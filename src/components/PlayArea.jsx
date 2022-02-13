@@ -1,7 +1,6 @@
 import React from 'react';
 
 import PlayAreaImage from '../images/playarea.png';
-
 import BorderTopLeftImage from '../images/borders/topleft.png';
 import BorderTopImage from '../images/borders/top.png';
 import BorderLeftImage from '../images/borders/left.png';
@@ -10,6 +9,10 @@ import BorderBottomImage from '../images/borders/bottom.png';
 import BorderTopRightImage from '../images/borders/topright.png';
 import BorderBottomRightImage from '../images/borders/bottomright.png';
 import BorderRightImage from '../images/borders/right.png';
+
+import { COL_INDEXES, ROW_INDEXES } from '../shared/constants';
+
+import BlankSpace from './BlankSpace';
 
 const bordertopleft = {
   position: 'absolute',
@@ -87,19 +90,12 @@ const playarea = {
   left: '0px',
 };
 
-const playarea2 = {
-  position: 'absolute',
-  top: '0px',
-  left: '544px',
-};
-
 const PlayArea = () => (
   <div>
     <svg style={playbackgroundsvg}>
       <rect style={playbackgroundrect} />
     </svg>
     <img src={PlayAreaImage} alt="playarea" style={playarea} />
-    <img src={PlayAreaImage} alt="playarea2" style={playarea2} />
     <img src={BorderTopLeftImage} alt="bordertopleft" style={bordertopleft} />
     <img src={BorderTopImage} alt="bordertop" style={bordertop} />
     <img src={BorderLeftImage} alt="borderleft" style={borderleft} />
@@ -108,6 +104,9 @@ const PlayArea = () => (
     <img src={BorderTopRightImage} alt="bordertopright" style={bordertopright} />
     <img src={BorderBottomRightImage} alt="borderbottomright" style={borderbottomright} />
     <img src={BorderRightImage} alt="borderright" style={borderright} />
+    {COL_INDEXES.map((col) =>
+      ROW_INDEXES.map((row) => <BlankSpace key={`blankspace_${col}_${row}`} col={col} row={row} />))}
+    <BlankSpace key="blankspace_4_4" col={4} row={4} />
   </div>
 );
 

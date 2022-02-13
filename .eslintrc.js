@@ -20,5 +20,7 @@ module.exports = {
   rules: {
     'no-console': 0,
     'react/function-component-definition': 0,
+    'max-len': ['error', { ignoreComments: true, code: 120 }],
+    'implicit-arrow-linebreak': 0,
   },
 };
