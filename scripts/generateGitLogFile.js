@@ -27,7 +27,7 @@ exec('git log -1 --oneline', (err, stdout /* , stderr */) => {
   // either way, write some output
   fs.writeFileSync(
     outputFileName,
-    `const gitLogInfo = {\n  logMessage: '${logMessage.replace(
+    `/* eslint-disable */\nconst gitLogInfo = {\n  logMessage: '${logMessage.replace(
       /'/g,
       "\\'",
     )}',\n  date: '${date}',\n};\nexport default gitLogInfo;\n`,
