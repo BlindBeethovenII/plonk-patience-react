@@ -1,16 +1,14 @@
 {
   "files": {
-    "main.css": "/plonk-patience-react/static/css/main.073c9b0a.css",
-    "main.js": "/plonk-patience-react/static/js/main.8f2c14bb.js",
-    "static/js/787.13d17365.chunk.js": "/plonk-patience-react/static/js/787.13d17365.chunk.js",
-    "static/media/logo.svg": "/plonk-patience-react/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "main.css": "/plonk-patience-react/static/css/main.e6c13ad2.css",
+    "main.js": "/plonk-patience-react/static/js/main.2dcf1ced.js",
+    "static/media/playarea.png": "/plonk-patience-react/static/media/playarea.b23162637225866bd41c.png",
     "index.html": "/plonk-patience-react/index.html",
-    "main.073c9b0a.css.map": "/plonk-patience-react/static/css/main.073c9b0a.css.map",
-    "main.8f2c14bb.js.map": "/plonk-patience-react/static/js/main.8f2c14bb.js.map",
-    "787.13d17365.chunk.js.map": "/plonk-patience-react/static/js/787.13d17365.chunk.js.map"
+    "main.e6c13ad2.css.map": "/plonk-patience-react/static/css/main.e6c13ad2.css.map",
+    "main.2dcf1ced.js.map": "/plonk-patience-react/static/js/main.2dcf1ced.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.8f2c14bb.js"
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.2dcf1ced.js"
   ]
 }
