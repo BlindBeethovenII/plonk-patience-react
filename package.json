@@ -135,5 +135,9 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^8.11.3",
+    "autoprefixer": "^10.4.2"
   }
 }
