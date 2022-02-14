@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -21,9 +21,8 @@ export const GameStateContextProvider = ({ children }) => {
   };
 
   // expose our state and state functions via the context
-  // TODO - fix this??
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const context = {
+  // we are encouraged to do this via a useMemo now
+  const context = useMemo(() => ({
     // the main menu open
     mainMenuOpen,
     openMainMenu,
@@ -32,7 +31,7 @@ export const GameStateContextProvider = ({ children }) => {
     // the deck with its current card index
     deck,
     resetDeck,
-  };
+  }), []);
 
   return <GameStateContext.Provider value={context}>{children}</GameStateContext.Provider>;
 };
