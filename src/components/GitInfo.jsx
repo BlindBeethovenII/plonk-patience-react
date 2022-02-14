@@ -33,7 +33,6 @@ const datestyle = {
 };
 
 const GitInfo = () => (
-  // just showing build date for now
   <div>
     <div style={builtstyle}>Built</div>
     <div style={datestyle}>{moment(gitLog.date, 'ddd MMM D YYYY HH:mm:ss').format('DMMMYY')}</div>
