@@ -12,12 +12,16 @@ export const GameStateContextProvider = ({ children }) => {
   const openMainMenu = () => setMainMenuOpen(true);
   const closeMainMenu = () => setMainMenuOpen(false);
 
-  // the deck is a shuffled array of cards
-  const [deck, setDeck] = useState(createShuffledDeck());
+  // the deal pile starts as a shuffled array of cards - two packs worth
+  const [dealPile, setDealPile] = useState(createShuffledDeck());
 
-  // reset the deck to a random shuffle
-  const resetDeck = () => {
-    setDeck(createShuffledDeck());
+  // the plonk pile starts empty
+  const [plonkPile, setPlonkPile] = useState([]);
+
+  // reset the cards to the starting position
+  const resetCards = () => {
+    setDealPile(createShuffledDeck());
+    setPlonkPile([]);
   };
 
   // expose our state and state functions via the context
@@ -28,9 +32,12 @@ export const GameStateContextProvider = ({ children }) => {
     openMainMenu,
     closeMainMenu,
 
-    // the deck with its current card index
-    deck,
-    resetDeck,
+    // the piles
+    dealPile,
+    plonkPile,
+
+    // functions over the cards
+    resetCards,
   }), []);
 
   return <GameStateContext.Provider value={context}>{children}</GameStateContext.Provider>;

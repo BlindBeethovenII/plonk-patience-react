@@ -5,13 +5,16 @@ import GameStateContext from '../contexts/GameStateContext';
 import Pile from './Pile';
 
 const Piles = () => {
-  const { deck } = useContext(GameStateContext);
+  const { dealPile, plonkPile } = useContext(GameStateContext);
 
   // here are all the piles to show
   const pilesToShow = [];
 
-  // for now we just form the dealing pile with the deck
-  pilesToShow.push(<Pile key="deal_pile" cards={deck} faceUp col={0} row={4} />);
+  // add in the deal pile
+  pilesToShow.push(<Pile key="deal_pile" cards={dealPile} faceUp col={0} row={4} />);
+
+  // and the plonk pile
+  pilesToShow.push(<Pile key="plonk_pile" cards={plonkPile} faceDown col={4} row={4} />);
 
   return pilesToShow;
 };
