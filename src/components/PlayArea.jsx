@@ -106,6 +106,7 @@ const PlayArea = () => (
     <img src={BorderRightImage} alt="borderright" style={borderright} />
     {COL_INDEXES.map((col) =>
       ROW_INDEXES.map((row) => <BlankSpace key={`blankspace_${col}_${row}`} col={col} row={row} />))}
+    <BlankSpace key="blankspace_0_4" col={0} row={4} />
     <BlankSpace key="blankspace_4_4" col={4} row={4} />
   </div>
 );

@@ -42,3 +42,6 @@ export const CARD_NONE = { suit: SUIT_NONE, number: NUMBER_NONE };
 
 export const COL_INDEXES = [0, 1, 2, 3, 4];
 export const ROW_INDEXES = [0, 1, 2, 3];
+
+export const DEAL_COL = 0;
+export const DEAL_ROW = 4;
