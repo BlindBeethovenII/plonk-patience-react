@@ -19,8 +19,19 @@ const Pile = (props) => {
 
   const card = cards[0];
 
-  // we just return the top card
-  return <Card key={card.id} card={card} zIndex={0} faceUp={faceUp} col={col} row={row} />;
+  // we now return an array of cards (at most 2 for now) - so the 2nd card is visible as the top card animates into position
+  const cardsToShow = [];
+
+  const card2 = cards[1];
+  if (card2) {
+    cardsToShow.push(<Card key={card2.id} card={card2} zIndex={0} faceUp={faceUp} col={col} row={row} />);
+  }
+
+  // and now the top card
+  cardsToShow.push(<Card key={card.id} card={card} zIndex={0} faceUp={faceUp} col={col} row={row} />);
+
+  // and return them
+  return cardsToShow;
 };
 
 Pile.propTypes = {
