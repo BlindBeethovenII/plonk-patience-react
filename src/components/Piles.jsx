@@ -14,7 +14,7 @@ const Piles = () => {
   pilesToShow.push(<Pile key="deal_pile" cards={dealPile} faceUp col={0} row={4} />);
 
   // and the plonk pile
-  pilesToShow.push(<Pile key="plonk_pile" cards={plonkPile} faceDown col={4} row={4} />);
+  pilesToShow.push(<Pile key="plonk_pile" cards={plonkPile} faceUp={false} col={4} row={4} />);
 
   return pilesToShow;
 };
