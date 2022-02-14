@@ -13,7 +13,7 @@ export const GameStateContextProvider = ({ children }) => {
   const closeMainMenu = () => setMainMenuOpen(false);
 
   // the deck is a shuffled array of cards
-  const [deck, setDeck] = useState([]);
+  const [deck, setDeck] = useState(createShuffledDeck());
 
   // reset the deck to a random shuffle
   const resetDeck = () => {

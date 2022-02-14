@@ -7,9 +7,20 @@ import {
   CARD_HEIGHT,
   SUITS,
   NUMBERS,
-  DEAL_COL,
-  DEAL_ROW,
+  NUMBER_A,
+  NUMBER_K,
+  NUMBER_Q,
+  NUMBER_J,
+  SUIT_CLUBS,
+  SUIT_DIAMONDS,
+  SUIT_HEARTS,
+  SUIT_SPADES,
 } from './constants';
+
+import CardSuitSpadesImage from '../images/cards/spades.png';
+import CardSuitHeartsImage from '../images/cards/hearts.png';
+import CardSuitDiamondsImage from '../images/cards/diamonds.png';
+import CardSuitClubsImage from '../images/cards/clubs.png';
 
 // calc left based on given column
 export function col2Left(col) {
@@ -21,6 +32,26 @@ export function row2Top(row) {
   return 20 + row * CARD_HEIGHT;
 }
 
+export const cardNumberToString = (number) => {
+  if (number === NUMBER_A) return 'A';
+  if (number === NUMBER_K) return 'K';
+  if (number === NUMBER_Q) return 'Q';
+  if (number === NUMBER_J) return 'J';
+  return number;
+};
+
+export const cardSuitToImage = (suit) => {
+  if (suit === SUIT_CLUBS) return CardSuitClubsImage;
+  if (suit === SUIT_DIAMONDS) return CardSuitDiamondsImage;
+  if (suit === SUIT_HEARTS) return CardSuitHeartsImage;
+  return CardSuitSpadesImage;
+};
+
+export const cardSuitToFillColour = (suit) => {
+  if (suit === SUIT_CLUBS || SUIT_SPADES) return 'black';
+  return 'red';
+};
+
 // the simple algorithm to generate the player and opponent card id from the card's suit and number
 export const generateCardId = (suit, number) => `card_${suit}_${number}`;
 
@@ -31,11 +62,9 @@ export const createShuffledDeck = () => {
   SUITS.map((suit) =>
     NUMBERS.map((number) =>
       deck.push({
+        id: generateCardId(suit, number),
         suit,
         number,
-        left: col2Left(DEAL_COL),
-        top: row2Top(DEAL_ROW),
-        id: generateCardId(suit, number),
       })));
 
   // now shuffle them
