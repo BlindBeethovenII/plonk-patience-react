@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import CardBaseImage from '../images/cards/cardbase.png';
 
 import { col2Left, row2Top } from '../shared/card-functions';
+import { PLAYAREA_X_OFFSET } from '../shared/constants';
 
 const BlankSpace = (props) => {
   // compute the card blank space using absolute positioning based on grid (col, row) values
@@ -12,7 +13,7 @@ const BlankSpace = (props) => {
 
   const blankspacestyle = {
     position: 'absolute',
-    left: `${col2Left(col)}px`,
+    left: `${col2Left(col) + PLAYAREA_X_OFFSET}px`,
     top: `${row2Top(row)}px`,
   };
 

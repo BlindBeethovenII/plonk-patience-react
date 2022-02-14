@@ -45,3 +45,5 @@ export const ROW_INDEXES = [0, 1, 2, 3];
 
 export const DEAL_COL = 0;
 export const DEAL_ROW = 4;
+
+export const PLAYAREA_X_OFFSET = 278;

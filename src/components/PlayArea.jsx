@@ -10,7 +10,7 @@ import BorderTopRightImage from '../images/borders/topright.png';
 import BorderBottomRightImage from '../images/borders/bottomright.png';
 import BorderRightImage from '../images/borders/right.png';
 
-import { COL_INDEXES, ROW_INDEXES } from '../shared/constants';
+import { COL_INDEXES, ROW_INDEXES, PLAYAREA_X_OFFSET } from '../shared/constants';
 
 import BlankSpace from './BlankSpace';
 
@@ -87,7 +87,7 @@ const playbackgroundrect = {
 const playarea = {
   position: 'absolute',
   top: '0px',
-  left: '0px',
+  left: `${PLAYAREA_X_OFFSET}px`,
 };
 
 const PlayArea = () => (
