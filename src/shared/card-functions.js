@@ -65,6 +65,8 @@ export const createShuffledDeck = () => {
         id: generateCardId(suit, number),
         suit,
         number,
+        prevCol: 0,
+        prevRow: 4,
       })));
 
   // now shuffle them

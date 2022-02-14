@@ -26,7 +26,9 @@ export const GameStateContextProvider = ({ children }) => {
       // create new objects for context rendering
       const newDealPile = [...dealPile];
       const newPlonkPile = [...plonkPile];
-      newPlonkPile.unshift(newDealPile.shift());
+      const topCard = newDealPile.shift();
+      // put it on the plonk pile, recording which pile it came from
+      newPlonkPile.unshift({ ...topCard, prevCol: 0, prevRow: 4 });
       setDealPile(newDealPile);
       setPlonkPile(newPlonkPile);
     }

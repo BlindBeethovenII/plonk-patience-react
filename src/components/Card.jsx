@@ -17,12 +17,23 @@ import {
 import { SUIT_CLUBS, SUIT_SPADES, PLAYAREA_X_OFFSET } from '../shared/constants';
 
 const Card = (props) => {
+  // we are given the card and the col/row it is to be shown at
   const { card, col, row } = props;
-  const { suit, number, id } = card;
 
-  // convert the col/row into left/top
+  // there are the card details - including where it was showing before
+  const {
+    id,
+    suit,
+    number,
+    prevCol,
+    prevRow,
+  } = card;
+
+  // convert the cols and rows into left/top
   const left = col2Left(col) + PLAYAREA_X_OFFSET;
   const top = row2Top(row);
+  const prevLeft = col2Left(prevCol) + PLAYAREA_X_OFFSET;
+  const prevTop = row2Top(prevRow);
 
   const cardbasestyle = {
     position: 'relative',
@@ -60,7 +71,12 @@ const Card = (props) => {
   const { zIndex } = props;
 
   return (
-    <motion.div id={id} style={{ position: 'absolute', zIndex }} animate={{ left, top }} initial={false}>
+    <motion.div
+      id={id}
+      style={{ position: 'absolute', zIndex }}
+      initial={{ left: prevLeft, top: prevTop }}
+      animate={{ left, top }}
+    >
       <img src={CardBlankImage} alt="cardblank" style={cardbasestyle} />
       <div style={cardnumberstyle}>
         <svg width="60px" height="40px">
@@ -79,6 +95,8 @@ Card.propTypes = {
     id: PropTypes.string.isRequired,
     suit: PropTypes.string.isRequired,
     number: PropTypes.number.isRequired,
+    prevCol: PropTypes.number.isRequired,
+    prevRow: PropTypes.number.isRequired,
   }).isRequired,
   zIndex: PropTypes.number.isRequired,
   // faceUp: PropTypes.bool.isRequired,
