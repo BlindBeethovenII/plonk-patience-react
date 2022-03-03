@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -20,7 +20,7 @@ export const GameStateContextProvider = ({ children }) => {
   };
 
   // deal the cards
-  const dealCards = () => {
+  const dealCards = useCallback(() => {
     // this only makes sense if we have some cards to deal
     if (dealPile?.length) {
       // create new objects for context rendering
@@ -32,7 +32,7 @@ export const GameStateContextProvider = ({ children }) => {
       setDealPile(newDealPile);
       setPlonkPile(newPlonkPile);
     }
-  };
+  }, [dealPile, plonkPile]);
 
   // expose our state and state functions via the context
   // we are encouraged to do this via a useMemo now
@@ -44,7 +44,7 @@ export const GameStateContextProvider = ({ children }) => {
     // card functions
     resetCards,
     dealCards,
-  }), [dealPile, plonkPile]);
+  }), [dealCards, dealPile, plonkPile]);
 
   return <GameStateContext.Provider value={context}>{children}</GameStateContext.Provider>;
 };
