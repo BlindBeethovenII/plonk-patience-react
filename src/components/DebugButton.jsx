@@ -6,8 +6,8 @@ import { col2Left, row2Top } from '../shared/card-functions';
 
 import GameStateContext from '../contexts/GameStateContext';
 
-const left = col2Left(2) + 32;
-const top = row2Top(4) + 16;
+const left = col2Left(2) + 22;
+const top = row2Top(3) + 16;
 
 const divstyle = {
   position: 'absolute',
@@ -18,7 +18,7 @@ const divstyle = {
 };
 
 const Button = styled.button`
-  background: #761d38;
+  background: #ff1d38;
   color: white;
   font-size: 1em;
   margin: 1em;
@@ -27,20 +27,14 @@ const Button = styled.button`
   border-radius: 3px;
 `;
 
-const DealButton = () => {
-  // const { dealCards, performNextAction } = useContext(GameStateContext);
-  const { dealCards } = useContext(GameStateContext);
-
-  const dealCardAndAction = () => {
-    dealCards();
-    // performNextAction();
-  };
+const DebugButton = () => {
+  const { performNextAction } = useContext(GameStateContext);
 
   return (
     <div style={divstyle}>
-      <Button onClick={dealCardAndAction}>Deal</Button>
+      <Button onClick={performNextAction}>Debug</Button>
     </div>
   );
 };
 
-export default DealButton;
+export default DebugButton;

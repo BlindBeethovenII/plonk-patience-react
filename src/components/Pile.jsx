@@ -6,6 +6,7 @@ import Card from './Card';
 
 const Pile = (props) => {
   const {
+    pileId,
     cards,
     faceUp,
     col,
@@ -24,17 +25,18 @@ const Pile = (props) => {
 
   const card2 = cards[1];
   if (card2) {
-    cardsToShow.push(<Card key={card2.id} card={card2} zIndex={0} faceUp={faceUp} col={col} row={row} />);
+    cardsToShow.push(<Card key={card2.id} pileId={pileId} card={card2} zIndex={0} faceUp={faceUp} col={col} row={row} />);
   }
 
   // and now the top card
-  cardsToShow.push(<Card key={card.id} card={card} zIndex={0} faceUp={faceUp} col={col} row={row} />);
+  cardsToShow.push(<Card key={card.id} pileId={pileId} card={card} zIndex={0} faceUp={faceUp} col={col} row={row} />);
 
   // and return them
   return cardsToShow;
 };
 
 Pile.propTypes = {
+  pileId: PropTypes.string.isRequired,
   cards: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     suit: PropTypes.string.isRequired,

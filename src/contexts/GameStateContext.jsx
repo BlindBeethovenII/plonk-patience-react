@@ -3,6 +3,13 @@ import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { createShuffledDeck } from '../shared/card-functions';
+import {
+  ACTION_MOVE_CARD,
+  PILE_ID_DEAL_PILE,
+  PILE_ID_PLAY_PILE_1,
+  PILE_ID_PLAY_PILE_2,
+  PILE_ID_PLAY_PILE_3,
+} from '../shared/constants';
 
 const GameStateContext = React.createContext({});
 
@@ -13,26 +20,165 @@ export const GameStateContextProvider = ({ children }) => {
   // the plonk pile starts empty
   const [plonkPile, setPlonkPile] = useState([]);
 
+  // the play piles also start empty - so we have an array of 12 empty arrays
+  const [playPile1, setPlayPile1] = useState([]);
+  const [playPile2, setPlayPile2] = useState([]);
+  const [playPile3, setPlayPile3] = useState([]);
+
+  // the actions to be done when the current animation stops
+  const [actions, setActions] = useState([]);
+
+  // the current action - so we know if the animation complete is for the current action, and so we should perform the next action
+  const [currentAction, setCurrentAction] = useState(null);
+
+  // convert a pile constant to the actual pile, with its col/row info
+  const getPileWithInfo = useCallback((pileId) => {
+    switch (pileId) {
+      case PILE_ID_DEAL_PILE:
+        return { pile: dealPile, col: 0, row: 4 };
+
+      case PILE_ID_PLAY_PILE_1:
+        return { pile: playPile1, col: 1, row: 0 };
+
+      case PILE_ID_PLAY_PILE_2:
+        return { pile: playPile2, col: 2, row: 0 };
+
+      case PILE_ID_PLAY_PILE_3:
+        return { pile: playPile3, col: 2, row: 0 };
+
+      default:
+        return null;
+    }
+  }, [dealPile, playPile1, playPile2, playPile3]);
+
+  // set the given pile
+  const setPile = (pileId, pile) => {
+    switch (pileId) {
+      case PILE_ID_DEAL_PILE:
+        setDealPile(pile);
+        break;
+
+      case PILE_ID_PLAY_PILE_1:
+        setPlayPile1(pile);
+        break;
+
+      case PILE_ID_PLAY_PILE_2:
+        setPlayPile2(pile);
+        break;
+
+      case PILE_ID_PLAY_PILE_3:
+        setPlayPile3(pile);
+        break;
+
+      default:
+        break;
+    }
+  };
+
   // reset the cards to the starting position
   const resetCards = () => {
     setDealPile(createShuffledDeck());
     setPlonkPile([]);
+    setPlayPile1([]);
+    setPlayPile2([]);
+    setPlayPile3([]);
   };
+
+  // move a card from pile1 to pile 2
+  const moveCard = useCallback((fromPileId, toPileId) => {
+    const { pile: fromPile, col, row } = getPileWithInfo(fromPileId);
+    const { pile: toPile } = getPileWithInfo(toPileId);
+
+    // this only makes sense if we have some cards in the from pile to move to the to pile
+    if (!fromPile?.length) {
+      return;
+    }
+
+    // create new objects for context rendering
+    const newFromPile = [...fromPile];
+    const newToPile = [...toPile];
+
+    // take the top card from the first pile
+    const topCard = newFromPile.shift();
+
+    // and put it on the second pile
+    newToPile.unshift({ ...topCard, prevCol: col, prevRow: row });
+
+    setPile(fromPileId, newFromPile);
+    setPile(toPileId, newToPile);
+  }, [getPileWithInfo]);
+
+  // do the next action (if any)
+  // TODO CHANGE THIS - for now new param to say ignore currentAction check
+  const performNextAction = useCallback((ignoreCurrentAction) => {
+    // if there already is an action in progress, then ignore this call - it will be called again when that action completes
+    if (!ignoreCurrentAction && currentAction) {
+      console.log(`performNextAction there is a currentAction ${JSON.stringify(currentAction)}`);
+      return;
+    }
+
+    // protect ourselves for when there are no actions left to perform
+    if (!actions?.length) {
+      return;
+    }
+
+    // okay - we have at least one next action - so do it
+    // take the top action
+    const newActions = [...actions];
+    const nextAction = newActions.shift();
+    setCurrentAction(nextAction);
+    setActions(newActions);
+
+    // currently we can only process a MOVE_CARD action
+    const { action, fromPileId, toPileId } = nextAction;
+    if (action === ACTION_MOVE_CARD) {
+      moveCard(fromPileId, toPileId);
+    }
+  }, [currentAction, actions, moveCard]);
+
+  // the animation has completed for a card - if this card is the current MOVE_CARD action to pileId then that action is complete, so perform the next action (if there is one)
+  // TODO CHANGE THIS - for now return true if performNextAction is then to be called
+  const cardAnimationComplete = useCallback((pileId) => {
+    // if there is no current action, then nothing to do
+    if (!currentAction) {
+      console.log(`cardAnimationComplete pileId ${pileId}: no currentAction`);
+      return;
+    }
+
+    const { action, toPileId } = currentAction;
+
+    // if the current action is not a MOVE_CARD action, the nothing to do
+    if (action !== ACTION_MOVE_CARD) {
+      console.log(`cardAnimationComplete pileId ${pileId}: action !== ACTION_MOVE_CARD`);
+      return;
+    }
+
+    // if the current action is for a different pile, the nothing to do
+    if (toPileId !== pileId) {
+      console.log(`cardAnimationComplete pileId ${pileId}: toPileId ${toPileId} not pileId`);
+      return;
+    }
+
+    // current MOVE_CARD action is complete
+    console.log(`cardAnimationComplete currentAction ${JSON.stringify(currentAction)} complete`);
+    setCurrentAction(null);
+
+    // perform the next action
+    performNextAction(true);
+  }, [currentAction, performNextAction]);
 
   // deal the cards
   const dealCards = useCallback(() => {
-    // this only makes sense if we have some cards to deal
-    if (dealPile?.length) {
-      // create new objects for context rendering
-      const newDealPile = [...dealPile];
-      const newPlonkPile = [...plonkPile];
-      const topCard = newDealPile.shift();
-      // put it on the plonk pile, recording which pile it came from
-      newPlonkPile.unshift({ ...topCard, prevCol: 0, prevRow: 4 });
-      setDealPile(newDealPile);
-      setPlonkPile(newPlonkPile);
+    // this only makes sense if we have enough cards to deal the 3 cards out
+    if (dealPile?.length >= 3) {
+      // just for now - we add the actions, then perform the next action - being the first one - the rest are then done as the animations complete
+      const newActions = [...actions];
+      newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_1 });
+      newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_2 });
+      newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_3 });
+      setActions(newActions);
     }
-  }, [dealPile, plonkPile]);
+  }, [dealPile, actions]);
 
   // expose our state and state functions via the context
   // we are encouraged to do this via a useMemo now
@@ -40,11 +186,31 @@ export const GameStateContextProvider = ({ children }) => {
     // the piles
     dealPile,
     plonkPile,
+    playPile1,
+    playPile2,
+    playPile3,
+
+    // the actions
+    actions,
+    currentAction,
 
     // card functions
     resetCards,
+    performNextAction,
+    cardAnimationComplete,
     dealCards,
-  }), [dealCards, dealPile, plonkPile]);
+  }), [
+    dealPile,
+    plonkPile,
+    playPile1,
+    playPile2,
+    playPile3,
+    actions,
+    currentAction,
+    performNextAction,
+    cardAnimationComplete,
+    dealCards,
+  ]);
 
   return <GameStateContext.Provider value={context}>{children}</GameStateContext.Provider>;
 };

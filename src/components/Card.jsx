@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -16,9 +16,18 @@ import {
 
 import { SUIT_CLUBS, SUIT_SPADES, PLAYAREA_X_OFFSET } from '../shared/constants';
 
+import GameStateContext from '../contexts/GameStateContext';
+
 const Card = (props) => {
+  const { cardAnimationComplete } = useContext(GameStateContext);
+
   // we are given the card and the col/row it is to be shown at
-  const { card, col, row } = props;
+  const {
+    pileId,
+    card,
+    col,
+    row,
+  } = props;
 
   // there are the card details - including where it was showing before
   const {
@@ -70,12 +79,23 @@ const Card = (props) => {
   // if we are moving set our zIndex so we appear on top of everything else
   const { zIndex } = props;
 
+  // TODO remove
+  const onAnimationComplete = () => {
+    console.log(`onAnimationComplete card ${cardNumberToString(number)} ${suit} on pile ${pileId}`);
+    cardAnimationComplete(pileId);
+  };
+  const onAnimationStart = () => {
+    console.log(`onAnimationStart card ${cardNumberToString(number)} ${suit}`);
+  };
+
   return (
     <motion.div
       id={id}
       style={{ position: 'absolute', zIndex }}
       initial={{ left: prevLeft, top: prevTop }}
       animate={{ left, top }}
+      onAnimationComplete={onAnimationComplete}
+      onAnimationStart={onAnimationStart}
     >
       <img src={CardBlankImage} alt="cardblank" style={cardbasestyle} />
       <div style={cardnumberstyle}>
@@ -91,6 +111,7 @@ const Card = (props) => {
 };
 
 Card.propTypes = {
+  pileId: PropTypes.string.isRequired,
   card: PropTypes.shape({
     id: PropTypes.string.isRequired,
     suit: PropTypes.string.isRequired,

@@ -47,3 +47,11 @@ export const DEAL_COL = 0;
 export const DEAL_ROW = 4;
 
 export const PLAYAREA_X_OFFSET = 278;
+
+export const ACTION_MOVE_CARD = 'MOVE_CARD';
+
+export const PILE_ID_DEAL_PILE = 'DEAL_PILE';
+export const PILE_ID_PLONK_PILE = 'PLONK_PILE';
+export const PILE_ID_PLAY_PILE_1 = 'PLAY_PILE_1';
+export const PILE_ID_PLAY_PILE_2 = 'PLAY_PILE_2';
+export const PILE_ID_PLAY_PILE_3 = 'PLAY_PILE_3';

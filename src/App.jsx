@@ -5,6 +5,7 @@ import GitInfo from './components/GitInfo';
 import Piles from './components/Piles';
 import DealButton from './components/DealButton';
 import CountLabel from './components/CountLabel';
+import DebugButton from './components/DebugButton';
 
 // import MainMenuModal from './components/MainMenuModal';
 
@@ -17,6 +18,7 @@ const App = () => (
     <Piles />
     <DealButton />
     <CountLabel />
+    <DebugButton />
   </GameStateContextProvider>
 );
 
