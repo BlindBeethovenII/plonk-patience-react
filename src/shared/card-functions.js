@@ -53,16 +53,27 @@ export const cardSuitToFillColour = (suit) => {
 };
 
 // the simple algorithm to generate the player and opponent card id from the card's suit and number
-export const generateCardId = (suit, number) => `card_${suit}_${number}`;
+export const generateCardId = (deckN, suit, number) => `deck_${deckN}_card_${suit}_${number}`;
 
 // helper function to create a suffled deck
 export const createShuffledDeck = () => {
-  // put all the cards in the deck, placing at the dealing position
+  // put all the cards in the deck, placing them at the deal pile col/row
   let deck = [];
   SUITS.map((suit) =>
     NUMBERS.map((number) =>
       deck.push({
-        id: generateCardId(suit, number),
+        id: generateCardId(1, suit, number),
+        suit,
+        number,
+        prevCol: 0,
+        prevRow: 4,
+      })));
+
+  // in fact, we want two packs :-)
+  SUITS.map((suit) =>
+    NUMBERS.map((number) =>
+      deck.push({
+        id: generateCardId(2, suit, number),
         suit,
         number,
         prevCol: 0,

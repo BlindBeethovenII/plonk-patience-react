@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { createShuffledDeck } from '../shared/card-functions';
 import {
+  ACTION_DEAL_CARD,
   ACTION_MOVE_CARD,
   PILE_ID_DEAL_PILE,
   PILE_ID_PLONK_PILE,
@@ -47,8 +48,11 @@ export const GameStateContextProvider = ({ children }) => {
   // the actions to be done when the current animation stops
   const [actions, setActions] = useState([]);
 
-  // the current action - so we know if the animation complete is for the current action, and so we should perform the next action
-  const [currentAction, setCurrentAction] = useState(null);
+  // the current move action - so we know if the animation complete is for the current move action, and so we should perform the next action
+  const [currentMoveAction, setCurrentMoveAction] = useState(null);
+
+  // the next pile to deal a card to
+  const [nextDealPileId, setNextDealPileId] = useState(PILE_ID_PLONK_PILE);
 
   // convert a pile constant to the actual pile, with its col/row info
   const getPileWithInfo = useCallback((pileId) => {
@@ -175,6 +179,7 @@ export const GameStateContextProvider = ({ children }) => {
         break;
 
       default:
+        console.error(`setPile cannot cope with pileId ${pileId}`);
         break;
     }
   };
@@ -224,6 +229,67 @@ export const GameStateContextProvider = ({ children }) => {
     //   return;
     // }
 
+    // set the given pile
+    const incrementNextDealPileId = () => {
+      switch (nextDealPileId) {
+        case PILE_ID_PLONK_PILE:
+          setNextDealPileId(PILE_ID_PLAY_PILE_1);
+          break;
+
+        case PILE_ID_PLAY_PILE_1:
+          setNextDealPileId(PILE_ID_PLAY_PILE_2);
+          break;
+
+        case PILE_ID_PLAY_PILE_2:
+          setNextDealPileId(PILE_ID_PLAY_PILE_3);
+          break;
+
+        case PILE_ID_PLAY_PILE_3:
+          setNextDealPileId(PILE_ID_PLAY_PILE_4);
+          break;
+
+        case PILE_ID_PLAY_PILE_4:
+          setNextDealPileId(PILE_ID_PLAY_PILE_5);
+          break;
+
+        case PILE_ID_PLAY_PILE_5:
+          setNextDealPileId(PILE_ID_PLAY_PILE_6);
+          break;
+
+        case PILE_ID_PLAY_PILE_6:
+          setNextDealPileId(PILE_ID_PLAY_PILE_7);
+          break;
+
+        case PILE_ID_PLAY_PILE_7:
+          setNextDealPileId(PILE_ID_PLAY_PILE_8);
+          break;
+
+        case PILE_ID_PLAY_PILE_8:
+          setNextDealPileId(PILE_ID_PLAY_PILE_9);
+          break;
+
+        case PILE_ID_PLAY_PILE_9:
+          setNextDealPileId(PILE_ID_PLAY_PILE_10);
+          break;
+
+        case PILE_ID_PLAY_PILE_10:
+          setNextDealPileId(PILE_ID_PLAY_PILE_11);
+          break;
+
+        case PILE_ID_PLAY_PILE_11:
+          setNextDealPileId(PILE_ID_PLAY_PILE_12);
+          break;
+
+        case PILE_ID_PLAY_PILE_12:
+          setNextDealPileId(PILE_ID_PLONK_PILE);
+          break;
+
+        default:
+          console.error(`incrementNextDealPileId cannot cope with pileId ${nextDealPileId}`);
+          break;
+      }
+    };
+
     // protect ourselves for when there are no actions left to perform
     if (!theActions?.length) {
       console.log('performNextAction there are no actions to perform');
@@ -233,41 +299,56 @@ export const GameStateContextProvider = ({ children }) => {
     // okay - we have at least one next action - so do it
     // take the top action
     const newActions = [...theActions];
-    const nextAction = newActions.shift();
-    setCurrentAction(nextAction);
-    setActions(newActions);
 
-    // currently we can only process a MOVE_CARD action
-    const { action, fromPileId, toPileId } = nextAction;
-    if (action === ACTION_MOVE_CARD) {
-      moveCard(fromPileId, toPileId);
+    // we need to continue processing the actions until we have actually started to move a card
+    let cardMoving = false;
+
+    while (!cardMoving) {
+      // get and process the next action
+      const nextAction = newActions.shift();
+      const { action } = nextAction;
+      if (action === ACTION_DEAL_CARD) {
+        // this action is to deal the current top card from the deal pile to the nextDealPileId pile
+        // need to put this at the top of the newActions
+        newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: nextDealPileId });
+
+        // now 'increment' the next deal pile id
+        incrementNextDealPileId();
+      } else if (action === ACTION_MOVE_CARD) {
+        // this action is to move the current top card from the named fromPileId to the named toPileId
+        const { fromPileId, toPileId } = nextAction;
+        moveCard(fromPileId, toPileId);
+
+        // remember we are moving this card
+        setCurrentMoveAction(nextAction);
+        cardMoving = true;
+      } else {
+        console.error(`performNextAction unknown action ${action}`);
+      }
     }
-  }, [moveCard]);
+
+    // remember the new actions
+    setActions(newActions);
+  }, [moveCard, nextDealPileId]);
 
   // the animation has completed for a card - if this card is the current MOVE_CARD action to pileId then that action is complete, so perform the next action (if there is one)
   const cardAnimationComplete = useCallback((pileId) => {
     // if there is no current action, then nothing to do
-    if (!currentAction) {
-      console.log(`cardAnimationComplete pileId ${pileId}: no currentAction`);
+    if (!currentMoveAction) {
+      console.log(`cardAnimationComplete pileId ${pileId}: no current move action`);
       return;
     }
 
-    const { action, toPileId } = currentAction;
-
-    // if the current action is not a MOVE_CARD action, the nothing to do
-    if (action !== ACTION_MOVE_CARD) {
-      console.log(`cardAnimationComplete pileId ${pileId}: action !== ACTION_MOVE_CARD`);
-      return;
-    }
+    const { toPileId } = currentMoveAction;
 
     // if the current action is for a different pile, the nothing to do
     if (toPileId !== pileId) {
-      console.log(`cardAnimationComplete pileId ${pileId}: toPileId ${toPileId} not pileId`);
+      console.log(`cardAnimationComplete pileId ${pileId}: toPileId ${toPileId} of current move action is not pileId`);
       return;
     }
 
     // current MOVE_CARD action is complete
-    console.log(`cardAnimationComplete currentAction ${JSON.stringify(currentAction)} complete`);
+    console.log(`cardAnimationComplete currentMoveAction ${JSON.stringify(currentMoveAction)} complete`);
 
     // because performNextAction no longer cares if there is a current action (as it can never be called when there is one)
     // and because setCurrentAction(null) here will not be effected before performNextAction() is called anyway - we don't setCurrentAction(null) now
@@ -275,7 +356,7 @@ export const GameStateContextProvider = ({ children }) => {
 
     // perform the next action
     performNextAction(actions);
-  }, [currentAction, performNextAction, actions]);
+  }, [currentMoveAction, performNextAction, actions]);
 
   // deal the cards
   const dealCards = useCallback(() => {
@@ -287,19 +368,11 @@ export const GameStateContextProvider = ({ children }) => {
     // these will be our new actions
     const newActions = [...actions];
 
-    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLONK_PILE });
-    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_1 });
-    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_2 });
-    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_3 });
-    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_4 });
-    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_5 });
-    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_6 });
-    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_7 });
-    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_8 });
-    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_9 });
-    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_10 });
-    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_11 });
-    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_12 });
+    // add in a DEAL_CARD action for every card in the deal pile
+    const nCards = dealPile.length;
+    for (let i = 0; i < nCards; i += 1) {
+      newActions.push({ action: ACTION_DEAL_CARD });
+    }
 
     // perform the next action (i.e. first of these actions)
     // we know here there there is no current action in place, as we've just started to deal the cards - so these are the first actions
@@ -327,7 +400,7 @@ export const GameStateContextProvider = ({ children }) => {
 
     // the actions
     actions,
-    currentAction,
+    currentMoveAction,
 
     // card functions
     resetCards,
@@ -350,7 +423,7 @@ export const GameStateContextProvider = ({ children }) => {
     playPile11,
     playPile12,
     actions,
-    currentAction,
+    currentMoveAction,
     performNextAction,
     cardAnimationComplete,
     dealCards,
