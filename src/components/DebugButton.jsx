@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import styled from 'styled-components';
 
 import { col2Left, row2Top } from '../shared/card-functions';
-
-import GameStateContext from '../contexts/GameStateContext';
 
 const left = col2Left(2) + 22;
 const top = row2Top(3) + 16;
@@ -28,11 +26,13 @@ const Button = styled.button`
 `;
 
 const DebugButton = () => {
-  const { performNextAction } = useContext(GameStateContext);
+  const doDebug = () => {
+    console.log('No debug at the moment');
+  };
 
   return (
     <div style={divstyle}>
-      <Button onClick={performNextAction}>Debug</Button>
+      <Button onClick={doDebug}>Debug</Button>
     </div>
   );
 };

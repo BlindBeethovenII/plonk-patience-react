@@ -109,22 +109,26 @@ export const GameStateContextProvider = ({ children }) => {
   }, [getPileWithInfo]);
 
   // do the next action (if any)
-  // TODO CHANGE THIS - for now new param to say ignore currentAction check
-  const performNextAction = useCallback((ignoreCurrentAction) => {
+  // this is called from useCallback functions in this GameStateContext
+  // and so, the set state functions will not have effected by this call (which I don't fully understand)
+  // so we pass in the current/new values for those states and set them here
+  const performNextAction = useCallback((theActions) => {
     // if there already is an action in progress, then ignore this call - it will be called again when that action completes
-    if (!ignoreCurrentAction && currentAction) {
-      console.log(`performNextAction there is a currentAction ${JSON.stringify(currentAction)}`);
-      return;
-    }
+    // Note: we no longer call performNextAction when there is a currentAction in place - so commenting out this code
+    // if (currentAction) {
+    //   console.log(`performNextAction there is a currentAction ${JSON.stringify(currentAction)}`);
+    //   return;
+    // }
 
     // protect ourselves for when there are no actions left to perform
-    if (!actions?.length) {
+    if (!theActions?.length) {
+      console.log('performNextAction there are no actions to perform');
       return;
     }
 
     // okay - we have at least one next action - so do it
     // take the top action
-    const newActions = [...actions];
+    const newActions = [...theActions];
     const nextAction = newActions.shift();
     setCurrentAction(nextAction);
     setActions(newActions);
@@ -134,10 +138,9 @@ export const GameStateContextProvider = ({ children }) => {
     if (action === ACTION_MOVE_CARD) {
       moveCard(fromPileId, toPileId);
     }
-  }, [currentAction, actions, moveCard]);
+  }, [moveCard]);
 
   // the animation has completed for a card - if this card is the current MOVE_CARD action to pileId then that action is complete, so perform the next action (if there is one)
-  // TODO CHANGE THIS - for now return true if performNextAction is then to be called
   const cardAnimationComplete = useCallback((pileId) => {
     // if there is no current action, then nothing to do
     if (!currentAction) {
@@ -161,11 +164,14 @@ export const GameStateContextProvider = ({ children }) => {
 
     // current MOVE_CARD action is complete
     console.log(`cardAnimationComplete currentAction ${JSON.stringify(currentAction)} complete`);
-    setCurrentAction(null);
+
+    // because performNextAction no longer cares if there is a current action (as it can never be called when there is one)
+    // and because setCurrentAction(null) here will not be effected before performNextAction() is called anyway - we don't setCurrentAction(null) now
+    // setCurrentAction(null);
 
     // perform the next action
-    performNextAction(true);
-  }, [currentAction, performNextAction]);
+    performNextAction(actions);
+  }, [currentAction, performNextAction, actions]);
 
   // deal the cards
   const dealCards = useCallback(() => {
@@ -176,9 +182,12 @@ export const GameStateContextProvider = ({ children }) => {
       newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_1 });
       newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_2 });
       newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLAY_PILE_3 });
-      setActions(newActions);
+
+      // perform the next action (i.e. first of these actions)
+      // we know here there there is no current action in place, as we've just started to deal the cards - so these are the first actions
+      performNextAction(newActions);
     }
-  }, [dealPile, actions]);
+  }, [dealPile, actions, performNextAction]);
 
   // expose our state and state functions via the context
   // we are encouraged to do this via a useMemo now

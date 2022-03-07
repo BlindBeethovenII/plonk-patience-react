@@ -28,12 +28,10 @@ const Button = styled.button`
 `;
 
 const DealButton = () => {
-  // const { dealCards, performNextAction } = useContext(GameStateContext);
   const { dealCards } = useContext(GameStateContext);
 
   const dealCardAndAction = () => {
     dealCards();
-    // performNextAction();
   };
 
   return (
