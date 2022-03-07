@@ -20,6 +20,19 @@ import {
   PILE_ID_PLAY_PILE_10,
   PILE_ID_PLAY_PILE_11,
   PILE_ID_PLAY_PILE_12,
+  NUMBER_A,
+  NUMBER_2,
+  NUMBER_3,
+  NUMBER_4,
+  NUMBER_5,
+  NUMBER_6,
+  NUMBER_7,
+  NUMBER_8,
+  NUMBER_9,
+  NUMBER_10,
+  NUMBER_J,
+  NUMBER_Q,
+  NUMBER_K,
 } from '../shared/constants';
 
 const GameStateContext = React.createContext({});
@@ -184,6 +197,60 @@ export const GameStateContextProvider = ({ children }) => {
     }
   };
 
+  // helper function (might move it to card-functions later)
+  const numberMatchesDealPile = (n, pileId) => {
+    if ((n === NUMBER_A || n === NUMBER_2) && pileId === PILE_ID_PLAY_PILE_1) {
+      return true;
+    }
+
+    if (n === NUMBER_3 && pileId === PILE_ID_PLAY_PILE_2) {
+      return true;
+    }
+
+    if (n === NUMBER_4 && pileId === PILE_ID_PLAY_PILE_3) {
+      return true;
+    }
+
+    if (n === NUMBER_5 && pileId === PILE_ID_PLAY_PILE_4) {
+      return true;
+    }
+
+    if (n === NUMBER_6 && pileId === PILE_ID_PLAY_PILE_5) {
+      return true;
+    }
+
+    if (n === NUMBER_7 && pileId === PILE_ID_PLAY_PILE_6) {
+      return true;
+    }
+
+    if (n === NUMBER_8 && pileId === PILE_ID_PLAY_PILE_7) {
+      return true;
+    }
+
+    if (n === NUMBER_9 && pileId === PILE_ID_PLAY_PILE_8) {
+      return true;
+    }
+
+    if (n === NUMBER_10 && pileId === PILE_ID_PLAY_PILE_9) {
+      return true;
+    }
+
+    if (n === NUMBER_J && pileId === PILE_ID_PLAY_PILE_10) {
+      return true;
+    }
+
+    if (n === NUMBER_Q && pileId === PILE_ID_PLAY_PILE_11) {
+      return true;
+    }
+
+    if (n === NUMBER_K && pileId === PILE_ID_PLAY_PILE_12) {
+      return true;
+    }
+
+    // doesn't match
+    return false;
+  };
+
   // reset the cards to the starting position
   const resetCards = () => {
     setDealPile(createShuffledDeck());
@@ -309,11 +376,28 @@ export const GameStateContextProvider = ({ children }) => {
       const { action } = nextAction;
       if (action === ACTION_DEAL_CARD) {
         // this action is to deal the current top card from the deal pile to the nextDealPileId pile
-        // need to put this at the top of the newActions
-        newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: nextDealPileId });
+        // if the top card of the deal pile matches the nextDealPileId, then it needs to be moved to the plonk pile, once it has been dealt to its pile
+        // just protect ourselves
+        if (dealPile.length > 0) {
+          const { number } = dealPile[0];
 
-        // now 'increment' the next deal pile id
-        incrementNextDealPileId();
+          // we only increment the next deal pile id, if we actual dealt to the current
+          let incNextDealPileId = true;
+
+          if (numberMatchesDealPile(number, nextDealPileId)) {
+            newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: nextDealPileId, toPileId: PILE_ID_PLONK_PILE });
+            // in this case, we need to deal to the same pile again
+            incNextDealPileId = false;
+          }
+
+          // need to put this at the top of the newActions
+          newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: nextDealPileId });
+
+          // 'increment' the next deal pile id, if we need to
+          if (incNextDealPileId) {
+            incrementNextDealPileId();
+          }
+        }
       } else if (action === ACTION_MOVE_CARD) {
         // this action is to move the current top card from the named fromPileId to the named toPileId
         const { fromPileId, toPileId } = nextAction;
@@ -329,7 +413,7 @@ export const GameStateContextProvider = ({ children }) => {
 
     // remember the new actions
     setActions(newActions);
-  }, [moveCard, nextDealPileId]);
+  }, [moveCard, nextDealPileId, dealPile]);
 
   // the animation has completed for a card - if this card is the current MOVE_CARD action to pileId then that action is complete, so perform the next action (if there is one)
   const cardAnimationComplete = useCallback((pileId) => {

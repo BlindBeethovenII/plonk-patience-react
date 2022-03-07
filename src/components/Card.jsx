@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -20,6 +20,9 @@ import GameStateContext from '../contexts/GameStateContext';
 
 const Card = (props) => {
   const { cardAnimationComplete } = useContext(GameStateContext);
+
+  // we manage our own zIndex while we are moving
+  const [zIndex, setZIndex] = useState(0);
 
   // we are given the card and the col/row it is to be shown at
   const {
@@ -76,16 +79,15 @@ const Card = (props) => {
     height,
   };
 
-  // if we are moving set our zIndex so we appear on top of everything else
-  const { zIndex } = props;
-
-  // TODO remove
-  const onAnimationComplete = () => {
-    console.log(`onAnimationComplete card ${cardNumberToString(number)} ${suit} on pile ${pileId}`);
-    cardAnimationComplete(pileId);
-  };
   const onAnimationStart = () => {
-    console.log(`onAnimationStart card ${cardNumberToString(number)} ${suit}`);
+    // console.log(`onAnimationStart card ${cardNumberToString(number)} ${suit} on pile ${pileId}`);
+    setZIndex(1);
+  };
+
+  const onAnimationComplete = () => {
+    // console.log(`onAnimationComplete card ${cardNumberToString(number)} ${suit} on pile ${pileId}`);
+    setZIndex(0);
+    cardAnimationComplete(pileId);
   };
 
   return (
@@ -119,7 +121,6 @@ Card.propTypes = {
     prevCol: PropTypes.number.isRequired,
     prevRow: PropTypes.number.isRequired,
   }).isRequired,
-  zIndex: PropTypes.number.isRequired,
   // faceUp: PropTypes.bool.isRequired,
   col: PropTypes.number.isRequired,
   row: PropTypes.number.isRequired,
