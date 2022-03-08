@@ -12,9 +12,9 @@ const Label = styled.h2`
   color: white;
   font-size: 0.6em;
   margin: 0.6em;
-  padding: 0.25em 1em;
-  border: 2px solid #761d38;
-  border-radius: 3px;
+  padding: 0.2em 1em 0.2em 0.2em;
+  border: 1px solid #761d38;
+  border-radius: 2px;
 `;
 
 const CountLabel = (props) => {
@@ -31,9 +31,9 @@ const CountLabel = (props) => {
     position: 'absolute',
     left: `${left}px`,
     top: `${top}px`,
-    width: '20px',
+    width: '30px',
     height: '20px',
-    textAlign: 'center',
+    textAlign: 'left',
     zIndex: 5,
   };
 
