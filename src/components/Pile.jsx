@@ -26,22 +26,22 @@ const Pile = (props) => {
   const card = cards[0];
 
   // we now return an array of cards (at most 2 for now) - so the 2nd card is visible as the top card animates into position; and a count label (if we in debug mode)
-  const cardsToShow = [];
+  const componentsToShow = [];
 
   const card2 = cards[1];
   if (card2) {
-    cardsToShow.push(<Card key={card2.id} pileId={pileId} card={card2} faceUp={faceUp} col={col} row={row} />);
+    componentsToShow.push(<Card key={card2.id} pileId={pileId} card={card2} faceUp={faceUp} col={col} row={row} underCard />);
   }
 
   // and now the top card
-  cardsToShow.push(<Card key={card.id} pileId={pileId} card={card} faceUp={faceUp} col={col} row={row} />);
+  componentsToShow.push(<Card key={card.id} pileId={pileId} card={card} faceUp={faceUp} col={col} row={row} underCard={false} />);
 
   if (isDebugMode) {
-    cardsToShow.push(<CountLabel key={`count_label_${card.id}`} count={cards.length} col={col} row={row} />);
+    componentsToShow.push(<CountLabel key={`count_label_${card.id}`} count={cards.length} col={col} row={row} />);
   }
 
   // and return them
-  return cardsToShow;
+  return componentsToShow;
 };
 
 Pile.propTypes = {
