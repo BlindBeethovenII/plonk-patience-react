@@ -19,7 +19,7 @@ import { SUIT_CLUBS, SUIT_SPADES, PLAYAREA_X_OFFSET } from '../shared/constants'
 import GameStateContext from '../contexts/GameStateContext';
 
 const Card = (props) => {
-  const { cardAnimationComplete } = useContext(GameStateContext);
+  const { cardAnimationComplete, dealSpeedPercentage } = useContext(GameStateContext);
 
   // we manage our own zIndex while we are moving
   const [zIndex, setZIndex] = useState(0);
@@ -90,12 +90,16 @@ const Card = (props) => {
     cardAnimationComplete(pileId);
   };
 
+  // duration of animation is based on the deal speed percentage - using reverse percentage - so slider to right is faster
+  const duration = (2 * (100 - dealSpeedPercentage)) / 100;
+
   return (
     <motion.div
       id={id}
       style={{ position: 'absolute', zIndex }}
       initial={{ left: prevLeft, top: prevTop }}
       animate={{ left, top }}
+      transition={{ duration }}
       onAnimationComplete={onAnimationComplete}
       onAnimationStart={onAnimationStart}
     >

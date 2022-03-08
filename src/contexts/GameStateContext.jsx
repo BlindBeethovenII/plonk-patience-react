@@ -70,6 +70,9 @@ export const GameStateContextProvider = ({ children }) => {
   // if the game is playing
   const [gamePlaying, setGamePlaying] = useState(false);
 
+  // the deal speed percentage
+  const [dealSpeedPercentage, setDealSpeedPercentage] = React.useState(50);
+
   // convert a pile constant to the actual pile, with its col/row info
   const getPileWithInfo = useCallback((pileId) => {
     switch (pileId) {
@@ -495,6 +498,10 @@ export const GameStateContextProvider = ({ children }) => {
     // further game state
     gamePlaying,
 
+    // deal speed
+    dealSpeedPercentage,
+    setDealSpeedPercentage,
+
     // card functions
     resetCards,
     performNextAction,
@@ -518,6 +525,8 @@ export const GameStateContextProvider = ({ children }) => {
     actions,
     currentMoveAction,
     gamePlaying,
+    dealSpeedPercentage,
+    setDealSpeedPercentage,
     performNextAction,
     cardAnimationComplete,
     dealCards,
