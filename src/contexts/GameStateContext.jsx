@@ -497,6 +497,7 @@ export const GameStateContextProvider = ({ children }) => {
 
     // further game state
     gamePlaying,
+    isDebugMode: true,
 
     // deal speed
     dealSpeedPercentage,

@@ -4,7 +4,6 @@ import PlayArea from './components/PlayArea';
 import GitInfo from './components/GitInfo';
 import Piles from './components/Piles';
 import DealButton from './components/DealButton';
-import CountLabel from './components/CountLabel';
 import DebugButton from './components/DebugButton';
 import Slider from './components/Slider';
 
@@ -19,7 +18,6 @@ const App = () => (
     <Piles />
     <DealButton />
     <Slider />
-    <CountLabel />
     <DebugButton />
   </GameStateContextProvider>
 );
