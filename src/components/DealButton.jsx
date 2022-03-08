@@ -28,11 +28,16 @@ const Button = styled.button`
 `;
 
 const DealButton = () => {
-  const { dealCards } = useContext(GameStateContext);
+  const { dealCards, gamePlaying } = useContext(GameStateContext);
 
   const dealCardAndAction = () => {
     dealCards();
   };
+
+  // only show the button if we are not playing the game yet
+  if (gamePlaying) {
+    return null;
+  }
 
   return (
     <div style={divstyle}>

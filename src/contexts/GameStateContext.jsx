@@ -67,6 +67,9 @@ export const GameStateContextProvider = ({ children }) => {
   // the next pile to deal a card to
   const [nextDealPileId, setNextDealPileId] = useState(PILE_ID_PLONK_PILE);
 
+  // if the game is playing
+  const [gamePlaying, setGamePlaying] = useState(false);
+
   // convert a pile constant to the actual pile, with its col/row info
   const getPileWithInfo = useCallback((pileId) => {
     switch (pileId) {
@@ -458,6 +461,9 @@ export const GameStateContextProvider = ({ children }) => {
       newActions.push({ action: ACTION_DEAL_CARD });
     }
 
+    // we are now playing the game
+    setGamePlaying(true);
+
     // perform the next action (i.e. first of these actions)
     // we know here there there is no current action in place, as we've just started to deal the cards - so these are the first actions
     performNextAction(newActions);
@@ -486,6 +492,9 @@ export const GameStateContextProvider = ({ children }) => {
     actions,
     currentMoveAction,
 
+    // further game state
+    gamePlaying,
+
     // card functions
     resetCards,
     performNextAction,
@@ -508,6 +517,7 @@ export const GameStateContextProvider = ({ children }) => {
     playPile12,
     actions,
     currentMoveAction,
+    gamePlaying,
     performNextAction,
     cardAnimationComplete,
     dealCards,
