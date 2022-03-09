@@ -20,6 +20,14 @@ import {
   PILE_ID_PLAY_PILE_10,
   PILE_ID_PLAY_PILE_11,
   PILE_ID_PLAY_PILE_12,
+  PILE_ID_UP_PILE_S,
+  PILE_ID_UP_PILE_H,
+  PILE_ID_UP_PILE_D,
+  PILE_ID_UP_PILE_C,
+  PILE_ID_DOWN_PILE_S,
+  PILE_ID_DOWN_PILE_H,
+  PILE_ID_DOWN_PILE_D,
+  PILE_ID_DOWN_PILE_C,
   NUMBER_A,
   NUMBER_2,
   NUMBER_3,
@@ -57,6 +65,14 @@ export const GameStateContextProvider = ({ children }) => {
   const [playPile10, setPlayPile10] = useState([]);
   const [playPile11, setPlayPile11] = useState([]);
   const [playPile12, setPlayPile12] = useState([]);
+  const [upPileSpades, setUpPileSpades] = useState([]);
+  const [upPileHearts, setUpPileHearts] = useState([]);
+  const [upPileDiamonds, setUpPileDiamonds] = useState([]);
+  const [upPileClubs, setUpPileClubs] = useState([]);
+  const [downPileSpades, setDownPileSpades] = useState([]);
+  const [downPileHearts, setDownPileHearts] = useState([]);
+  const [downPileDiamonds, setDownPileDiamonds] = useState([]);
+  const [downPileClubs, setDownPileClubs] = useState([]);
 
   // the actions to be done when the current animation stops
   const [actions, setActions] = useState([]);
@@ -118,6 +134,30 @@ export const GameStateContextProvider = ({ children }) => {
       case PILE_ID_PLAY_PILE_12:
         return { pile: playPile12, col: 3, row: 3 };
 
+      case PILE_ID_UP_PILE_S:
+        return { pile: upPileSpades, col: 0, row: 0 };
+
+      case PILE_ID_UP_PILE_H:
+        return { pile: upPileHearts, col: 0, row: 1 };
+
+      case PILE_ID_UP_PILE_D:
+        return { pile: upPileDiamonds, col: 0, row: 2 };
+
+      case PILE_ID_UP_PILE_C:
+        return { pile: upPileClubs, col: 0, row: 3 };
+
+      case PILE_ID_DOWN_PILE_S:
+        return { pile: downPileSpades, col: 4, row: 0 };
+
+      case PILE_ID_DOWN_PILE_H:
+        return { pile: downPileHearts, col: 4, row: 1 };
+
+      case PILE_ID_DOWN_PILE_D:
+        return { pile: downPileDiamonds, col: 4, row: 2 };
+
+      case PILE_ID_DOWN_PILE_C:
+        return { pile: downPileClubs, col: 4, row: 3 };
+
       default:
         return null;
     }
@@ -136,6 +176,14 @@ export const GameStateContextProvider = ({ children }) => {
     playPile10,
     playPile11,
     playPile12,
+    upPileSpades,
+    upPileHearts,
+    upPileDiamonds,
+    upPileClubs,
+    downPileSpades,
+    downPileHearts,
+    downPileDiamonds,
+    downPileClubs,
   ]);
 
   // set the given pile
@@ -195,6 +243,38 @@ export const GameStateContextProvider = ({ children }) => {
 
       case PILE_ID_PLAY_PILE_12:
         setPlayPile12(pile);
+        break;
+
+      case PILE_ID_UP_PILE_S:
+        setUpPileSpades(pile);
+        break;
+
+      case PILE_ID_UP_PILE_H:
+        setUpPileHearts(pile);
+        break;
+
+      case PILE_ID_UP_PILE_D:
+        setUpPileDiamonds(pile);
+        break;
+
+      case PILE_ID_UP_PILE_C:
+        setUpPileClubs(pile);
+        break;
+
+      case PILE_ID_DOWN_PILE_S:
+        setDownPileSpades(pile);
+        break;
+
+      case PILE_ID_DOWN_PILE_H:
+        setDownPileHearts(pile);
+        break;
+
+      case PILE_ID_DOWN_PILE_D:
+        setDownPileDiamonds(pile);
+        break;
+
+      case PILE_ID_DOWN_PILE_C:
+        setDownPileClubs(pile);
         break;
 
       default:
@@ -264,6 +344,23 @@ export const GameStateContextProvider = ({ children }) => {
     setPlayPile1([]);
     setPlayPile2([]);
     setPlayPile3([]);
+    setPlayPile4([]);
+    setPlayPile5([]);
+    setPlayPile6([]);
+    setPlayPile7([]);
+    setPlayPile8([]);
+    setPlayPile9([]);
+    setPlayPile10([]);
+    setPlayPile11([]);
+    setPlayPile12([]);
+    setUpPileSpades([]);
+    setUpPileHearts([]);
+    setUpPileDiamonds([]);
+    setUpPileClubs([]);
+    setDownPileSpades([]);
+    setDownPileHearts([]);
+    setDownPileDiamonds([]);
+    setDownPileClubs([]);
   };
 
   // move a card from pile1 to pile 2
@@ -490,6 +587,14 @@ export const GameStateContextProvider = ({ children }) => {
     playPile10,
     playPile11,
     playPile12,
+    upPileSpades,
+    upPileHearts,
+    upPileDiamonds,
+    upPileClubs,
+    downPileSpades,
+    downPileHearts,
+    downPileDiamonds,
+    downPileClubs,
 
     // the actions
     actions,
@@ -523,6 +628,14 @@ export const GameStateContextProvider = ({ children }) => {
     playPile10,
     playPile11,
     playPile12,
+    upPileSpades,
+    upPileHearts,
+    upPileDiamonds,
+    upPileClubs,
+    downPileSpades,
+    downPileHearts,
+    downPileDiamonds,
+    downPileClubs,
     actions,
     currentMoveAction,
     gamePlaying,
