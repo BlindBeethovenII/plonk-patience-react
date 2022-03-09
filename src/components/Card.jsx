@@ -81,7 +81,7 @@ const Card = (props) => {
   };
 
   const onAnimationStart = () => {
-    // console.log(`onAnimationStart card ${cardNumberToString(number)} ${suit} on pile ${pileId}`);
+    console.log(`onAnimationStart card ${cardNumberToString(number)} ${suit} on pile ${pileId} undercard=${underCard} (${prevCol},${prevRow}) (${col},${row})`);
     // only move the z-index to 1, if we are not the under-card
     // the reason for this, is that every card animates, even if it is already in position and has nowhere to go
     if (!underCard) {
@@ -90,13 +90,44 @@ const Card = (props) => {
   };
 
   const onAnimationComplete = () => {
-    // console.log(`onAnimationComplete card ${cardNumberToString(number)} ${suit} on pile ${pileId}`);
+    console.log(`onAnimationComplete card ${cardNumberToString(number)} ${suit} on pile undercard=${underCard} ${pileId} (${prevCol},${prevRow}) (${col},${row})`);
     setZIndex(0);
     cardAnimationComplete(pileId);
   };
 
   // duration of animation is based on the deal speed percentage - using reverse percentage - so slider to right is faster
   const duration = (2 * (100 - dealSpeedPercentage)) / 100;
+
+  // the inside of the motion.div or div is the same regardless of if we animate the card into position
+  const cardblank = <img src={CardBlankImage} alt="cardblank" style={cardbasestyle} />;
+  const cardnumber = (
+    <div style={cardnumberstyle}>
+      <svg width="60px" height="40px">
+        <text x="10" y="30" fill={cardSuitToFillColour(suit)}>
+          {cardNumberToString(number)}
+        </text>
+      </svg>
+    </div>
+  );
+  const cardsuit = <img src={cardSuitToImage(suit)} alt="cardsuit" style={cardsuitstyle} />;
+
+  // we don't need to animate if we are already in place
+  if (prevCol === col && prevRow === row) {
+    const inPlaceDivStyle = {
+      position: 'absolute',
+      zIndex: 0,
+      left,
+      top,
+    };
+
+    return (
+      <div style={inPlaceDivStyle}>
+        {cardblank}
+        {cardnumber}
+        {cardsuit}
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -108,15 +139,9 @@ const Card = (props) => {
       onAnimationComplete={onAnimationComplete}
       onAnimationStart={onAnimationStart}
     >
-      <img src={CardBlankImage} alt="cardblank" style={cardbasestyle} />
-      <div style={cardnumberstyle}>
-        <svg width="60px" height="40px">
-          <text x="10" y="30" fill={cardSuitToFillColour(suit)}>
-            {cardNumberToString(number)}
-          </text>
-        </svg>
-      </div>
-      <img src={cardSuitToImage(suit)} alt="cardsuit" style={cardsuitstyle} />
+      {cardblank}
+      {cardnumber}
+      {cardsuit}
     </motion.div>
   );
 };
