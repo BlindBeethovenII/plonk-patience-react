@@ -569,6 +569,11 @@ export const GameStateContextProvider = ({ children }) => {
     performNextAction(newActions);
   }, [dealPile, actions, performNextAction]);
 
+  // click on a card
+  const clickOnCard = (col, row) => {
+    console.log(`onClick for ${col} ${row} called`);
+  };
+
   // expose our state and state functions via the context
   // we are encouraged to do this via a useMemo now
   const context = useMemo(() => ({
@@ -613,6 +618,7 @@ export const GameStateContextProvider = ({ children }) => {
     performNextAction,
     cardAnimationComplete,
     dealCards,
+    clickOnCard,
   }), [
     dealPile,
     plonkPile,

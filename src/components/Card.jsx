@@ -19,7 +19,7 @@ import { SUIT_CLUBS, SUIT_SPADES, PLAYAREA_X_OFFSET } from '../shared/constants'
 import GameStateContext from '../contexts/GameStateContext';
 
 const Card = (props) => {
-  const { cardAnimationComplete, dealSpeedPercentage } = useContext(GameStateContext);
+  const { dealSpeedPercentage, cardAnimationComplete, clickOnCard } = useContext(GameStateContext);
 
   // we manage our own zIndex while we are moving
   const [zIndex, setZIndex] = useState(0);
@@ -121,7 +121,14 @@ const Card = (props) => {
     };
 
     return (
-      <div id={id} style={inPlaceDivStyle}>
+      // eslint-disable-next-line jsx-a11y/interactive-supports-focus
+      <div
+        id={id}
+        style={inPlaceDivStyle}
+        role="button"
+        onClick={() => clickOnCard(col, row)}
+        onKeyDown={() => clickOnCard(col, row)}
+      >
         {cardblank}
         {cardnumber}
         {cardsuit}
@@ -138,6 +145,9 @@ const Card = (props) => {
       transition={{ duration }}
       onAnimationComplete={onAnimationComplete}
       onAnimationStart={onAnimationStart}
+      role="button"
+      onClick={() => clickOnCard(col, row)}
+      onKeyDown={() => clickOnCard(col, row)}
     >
       {cardblank}
       {cardnumber}
