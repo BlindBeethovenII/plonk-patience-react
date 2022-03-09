@@ -570,9 +570,9 @@ export const GameStateContextProvider = ({ children }) => {
   }, [dealPile, actions, performNextAction]);
 
   // click on a card
-  const clickOnCard = (col, row) => {
-    console.log(`onClick for ${col} ${row} called`);
-  };
+  const clickOnCard = useCallback((col, row) => {
+    console.log(`onClick for ${col} ${row} called - deal pile empty = ${dealPile?.length === 0}`);
+  }, [dealPile]);
 
   // expose our state and state functions via the context
   // we are encouraged to do this via a useMemo now
@@ -650,6 +650,7 @@ export const GameStateContextProvider = ({ children }) => {
     performNextAction,
     cardAnimationComplete,
     dealCards,
+    clickOnCard,
   ]);
 
   return <GameStateContext.Provider value={context}>{children}</GameStateContext.Provider>;

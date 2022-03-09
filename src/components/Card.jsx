@@ -21,8 +21,8 @@ import GameStateContext from '../contexts/GameStateContext';
 const Card = (props) => {
   const { dealSpeedPercentage, cardAnimationComplete, clickOnCard } = useContext(GameStateContext);
 
-  // we manage our own zIndex while we are moving
-  const [zIndex, setZIndex] = useState(0);
+  // we need to know if we are animating - both for the zIndex, and for card clicking
+  const [isAnimating, setIsAnimating] = useState(false);
 
   // we are given the card and the col/row it is to be shown at
   const {
@@ -83,16 +83,22 @@ const Card = (props) => {
     // console.log(`onAnimationStart card ${cardNumberToString(number)} ${suit} on pile ${pileId} (${prevCol},${prevRow}) (${col},${row})`);
 
     // we are moving - so make sure we are on top of all the 'at rest' cards
-    setZIndex(1);
+    setIsAnimating(1);
   };
 
   const onAnimationComplete = () => {
     // console.log(`onAnimationComplete card ${cardNumberToString(number)} ${suit} on pile ${pileId} (${prevCol},${prevRow}) (${col},${row})`);
 
     // we have arrived, so go back to 'at rest'
-    setZIndex(0);
+    setIsAnimating(false);
 
     cardAnimationComplete(pileId);
+  };
+
+  const cardClicked = () => {
+    if (!isAnimating) {
+      clickOnCard(col, row);
+    }
   };
 
   // duration of animation is based on the deal speed percentage - using reverse percentage - so slider to right is faster
@@ -126,8 +132,8 @@ const Card = (props) => {
         id={id}
         style={inPlaceDivStyle}
         role="button"
-        onClick={() => clickOnCard(col, row)}
-        onKeyDown={() => clickOnCard(col, row)}
+        onClick={cardClicked}
+        onKeyDown={cardClicked}
       >
         {cardblank}
         {cardnumber}
@@ -135,6 +141,9 @@ const Card = (props) => {
       </div>
     );
   }
+
+  // if we are animating, use a zIndex of 1, so we are on top of all other cards
+  const zIndex = isAnimating ? 1 : 0;
 
   return (
     <motion.div
@@ -146,8 +155,8 @@ const Card = (props) => {
       onAnimationComplete={onAnimationComplete}
       onAnimationStart={onAnimationStart}
       role="button"
-      onClick={() => clickOnCard(col, row)}
-      onKeyDown={() => clickOnCard(col, row)}
+      onClick={cardClicked}
+      onKeyDown={cardClicked}
     >
       {cardblank}
       {cardnumber}
