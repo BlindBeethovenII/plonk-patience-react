@@ -30,11 +30,11 @@ const Pile = (props) => {
 
   const card2 = cards[1];
   if (card2) {
-    componentsToShow.push(<Card key={card2.id} pileId={pileId} card={card2} faceUp={faceUp} col={col} row={row} underCard />);
+    componentsToShow.push(<Card key={card2.id} pileId={pileId} card={card2} faceUp={faceUp} col={col} row={row} />);
   }
 
   // and now the top card
-  componentsToShow.push(<Card key={card.id} pileId={pileId} card={card} faceUp={faceUp} col={col} row={row} underCard={false} />);
+  componentsToShow.push(<Card key={card.id} pileId={pileId} card={card} faceUp={faceUp} col={col} row={row} />);
 
   if (isDebugMode) {
     componentsToShow.push(<CountLabel key={`count_label_${card.id}`} count={cards.length} col={col} row={row} />);

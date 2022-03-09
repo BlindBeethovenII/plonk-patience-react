@@ -30,7 +30,6 @@ const Card = (props) => {
     card,
     col,
     row,
-    underCard,
   } = props;
 
   // there are the card details - including where it was showing before
@@ -81,17 +80,18 @@ const Card = (props) => {
   };
 
   const onAnimationStart = () => {
-    console.log(`onAnimationStart card ${cardNumberToString(number)} ${suit} on pile ${pileId} undercard=${underCard} (${prevCol},${prevRow}) (${col},${row})`);
-    // only move the z-index to 1, if we are not the under-card
-    // the reason for this, is that every card animates, even if it is already in position and has nowhere to go
-    if (!underCard) {
-      setZIndex(1);
-    }
+    // console.log(`onAnimationStart card ${cardNumberToString(number)} ${suit} on pile ${pileId} (${prevCol},${prevRow}) (${col},${row})`);
+
+    // we are moving - so make sure we are on top of all the 'at rest' cards
+    setZIndex(1);
   };
 
   const onAnimationComplete = () => {
-    console.log(`onAnimationComplete card ${cardNumberToString(number)} ${suit} on pile undercard=${underCard} ${pileId} (${prevCol},${prevRow}) (${col},${row})`);
+    // console.log(`onAnimationComplete card ${cardNumberToString(number)} ${suit} on pile ${pileId} (${prevCol},${prevRow}) (${col},${row})`);
+
+    // we have arrived, so go back to 'at rest'
     setZIndex(0);
+
     cardAnimationComplete(pileId);
   };
 
@@ -121,7 +121,7 @@ const Card = (props) => {
     };
 
     return (
-      <div style={inPlaceDivStyle}>
+      <div id={id} style={inPlaceDivStyle}>
         {cardblank}
         {cardnumber}
         {cardsuit}
@@ -158,7 +158,6 @@ Card.propTypes = {
   // faceUp: PropTypes.bool.isRequired,
   col: PropTypes.number.isRequired,
   row: PropTypes.number.isRequired,
-  underCard: PropTypes.bool.isRequired, // true if this card is the 2nd card, the under-card, which is been shown as the top card could still is be moving onto the pile
 };
 
 export default Card;
