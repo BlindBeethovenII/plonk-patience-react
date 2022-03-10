@@ -106,7 +106,7 @@ const Pile = (props) => {
 
   const card2 = cards[1];
   if (card2) {
-    componentsToShow.push(<Card key={card2.id} pileId={pileId} card={card2} faceUp={faceUp} col={col} row={row} />);
+    componentsToShow.push(<Card key={card2.id} pileId={pileId} card={card2} faceUp={faceUp} col={col} row={row} underCard />);
   }
 
   // and now the top card

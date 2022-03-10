@@ -553,9 +553,24 @@ export const GameStateContextProvider = ({ children }) => {
     // and because setCurrentAction(null) here will not be effected before performNextAction() is called anyway - we don't setCurrentAction(null) now
     // setCurrentAction(null);
 
+    // the top card of this pile is now considered at this col/row
+    // get the pile
+    const { pile, col, row } = getPileWithInfo(pileId);
+
+    // there should be at least one card in this pile by here - but checking anyway
+    if (!pile?.length) {
+      console.error(`cardAnimationComplete: ${pileId} is empty but it should have at least one card in it`);
+      return;
+    }
+
+    // danger: going to update in situ - let's see what happens
+    const topCard = pile[0];
+    topCard.prevCol = col;
+    topCard.prevRow = row;
+
     // perform the next action
     performNextAction(actions);
-  }, [currentMoveAction, performNextAction, actions]);
+  }, [currentMoveAction, performNextAction, actions, getPileWithInfo]);
 
   // deal the cards
   const dealCards = useCallback(() => {

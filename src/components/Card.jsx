@@ -19,17 +19,13 @@ import { SUIT_CLUBS, SUIT_SPADES, PLAYAREA_X_OFFSET } from '../shared/constants'
 import GameStateContext from '../contexts/GameStateContext';
 
 const Card = (props) => {
-  const { animationSpeedPercentage, cardAnimationComplete, clickOnCard } = useContext(GameStateContext);
-
-  // we need to know if we are animating - both for the zIndex, and for card clicking
-  const [isAnimating, setIsAnimating] = useState(false);
-
   // we are given the card and the col/row it is to be shown at
   const {
     pileId,
     card,
     col,
     row,
+    underCard,
   } = props;
 
   // there are the card details - including where it was showing before
@@ -40,6 +36,11 @@ const Card = (props) => {
     prevCol,
     prevRow,
   } = card;
+
+  const { animationSpeedPercentage, cardAnimationComplete, clickOnCard } = useContext(GameStateContext);
+
+  // we need to know if we are animating - both for the zIndex, and for card clicking
+  const [isAnimating, setIsAnimating] = useState(false);
 
   // convert the cols and rows into left/top
   const left = col2Left(col) + PLAYAREA_X_OFFSET;
@@ -117,8 +118,8 @@ const Card = (props) => {
   );
   const cardsuit = <img src={cardSuitToImage(suit)} alt="cardsuit" style={cardsuitstyle} />;
 
-  // we don't need to animate if we are already in place
-  if (prevCol === col && prevRow === row) {
+  // we don't need to animate if we are already in place, or we are the undercard
+  if ((prevCol === col && prevRow === row) || underCard) {
     const inPlaceDivStyle = {
       position: 'absolute',
       zIndex: 0,
@@ -177,6 +178,11 @@ Card.propTypes = {
   // faceUp: PropTypes.bool.isRequired,
   col: PropTypes.number.isRequired,
   row: PropTypes.number.isRequired,
+  underCard: PropTypes.bool,
+};
+
+Card.defaultProps = {
+  underCard: false,
 };
 
 export default Card;
