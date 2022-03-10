@@ -41,6 +41,10 @@ import {
   NUMBER_J,
   NUMBER_Q,
   NUMBER_K,
+  SUIT_CLUBS,
+  SUIT_DIAMONDS,
+  SUIT_HEARTS,
+  // SUIT_SPADES,
 } from '../shared/constants';
 
 const GameStateContext = React.createContext({});
@@ -86,8 +90,8 @@ export const GameStateContextProvider = ({ children }) => {
   // if the game is playing
   const [gamePlaying, setGamePlaying] = useState(false);
 
-  // the deal speed percentage
-  const [dealSpeedPercentage, setDealSpeedPercentage] = React.useState(50);
+  // the animation speed percentage
+  const [animationSpeedPercentage, setAnimationSpeedPercentage] = React.useState(50);
 
   // convert a pile constant to the actual pile, with its col/row info
   const getPileWithInfo = useCallback((pileId) => {
@@ -337,6 +341,14 @@ export const GameStateContextProvider = ({ children }) => {
     return false;
   };
 
+  // helper function (might move it to card-functions later)
+  const suitToUpPileId = (suit) => {
+    if (suit === SUIT_CLUBS) return PILE_ID_UP_PILE_C;
+    if (suit === SUIT_DIAMONDS) return PILE_ID_UP_PILE_D;
+    if (suit === SUIT_HEARTS) return PILE_ID_UP_PILE_H;
+    return PILE_ID_UP_PILE_S;
+  };
+
   // reset the cards to the starting position
   const resetCards = () => {
     setDealPile(createShuffledDeck());
@@ -455,14 +467,14 @@ export const GameStateContextProvider = ({ children }) => {
           break;
 
         default:
-          console.error(`incrementNextDealPileId cannot cope with pileId ${nextDealPileId}`);
+          console.error(`incrementNextDealPileId: cannot cope with pileId ${nextDealPileId}`);
           break;
       }
     };
 
     // protect ourselves for when there are no actions left to perform
     if (!theActions?.length) {
-      console.log('performNextAction there are no actions to perform');
+      console.log('performNextAction: there are no actions to perform');
       return;
     }
 
@@ -535,7 +547,7 @@ export const GameStateContextProvider = ({ children }) => {
     }
 
     // current MOVE_CARD action is complete
-    console.log(`cardAnimationComplete currentMoveAction ${JSON.stringify(currentMoveAction)} complete`);
+    console.log(`cardAnimationComplete: currentMoveAction ${JSON.stringify(currentMoveAction)} complete`);
 
     // because performNextAction no longer cares if there is a current action (as it can never be called when there is one)
     // and because setCurrentAction(null) here will not be effected before performNextAction() is called anyway - we don't setCurrentAction(null) now
@@ -570,9 +582,87 @@ export const GameStateContextProvider = ({ children }) => {
   }, [dealPile, actions, performNextAction]);
 
   // click on a card
-  const clickOnCard = useCallback((col, row) => {
-    console.log(`onClick for ${col} ${row} called - deal pile empty = ${dealPile?.length === 0}`);
-  }, [dealPile]);
+  const clickOnCard = useCallback((clickPileId) => {
+    console.log(`clickOnCard: called for pile ${clickPileId}`);
+
+    // if deal pile is not empty, then we are not allowed to click - just ignore
+    if (dealPile?.length) {
+      return;
+    }
+
+    // process the pile clicked on
+
+    if (clickPileId === PILE_ID_DEAL_PILE) {
+      // the deal pile can never be clicked on
+      return;
+    }
+
+    if (clickPileId === PILE_ID_PLONK_PILE) {
+      // TODO
+      console.log('clickOnCard: TODO code clicking on the plonk pile');
+      return;
+    }
+
+    if (clickPileId === PILE_ID_UP_PILE_S || clickPileId === PILE_ID_UP_PILE_H || clickPileId === PILE_ID_UP_PILE_D || clickPileId === PILE_ID_UP_PILE_C) {
+      // TODO
+      console.log('clickOnCard: TODO code clicking on an up pile');
+      return;
+    }
+
+    if (clickPileId === PILE_ID_DOWN_PILE_S || clickPileId === PILE_ID_DOWN_PILE_H || clickPileId === PILE_ID_DOWN_PILE_D || clickPileId === PILE_ID_DOWN_PILE_C) {
+      // TODO
+      console.log('clickOnCard: TODO code clicking on a down pile');
+      return;
+    }
+
+    // we must be one of the 12 piles by this point
+    const { pile: clickPile } = getPileWithInfo(clickPileId);
+
+    // there should be at least one card in this pile by here - but checking anyway
+    if (!clickPile?.length) {
+      console.error(`clickOnCard: ${clickPileId} is empty but it should have at least one card in it`);
+      return;
+    }
+
+    // get the top card from the click pile
+    const { suit: clickPileSuit, number: clickPileNumber } = clickPile[0];
+
+    console.log(`clickOnCard: clicked on ${clickPileNumber} ${clickPileSuit}`);
+
+    // first check the build up pile for this suit
+    const upPileId = suitToUpPileId(clickPileSuit);
+
+    // get that up pile
+    const { pile: upPile } = getPileWithInfo(upPileId);
+
+    // this holds our decision to move this card to the up pile
+    let cardIsForUpPile = false;
+
+    // the up pile might be empty, if so, we want to move the Ace
+    if (!upPile.length && clickPileNumber === NUMBER_A) {
+      cardIsForUpPile = true;
+    }
+
+    // if the up pile is not empty, then we can move the next card
+    if (upPile.length) {
+      // get the top card from the up pile
+      const { number: upPileNumber } = upPile[0];
+
+      if (clickPileNumber === upPileNumber + 1) {
+        cardIsForUpPile = true;
+      }
+    }
+
+    if (cardIsForUpPile) {
+      // yet, move this card onto the up pile
+      const newActions = [...actions];
+      newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: clickPileId, toPileId: upPileId });
+      performNextAction(newActions);
+      return;
+    }
+
+    console.log('clickOnCard: STILL MORE TODO');
+  }, [dealPile, getPileWithInfo, actions, performNextAction]);
 
   // expose our state and state functions via the context
   // we are encouraged to do this via a useMemo now
@@ -609,9 +699,9 @@ export const GameStateContextProvider = ({ children }) => {
     gamePlaying,
     isDebugMode: true,
 
-    // deal speed
-    dealSpeedPercentage,
-    setDealSpeedPercentage,
+    // the animation speed
+    animationSpeedPercentage,
+    setAnimationSpeedPercentage,
 
     // card functions
     resetCards,
@@ -645,8 +735,8 @@ export const GameStateContextProvider = ({ children }) => {
     actions,
     currentMoveAction,
     gamePlaying,
-    dealSpeedPercentage,
-    setDealSpeedPercentage,
+    animationSpeedPercentage,
+    setAnimationSpeedPercentage,
     performNextAction,
     cardAnimationComplete,
     dealCards,

@@ -19,7 +19,7 @@ import { SUIT_CLUBS, SUIT_SPADES, PLAYAREA_X_OFFSET } from '../shared/constants'
 import GameStateContext from '../contexts/GameStateContext';
 
 const Card = (props) => {
-  const { dealSpeedPercentage, cardAnimationComplete, clickOnCard } = useContext(GameStateContext);
+  const { animationSpeedPercentage, cardAnimationComplete, clickOnCard } = useContext(GameStateContext);
 
   // we need to know if we are animating - both for the zIndex, and for card clicking
   const [isAnimating, setIsAnimating] = useState(false);
@@ -97,12 +97,12 @@ const Card = (props) => {
 
   const cardClicked = () => {
     if (!isAnimating) {
-      clickOnCard(col, row);
+      clickOnCard(pileId);
     }
   };
 
   // duration of animation is based on the deal speed percentage - using reverse percentage - so slider to right is faster
-  const duration = (2 * (100 - dealSpeedPercentage)) / 100;
+  const duration = (2 * (100 - animationSpeedPercentage)) / 100;
 
   // the inside of the motion.div or div is the same regardless of if we animate the card into position
   const cardblank = <img src={CardBlankImage} alt="cardblank" style={cardbasestyle} />;

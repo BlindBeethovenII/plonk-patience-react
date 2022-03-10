@@ -133,21 +133,21 @@ const divstyle = {
 };
 
 const Slider = () => {
-  const { dealSpeedPercentage, setDealSpeedPercentage } = useContext(GameStateContext);
+  const { animationSpeedPercentage, setAnimationSpeedPercentage } = useContext(GameStateContext);
 
   return (
     <div style={divstyle}>
       <Input
-        onInput={(e) => setDealSpeedPercentage(e.target.value)}
+        onInput={(e) => setAnimationSpeedPercentage(e.target.value)}
         type="range"
         style={{
           width: '100%',
           '--min': 0,
           '--max': 100,
-          '--val': dealSpeedPercentage,
+          '--val': animationSpeedPercentage,
         }}
       />
-      Deal Speed
+      Animation Speed
     </div>
   );
 };
