@@ -517,11 +517,13 @@ export const GameStateContextProvider = ({ children }) => {
     // these will be our new actions
     const newActions = [...actions];
 
-    // add in a DEAL_CARD action for every card in the deal pile
+    // add in a DEAL_CARD action for every card in the deal pile, except the last one
     const nCards = dealPile.length;
-    for (let i = 0; i < nCards; i += 1) {
+    for (let i = 0; i < nCards - 1; i += 1) {
       newActions.push({ action: ACTION_DEAL_CARD });
     }
+    // the last deal card always goes to the plonk pile
+    newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLONK_PILE });
 
     // we are now playing the game
     setGamePlaying(true);
