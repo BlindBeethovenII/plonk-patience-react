@@ -3,6 +3,7 @@ import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { createShuffledDeck } from '../shared/card-functions';
+import { numberMatchesDealPile, suitToUpPileId, suitToDownPileId } from '../shared/pile-functions';
 import {
   ACTION_DEAL_CARD,
   ACTION_MOVE_CARD,
@@ -29,22 +30,7 @@ import {
   PILE_ID_DOWN_PILE_D,
   PILE_ID_DOWN_PILE_C,
   NUMBER_A,
-  NUMBER_2,
-  NUMBER_3,
-  NUMBER_4,
-  NUMBER_5,
-  NUMBER_6,
-  NUMBER_7,
-  NUMBER_8,
-  NUMBER_9,
-  NUMBER_10,
-  NUMBER_J,
-  NUMBER_Q,
   NUMBER_K,
-  SUIT_CLUBS,
-  SUIT_DIAMONDS,
-  SUIT_HEARTS,
-  // SUIT_SPADES,
 } from '../shared/constants';
 
 const GameStateContext = React.createContext({});
@@ -92,6 +78,9 @@ export const GameStateContextProvider = ({ children }) => {
 
   // the animation speed percentage
   const [animationSpeedPercentage, setAnimationSpeedPercentage] = React.useState(50);
+
+  // the piles to flash
+  const [pileFlashes, setPileFlashes] = useState([]);
 
   // convert a pile constant to the actual pile, with its col/row info
   const getPileWithInfo = useCallback((pileId) => {
@@ -287,76 +276,6 @@ export const GameStateContextProvider = ({ children }) => {
     }
   };
 
-  // helper function (might move it to card-functions later)
-  const numberMatchesDealPile = (n, pileId) => {
-    if ((n === NUMBER_A || n === NUMBER_2) && pileId === PILE_ID_PLAY_PILE_1) {
-      return true;
-    }
-
-    if (n === NUMBER_3 && pileId === PILE_ID_PLAY_PILE_2) {
-      return true;
-    }
-
-    if (n === NUMBER_4 && pileId === PILE_ID_PLAY_PILE_3) {
-      return true;
-    }
-
-    if (n === NUMBER_5 && pileId === PILE_ID_PLAY_PILE_4) {
-      return true;
-    }
-
-    if (n === NUMBER_6 && pileId === PILE_ID_PLAY_PILE_5) {
-      return true;
-    }
-
-    if (n === NUMBER_7 && pileId === PILE_ID_PLAY_PILE_6) {
-      return true;
-    }
-
-    if (n === NUMBER_8 && pileId === PILE_ID_PLAY_PILE_7) {
-      return true;
-    }
-
-    if (n === NUMBER_9 && pileId === PILE_ID_PLAY_PILE_8) {
-      return true;
-    }
-
-    if (n === NUMBER_10 && pileId === PILE_ID_PLAY_PILE_9) {
-      return true;
-    }
-
-    if (n === NUMBER_J && pileId === PILE_ID_PLAY_PILE_10) {
-      return true;
-    }
-
-    if (n === NUMBER_Q && pileId === PILE_ID_PLAY_PILE_11) {
-      return true;
-    }
-
-    if (n === NUMBER_K && pileId === PILE_ID_PLAY_PILE_12) {
-      return true;
-    }
-
-    // doesn't match
-    return false;
-  };
-
-  // helper function (might move it to card-functions later)
-  const suitToUpPileId = (suit) => {
-    if (suit === SUIT_CLUBS) return PILE_ID_UP_PILE_C;
-    if (suit === SUIT_DIAMONDS) return PILE_ID_UP_PILE_D;
-    if (suit === SUIT_HEARTS) return PILE_ID_UP_PILE_H;
-    return PILE_ID_UP_PILE_S;
-  };
-
-  // helper function (might move it to card-functions later)
-  const suitToDownPileId = (suit) => {
-    if (suit === SUIT_CLUBS) return PILE_ID_DOWN_PILE_C;
-    if (suit === SUIT_DIAMONDS) return PILE_ID_DOWN_PILE_D;
-    if (suit === SUIT_HEARTS) return PILE_ID_DOWN_PILE_H;
-    return PILE_ID_DOWN_PILE_S;
-  };
-
   // reset the cards to the starting position
   const resetCards = () => {
     setDealPile(createShuffledDeck());
@@ -381,6 +300,7 @@ export const GameStateContextProvider = ({ children }) => {
     setDownPileHearts([]);
     setDownPileDiamonds([]);
     setDownPileClubs([]);
+    setPileFlashes([]);
   };
 
   // move a card from pile1 to pile 2
@@ -580,6 +500,13 @@ export const GameStateContextProvider = ({ children }) => {
     performNextAction(actions);
   }, [currentMoveAction, performNextAction, actions, getPileWithInfo]);
 
+  // the pile flash animation has completed for the given pileId
+  const pileFlashAnimationComplete = useCallback((pileId) => {
+    // console.log(`pileFlashAnimationComplete: pile flash complete for ${pileId}`);
+    const newPileFlashes = pileFlashes.filter((pileFlashId) => pileFlashId !== pileId);
+    setPileFlashes(newPileFlashes);
+  }, [pileFlashes]);
+
   // deal the cards
   const dealCards = useCallback(() => {
     // this only makes sense if we have cards to deal
@@ -716,8 +643,12 @@ export const GameStateContextProvider = ({ children }) => {
       return;
     }
 
-    console.log('clickOnCard: STILL MORE TODO');
-  }, [dealPile, getPileWithInfo, actions, performNextAction]);
+    // cannot move the card clicked on - so flash it, for user feedback for the click
+    console.log(`clickOnCard: flashing pile ${clickPileId}`);
+    const newPileFlashes = [...pileFlashes];
+    newPileFlashes.push(clickPileId);
+    setPileFlashes(newPileFlashes);
+  }, [dealPile, getPileWithInfo, actions, performNextAction, pileFlashes]);
 
   // expose our state and state functions via the context
   // we are encouraged to do this via a useMemo now
@@ -758,10 +689,14 @@ export const GameStateContextProvider = ({ children }) => {
     animationSpeedPercentage,
     setAnimationSpeedPercentage,
 
+    // the flashing piles
+    pileFlashes,
+
     // card functions
     resetCards,
     performNextAction,
     cardAnimationComplete,
+    pileFlashAnimationComplete,
     dealCards,
     clickOnCard,
   }), [
@@ -792,8 +727,10 @@ export const GameStateContextProvider = ({ children }) => {
     gamePlaying,
     animationSpeedPercentage,
     setAnimationSpeedPercentage,
+    pileFlashes,
     performNextAction,
     cardAnimationComplete,
+    pileFlashAnimationComplete,
     dealCards,
     clickOnCard,
   ]);

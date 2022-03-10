@@ -5,11 +5,7 @@ import PropTypes from 'prop-types';
 import Card from './Card';
 import CountLabel from './CountLabel';
 
-import {
-  col2Left,
-  row2Top,
-  cardSuitToImage,
-} from '../shared/card-functions';
+import { colToLeft, rowToTop, cardSuitToImage } from '../shared/card-functions';
 
 import {
   PILE_ID_UP_PILE_S,
@@ -84,8 +80,8 @@ const Pile = (props) => {
       const shadowSuitDivStyle = {
         position: 'absolute',
         zIndex: 0,
-        left: col2Left(col) + PLAYAREA_X_OFFSET,
-        top: row2Top(row),
+        left: colToLeft(col) + PLAYAREA_X_OFFSET,
+        top: rowToTop(row),
       };
 
       return (

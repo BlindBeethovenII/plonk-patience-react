@@ -7,8 +7,8 @@ import { motion } from 'framer-motion';
 import CardBlankImage from '../images/cards/cardblank.png';
 
 import {
-  col2Left,
-  row2Top,
+  colToLeft,
+  rowToTop,
   cardNumberToString,
   cardSuitToImage,
   cardSuitToFillColour,
@@ -43,10 +43,10 @@ const Card = (props) => {
   const [isAnimating, setIsAnimating] = useState(false);
 
   // convert the cols and rows into left/top
-  const left = col2Left(col) + PLAYAREA_X_OFFSET;
-  const top = row2Top(row);
-  const prevLeft = col2Left(prevCol) + PLAYAREA_X_OFFSET;
-  const prevTop = row2Top(prevRow);
+  const left = colToLeft(col) + PLAYAREA_X_OFFSET;
+  const top = rowToTop(row);
+  const prevLeft = colToLeft(prevCol) + PLAYAREA_X_OFFSET;
+  const prevTop = rowToTop(prevRow);
 
   const cardbasestyle = {
     position: 'relative',

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
 
-import { col2Left, row2Top } from '../shared/card-functions';
+import { colToLeft, rowToTop } from '../shared/card-functions';
 import { PLAYAREA_X_OFFSET } from '../shared/constants';
 
 const Label = styled.h2`
@@ -24,8 +24,8 @@ const CountLabel = (props) => {
     row,
   } = props;
 
-  const left = col2Left(col) + PLAYAREA_X_OFFSET - 6;
-  const top = row2Top(row) + 16;
+  const left = colToLeft(col) + PLAYAREA_X_OFFSET - 6;
+  const top = rowToTop(row) + 16;
 
   const divstyle = {
     position: 'absolute',

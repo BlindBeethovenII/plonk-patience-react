@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
 
-import GameStateContext from '../contexts/GameStateContext';
-
 import {
   PILE_ID_DEAL_PILE,
   PILE_ID_PLONK_PILE,
@@ -28,6 +26,9 @@ import {
 } from '../shared/constants';
 
 import Pile from './Pile';
+import PileFlash from './PileFlash';
+
+import GameStateContext from '../contexts/GameStateContext';
 
 const Piles = () => {
   const {
@@ -53,6 +54,7 @@ const Piles = () => {
     downPileHearts,
     downPileDiamonds,
     downPileClubs,
+    pileFlashes,
   } = useContext(GameStateContext);
 
   // here are all the piles to show
@@ -85,6 +87,11 @@ const Piles = () => {
   pilesToShow.push(<Pile key="down_pile_h" pileId={PILE_ID_DOWN_PILE_H} cards={downPileHearts} faceUp col={4} row={1} />);
   pilesToShow.push(<Pile key="down_pile_d" pileId={PILE_ID_DOWN_PILE_D} cards={downPileDiamonds} faceUp col={4} row={2} />);
   pilesToShow.push(<Pile key="down_pile_c" pileId={PILE_ID_DOWN_PILE_C} cards={downPileClubs} faceUp col={4} row={3} />);
+
+  // and the flashing piles
+  pileFlashes.forEach((pileId) => {
+    pilesToShow.push(<PileFlash key={`pileflash_${pileId}`} pileId={pileId} />);
+  });
 
   return pilesToShow;
 };

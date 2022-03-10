@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
 
-import { col2Left, row2Top } from '../shared/card-functions';
+import { colToLeft, rowToTop } from '../shared/card-functions';
 
 import GameStateContext from '../contexts/GameStateContext';
 
@@ -120,8 +120,8 @@ const Input = styled.input`
   }
 `;
 
-const left = col2Left(0);
-const top = row2Top(4) + 36;
+const left = colToLeft(0);
+const top = rowToTop(4) + 36;
 
 const divstyle = {
   position: 'absolute',

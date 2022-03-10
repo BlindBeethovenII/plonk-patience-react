@@ -23,12 +23,12 @@ import CardSuitDiamondsImage from '../images/cards/diamonds.png';
 import CardSuitClubsImage from '../images/cards/clubs.png';
 
 // calc left based on given column
-export function col2Left(col) {
+export function colToLeft(col) {
   return 21 + col * CARD_WIDTH;
 }
 
 // calc top based on given row
-export function row2Top(row) {
+export function rowToTop(row) {
   return 20 + row * CARD_HEIGHT;
 }
 
