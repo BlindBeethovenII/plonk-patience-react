@@ -349,6 +349,14 @@ export const GameStateContextProvider = ({ children }) => {
     return PILE_ID_UP_PILE_S;
   };
 
+  // helper function (might move it to card-functions later)
+  const suitToDownPileId = (suit) => {
+    if (suit === SUIT_CLUBS) return PILE_ID_DOWN_PILE_C;
+    if (suit === SUIT_DIAMONDS) return PILE_ID_DOWN_PILE_D;
+    if (suit === SUIT_HEARTS) return PILE_ID_DOWN_PILE_H;
+    return PILE_ID_DOWN_PILE_S;
+  };
+
   // reset the cards to the starting position
   const resetCards = () => {
     setDealPile(createShuffledDeck());
@@ -650,7 +658,7 @@ export const GameStateContextProvider = ({ children }) => {
     // get that up pile
     const { pile: upPile } = getPileWithInfo(upPileId);
 
-    // this holds our decision to move this card to the up pile
+    // remember our decision to move this card to the up pile
     let cardIsForUpPile = false;
 
     // the up pile might be empty, if so, we want to move the Ace
@@ -658,7 +666,7 @@ export const GameStateContextProvider = ({ children }) => {
       cardIsForUpPile = true;
     }
 
-    // if the up pile is not empty, then we can move the next card
+    // if the up pile is not empty, then we can move the next card up
     if (upPile.length) {
       // get the top card from the up pile
       const { number: upPileNumber } = upPile[0];
@@ -669,9 +677,41 @@ export const GameStateContextProvider = ({ children }) => {
     }
 
     if (cardIsForUpPile) {
-      // yet, move this card onto the up pile
+      // yes, move this card onto the up pile
       const newActions = [...actions];
       newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: clickPileId, toPileId: upPileId });
+      performNextAction(newActions);
+      return;
+    }
+
+    // now do the same for the down pile for this suit
+    const downPileId = suitToDownPileId(clickPileSuit);
+
+    // get that down pile
+    const { pile: downPile } = getPileWithInfo(downPileId);
+
+    // remember our decision to move this card to the down pile
+    let cardIsForDownPile = false;
+
+    // the down pile might be empty, if so, we want to move the King
+    if (!downPile.length && clickPileNumber === NUMBER_K) {
+      cardIsForDownPile = true;
+    }
+
+    // if the down pile is not empty, then we can move the next card down
+    if (downPile.length) {
+      // get the top card from the down pile
+      const { number: downPileNumber } = downPile[0];
+
+      if (clickPileNumber === downPileNumber - 1) {
+        cardIsForDownPile = true;
+      }
+    }
+
+    if (cardIsForDownPile) {
+      // yes, move this card onto the up pile
+      const newActions = [...actions];
+      newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: clickPileId, toPileId: downPileId });
       performNextAction(newActions);
       return;
     }
