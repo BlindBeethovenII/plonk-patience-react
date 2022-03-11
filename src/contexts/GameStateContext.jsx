@@ -3,7 +3,12 @@ import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { createShuffledDeck } from '../shared/card-functions';
-import { numberMatchesDealPile, suitToUpPileId, suitToDownPileId } from '../shared/pile-functions';
+import {
+  numberMatchesDealPile,
+  numberToPlayPileId,
+  suitToUpPileId,
+  suitToDownPileId,
+} from '../shared/pile-functions';
 import {
   ACTION_DEAL_CARD,
   ACTION_MOVE_CARD,
@@ -113,7 +118,7 @@ export const GameStateContextProvider = ({ children }) => {
   const [pileFlashes, setPileFlashes] = useState([]);
 
   // the selected pile
-  const [selectedPileId, setSelectedPileId] = useState(PILE_ID_PLAY_PILE_1);
+  const [selectedPileId, setSelectedPileId] = useState(null);
 
   // convert a pile constant to the actual pile, with its col/row info
   const getPileWithInfo = useCallback((pileId) => {
@@ -706,8 +711,19 @@ export const GameStateContextProvider = ({ children }) => {
     }
 
     if (clickPileId === PILE_ID_PLONK_PILE) {
-      // TODO
-      console.log('clickOnCard: TODO code clicking on the plonk pile');
+      // should never be empty - but let's check anyway
+      if (!plonkPile?.length) {
+        console.error(`clickOnCard: ${clickPileId} is empty but it should have at least one card in it`);
+        return;
+      }
+
+      // get the top card from the plonk pile, and convert to play pile id
+      const { number: plonkPileNumber } = plonkPile[0];
+      const playPileId = numberToPlayPileId(plonkPileNumber);
+      console.log(`clickOnCard: clicked on ${plonkPileNumber} on plonk pile so selected pile is ${playPileId}`);
+      setSelectedPileId(playPileId);
+
+      // create the actions to move the top plonk card and all the selected pile's cards to the sort piles
       return;
     }
 
@@ -806,7 +822,7 @@ export const GameStateContextProvider = ({ children }) => {
     const newPileFlashes = [...pileFlashes];
     newPileFlashes.push(clickPileId);
     setPileFlashes(newPileFlashes);
-  }, [dealPile, getPileWithInfo, actions, performNextAction, pileFlashes]);
+  }, [dealPile, getPileWithInfo, actions, performNextAction, pileFlashes, plonkPile]);
 
   // expose our state and state functions via the context
   // we are encouraged to do this via a useMemo now

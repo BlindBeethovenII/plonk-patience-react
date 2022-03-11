@@ -109,6 +109,61 @@ export const numberMatchesDealPile = (n, pileId) => {
   return false;
 };
 
+// convert a card number to the corresponding play pile id
+export const numberToPlayPileId = (n) => {
+  if (n === NUMBER_A || n === NUMBER_2) {
+    return PILE_ID_PLAY_PILE_1;
+  }
+
+  if (n === NUMBER_3) {
+    return PILE_ID_PLAY_PILE_2;
+  }
+
+  if (n === NUMBER_4) {
+    return PILE_ID_PLAY_PILE_3;
+  }
+
+  if (n === NUMBER_5) {
+    return PILE_ID_PLAY_PILE_4;
+  }
+
+  if (n === NUMBER_6) {
+    return PILE_ID_PLAY_PILE_5;
+  }
+
+  if (n === NUMBER_7) {
+    return PILE_ID_PLAY_PILE_6;
+  }
+
+  if (n === NUMBER_8) {
+    return PILE_ID_PLAY_PILE_7;
+  }
+
+  if (n === NUMBER_9) {
+    return PILE_ID_PLAY_PILE_8;
+  }
+
+  if (n === NUMBER_10) {
+    return PILE_ID_PLAY_PILE_9;
+  }
+
+  if (n === NUMBER_J) {
+    return PILE_ID_PLAY_PILE_10;
+  }
+
+  if (n === NUMBER_Q) {
+    return PILE_ID_PLAY_PILE_11;
+  }
+
+  if (n === NUMBER_K) {
+    return PILE_ID_PLAY_PILE_12;
+  }
+
+  // shouldn't get here
+  console.error(`numberToPlayPileId cannot cope with card number ${n}`);
+  return null;
+};
+
 // return the up pile id for the given suit
 export const suitToUpPileId = (suit) => {
   if (suit === SUIT_CLUBS) return PILE_ID_UP_PILE_C;
