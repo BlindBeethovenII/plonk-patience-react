@@ -51,7 +51,7 @@ const PileFlash = (props) => {
       animate={{
         opacity: [1, 0, 1, 0],
       }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.4 }}
       onAnimationStart={onAnimationStart}
       onAnimationComplete={onAnimationComplete}
     >

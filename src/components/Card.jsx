@@ -14,6 +14,8 @@ import {
   cardSuitToFillColour,
 } from '../shared/card-functions';
 
+import { pileIdToColRow } from '../shared/pile-functions';
+
 import { SUIT_CLUBS, SUIT_SPADES, PLAYAREA_X_OFFSET } from '../shared/constants';
 
 import GameStateContext from '../contexts/GameStateContext';
@@ -23,8 +25,6 @@ const Card = (props) => {
   const {
     pileId,
     card,
-    col,
-    row,
     underCard,
   } = props;
 
@@ -41,6 +41,9 @@ const Card = (props) => {
 
   // we need to know if we are animating - both for the zIndex, and for card clicking
   const [isAnimating, setIsAnimating] = useState(false);
+
+  // look up our col/row
+  const { col, row } = pileIdToColRow(pileId);
 
   // convert the cols and rows into left/top
   const left = colToLeft(col) + PLAYAREA_X_OFFSET;
@@ -176,8 +179,6 @@ Card.propTypes = {
     prevRow: PropTypes.number.isRequired,
   }).isRequired,
   // faceUp: PropTypes.bool.isRequired,
-  col: PropTypes.number.isRequired,
-  row: PropTypes.number.isRequired,
   underCard: PropTypes.bool,
 };
 

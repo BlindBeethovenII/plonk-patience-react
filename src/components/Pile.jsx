@@ -6,6 +6,7 @@ import Card from './Card';
 import CountLabel from './CountLabel';
 
 import { colToLeft, rowToTop, cardSuitToImage } from '../shared/card-functions';
+import { pileIdToColRow } from '../shared/pile-functions';
 
 import {
   PILE_ID_UP_PILE_S,
@@ -30,11 +31,12 @@ const Pile = (props) => {
     pileId,
     cards,
     faceUp,
-    col,
-    row,
   } = props;
 
   const { isDebugMode } = useContext(GameStateContext);
+
+  // look up our col/row
+  const { col, row } = pileIdToColRow(pileId);
 
   if (!cards?.length) {
     // if there are no cards - if we are a up pile or a down pile, then show our suit
@@ -102,11 +104,11 @@ const Pile = (props) => {
 
   const card2 = cards[1];
   if (card2) {
-    componentsToShow.push(<Card key={card2.id} pileId={pileId} card={card2} faceUp={faceUp} col={col} row={row} underCard />);
+    componentsToShow.push(<Card key={card2.id} pileId={pileId} card={card2} faceUp={faceUp} underCard />);
   }
 
   // and now the top card
-  componentsToShow.push(<Card key={card.id} pileId={pileId} card={card} faceUp={faceUp} col={col} row={row} />);
+  componentsToShow.push(<Card key={card.id} pileId={pileId} card={card} faceUp={faceUp} />);
 
   if (isDebugMode) {
     componentsToShow.push(<CountLabel key={`count_label_${card.id}`} count={cards.length} col={col} row={row} />);
@@ -124,8 +126,6 @@ Pile.propTypes = {
     number: PropTypes.number.isRequired,
   })).isRequired,
   faceUp: PropTypes.bool.isRequired,
-  col: PropTypes.number.isRequired,
-  row: PropTypes.number.isRequired,
 };
 
 export default Pile;
