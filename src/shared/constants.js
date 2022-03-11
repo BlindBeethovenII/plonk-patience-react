@@ -85,3 +85,5 @@ export const PILE_ID_SORT_PILE_8 = 'SORT_PILE_8';
 export const PILE_ID_SORT_PILE_9 = 'SORT_PILE_9';
 export const PILE_ID_SORT_PILE_10 = 'SORT_PILE_10';
 export const PILE_ID_SORT_PILE_11 = 'SORT_PILE_11';
+export const PILE_ID_SORT_PILE_12 = 'SORT_PILE_12';
+export const PILE_ID_SORT_PILE_13 = 'SORT_PILE_13';
