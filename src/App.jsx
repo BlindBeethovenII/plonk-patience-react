@@ -6,6 +6,7 @@ import Piles from './components/Piles';
 import DealButton from './components/DealButton';
 import DebugButton from './components/DebugButton';
 import Slider from './components/Slider';
+import SelectedPileFlash from './components/SelectedPileFlash';
 
 // import MainMenuModal from './components/MainMenuModal';
 
@@ -16,6 +17,7 @@ const App = () => (
     <PlayArea />
     <GitInfo />
     <Piles />
+    <SelectedPileFlash />
     <DealButton />
     <Slider />
     <DebugButton />

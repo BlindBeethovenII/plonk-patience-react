@@ -109,8 +109,11 @@ export const GameStateContextProvider = ({ children }) => {
   // the animation speed percentage
   const [animationSpeedPercentage, setAnimationSpeedPercentage] = React.useState(50);
 
-  // the piles to flash
+  // the piles to flash (we only flash one for now)
   const [pileFlashes, setPileFlashes] = useState([]);
+
+  // the selected pile
+  const [selectedPileId, setSelectedPileId] = useState(PILE_ID_PLAY_PILE_1);
 
   // convert a pile constant to the actual pile, with its col/row info
   const getPileWithInfo = useCallback((pileId) => {
@@ -448,6 +451,11 @@ export const GameStateContextProvider = ({ children }) => {
     setSortPile11([]);
     setSortPile12([]);
     setSortPile13([]);
+    setActions([]);
+    setCurrentMoveAction(null);
+    setNextDealPileId(PILE_ID_PLONK_PILE);
+    setPileFlashes([]);
+    setSelectedPileId(null);
   };
 
   // move a card from pile1 to pile 2
@@ -855,6 +863,9 @@ export const GameStateContextProvider = ({ children }) => {
     // the flashing piles
     pileFlashes,
 
+    // the selected pile
+    selectedPileId,
+
     // card functions
     resetCards,
     performNextAction,
@@ -904,6 +915,7 @@ export const GameStateContextProvider = ({ children }) => {
     animationSpeedPercentage,
     setAnimationSpeedPercentage,
     pileFlashes,
+    selectedPileId,
     performNextAction,
     cardAnimationComplete,
     pileFlashAnimationComplete,
