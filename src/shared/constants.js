@@ -47,6 +47,7 @@ export const DEAL_COL = 0;
 export const DEAL_ROW = 4;
 
 export const PLAYAREA_X_OFFSET = 278;
+export const ROW5_Y_OFFSET = 18;
 
 export const ACTION_DEAL_CARD = 'DEAL_CARD';
 export const ACTION_MOVE_CARD = 'MOVE_CARD';

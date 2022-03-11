@@ -24,7 +24,7 @@ const bordertop = {
   position: 'absolute',
   top: '4px',
   left: '14px',
-  width: '894px',
+  width: '904px',
   height: '10px',
 };
 
@@ -46,26 +46,26 @@ const borderbottom = {
   position: 'absolute',
   top: '616px',
   left: '14px',
-  width: '894px',
+  width: '904px',
   height: '10px',
 };
 
 const bordertopright = {
   position: 'absolute',
   top: '4px',
-  left: '908px',
+  left: '918px',
 };
 
 const borderbottomright = {
   position: 'absolute',
   top: '616px',
-  left: '908px',
+  left: '918px',
 };
 
 const borderright = {
   position: 'absolute',
   top: '14px',
-  left: '908px',
+  left: '918px',
   width: '10px',
   height: '602px',
 };
@@ -74,12 +74,12 @@ const playbackgroundsvg = {
   position: 'absolute',
   top: '4px',
   left: '8px',
-  width: '940px',
+  width: '950px',
   height: '622px',
 };
 
 const playbackgroundrect = {
-  width: '910px',
+  width: '920px',
   height: '622px',
   fill: 'rgb(85,107,47)',
 };
