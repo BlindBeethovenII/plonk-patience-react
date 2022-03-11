@@ -5,6 +5,7 @@ import shuffle from 'lodash.shuffle';
 import {
   CARD_WIDTH,
   CARD_HEIGHT,
+  ROW5_Y_OFFSET,
   SUITS,
   NUMBERS,
   NUMBER_A,
@@ -27,9 +28,9 @@ export function colToLeft(col) {
   return 21 + col * CARD_WIDTH;
 }
 
-// calc top based on given row
+// calc top based on given row - adjusting for row 5
 export function rowToTop(row) {
-  return 20 + row * CARD_HEIGHT;
+  return 20 + (row * CARD_HEIGHT) + (row >= 5 ? ROW5_Y_OFFSET : 0);
 }
 
 export const cardNumberToString = (number) => {

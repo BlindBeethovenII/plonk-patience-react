@@ -711,6 +711,8 @@ export const GameStateContextProvider = ({ children }) => {
     }
 
     if (clickPileId === PILE_ID_PLONK_PILE) {
+      // TODO - if there is a selected pile - then need to put it back here
+
       // should never be empty - but let's check anyway
       if (!plonkPile?.length) {
         console.error(`clickOnCard: ${clickPileId} is empty but it should have at least one card in it`);
@@ -723,7 +725,72 @@ export const GameStateContextProvider = ({ children }) => {
       console.log(`clickOnCard: clicked on ${plonkPileNumber} on plonk pile so selected pile is ${playPileId}`);
       setSelectedPileId(playPileId);
 
-      // create the actions to move the top plonk card and all the selected pile's cards to the sort piles
+      // create and perform the actions to move the top plonk card and all the selected pile's cards to the sort piles
+      const newActions = [...actions];
+      newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_PLONK_PILE, toPileId: PILE_ID_SORT_PILE_13 });
+
+      let nextSortPileId = PILE_ID_SORT_PILE_12;
+
+      // move to next sort pile (we move from right to left)
+      const moveToNextSortPileId = () => {
+        switch (nextSortPileId) {
+          case PILE_ID_SORT_PILE_12:
+            nextSortPileId = PILE_ID_SORT_PILE_11;
+            break;
+
+          case PILE_ID_SORT_PILE_11:
+            nextSortPileId = PILE_ID_SORT_PILE_10;
+            break;
+
+          case PILE_ID_SORT_PILE_10:
+            nextSortPileId = PILE_ID_SORT_PILE_9;
+            break;
+
+          case PILE_ID_SORT_PILE_9:
+            nextSortPileId = PILE_ID_SORT_PILE_8;
+            break;
+
+          case PILE_ID_SORT_PILE_8:
+            nextSortPileId = PILE_ID_SORT_PILE_7;
+            break;
+
+          case PILE_ID_SORT_PILE_7:
+            nextSortPileId = PILE_ID_SORT_PILE_6;
+            break;
+
+          case PILE_ID_SORT_PILE_6:
+            nextSortPileId = PILE_ID_SORT_PILE_5;
+            break;
+
+          case PILE_ID_SORT_PILE_5:
+            nextSortPileId = PILE_ID_SORT_PILE_4;
+            break;
+
+          case PILE_ID_SORT_PILE_4:
+            nextSortPileId = PILE_ID_SORT_PILE_3;
+            break;
+
+          case PILE_ID_SORT_PILE_3:
+            nextSortPileId = PILE_ID_SORT_PILE_2;
+            break;
+
+          case PILE_ID_SORT_PILE_2:
+            nextSortPileId = PILE_ID_SORT_PILE_1;
+            break;
+
+          default:
+            console.error(`moveToNextSortPileId: cannot cope with ${nextSortPileId}`);
+            break;
+        }
+      };
+
+      const { pile: playPile } = getPileWithInfo(playPileId);
+      playPile.forEach(() => {
+        newActions.push({ action: ACTION_MOVE_CARD, fromPileId: playPileId, toPileId: nextSortPileId });
+        moveToNextSortPileId();
+      });
+
+      performNextAction(newActions);
       return;
     }
 
