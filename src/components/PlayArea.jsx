@@ -108,6 +108,19 @@ const PlayArea = () => (
       ROW_INDEXES.map((row) => <BlankSpace key={`blankspace_${col}_${row}`} col={col} row={row} />))}
     <BlankSpace key="blankspace_0_4" col={0} row={4} />
     <BlankSpace key="blankspace_4_4" col={4} row={4} />
+    <BlankSpace key="blankspace_-4_5" col={-4} row={5} />
+    <BlankSpace key="blankspace_-3_5" col={-3} row={5} />
+    <BlankSpace key="blankspace_-2_5" col={-2} row={5} />
+    <BlankSpace key="blankspace_-1_5" col={-1} row={5} />
+    <BlankSpace key="blankspace_0_5" col={0} row={5} />
+    <BlankSpace key="blankspace_1_5" col={1} row={5} />
+    <BlankSpace key="blankspace_2_5" col={2} row={5} />
+    <BlankSpace key="blankspace_3_5" col={3} row={5} />
+    <BlankSpace key="blankspace_4_5" col={4} row={5} />
+    <BlankSpace key="blankspace_5_5" col={5} row={5} />
+    <BlankSpace key="blankspace_6_5" col={6} row={5} />
+    <BlankSpace key="blankspace_7_5" col={7} row={5} />
+    <BlankSpace key="blankspace_8_5" col={8} row={5} />
   </div>
 );
 

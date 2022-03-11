@@ -29,6 +29,17 @@ import {
   PILE_ID_DOWN_PILE_H,
   PILE_ID_DOWN_PILE_D,
   PILE_ID_DOWN_PILE_C,
+  PILE_ID_SORT_PILE_1,
+  PILE_ID_SORT_PILE_2,
+  PILE_ID_SORT_PILE_3,
+  PILE_ID_SORT_PILE_4,
+  PILE_ID_SORT_PILE_5,
+  PILE_ID_SORT_PILE_6,
+  PILE_ID_SORT_PILE_7,
+  PILE_ID_SORT_PILE_8,
+  PILE_ID_SORT_PILE_9,
+  PILE_ID_SORT_PILE_10,
+  PILE_ID_SORT_PILE_11,
   NUMBER_A,
   NUMBER_K,
 } from '../shared/constants';
@@ -42,7 +53,7 @@ export const GameStateContextProvider = ({ children }) => {
   // the plonk pile starts empty
   const [plonkPile, setPlonkPile] = useState([]);
 
-  // the play piles also start empty - so we have an array of 12 empty arrays
+  // the play piles also start empty
   const [playPile1, setPlayPile1] = useState([]);
   const [playPile2, setPlayPile2] = useState([]);
   const [playPile3, setPlayPile3] = useState([]);
@@ -55,6 +66,8 @@ export const GameStateContextProvider = ({ children }) => {
   const [playPile10, setPlayPile10] = useState([]);
   const [playPile11, setPlayPile11] = useState([]);
   const [playPile12, setPlayPile12] = useState([]);
+
+  // the up and down piles also start empty
   const [upPileSpades, setUpPileSpades] = useState([]);
   const [upPileHearts, setUpPileHearts] = useState([]);
   const [upPileDiamonds, setUpPileDiamonds] = useState([]);
@@ -63,6 +76,19 @@ export const GameStateContextProvider = ({ children }) => {
   const [downPileHearts, setDownPileHearts] = useState([]);
   const [downPileDiamonds, setDownPileDiamonds] = useState([]);
   const [downPileClubs, setDownPileClubs] = useState([]);
+
+  // the sort piles also start empty
+  const [sortPile1, setSortPile1] = useState([]);
+  const [sortPile2, setSortPile2] = useState([]);
+  const [sortPile3, setSortPile3] = useState([]);
+  const [sortPile4, setSortPile4] = useState([]);
+  const [sortPile5, setSortPile5] = useState([]);
+  const [sortPile6, setSortPile6] = useState([]);
+  const [sortPile7, setSortPile7] = useState([]);
+  const [sortPile8, setSortPile8] = useState([]);
+  const [sortPile9, setSortPile9] = useState([]);
+  const [sortPile10, setSortPile10] = useState([]);
+  const [sortPile11, setSortPile11] = useState([]);
 
   // the actions to be done when the current animation stops
   const [actions, setActions] = useState([]);
@@ -151,6 +177,39 @@ export const GameStateContextProvider = ({ children }) => {
       case PILE_ID_DOWN_PILE_C:
         return { pile: downPileClubs, col: 4, row: 3 };
 
+      case PILE_ID_SORT_PILE_1:
+        return { pile: sortPile1, col: -3, row: 5 };
+
+      case PILE_ID_SORT_PILE_2:
+        return { pile: sortPile2, col: -2, row: 5 };
+
+      case PILE_ID_SORT_PILE_3:
+        return { pile: sortPile3, col: -1, row: 5 };
+
+      case PILE_ID_SORT_PILE_4:
+        return { pile: sortPile4, col: 0, row: 5 };
+
+      case PILE_ID_SORT_PILE_5:
+        return { pile: sortPile5, col: 1, row: 5 };
+
+      case PILE_ID_SORT_PILE_6:
+        return { pile: sortPile6, col: 2, row: 5 };
+
+      case PILE_ID_SORT_PILE_7:
+        return { pile: sortPile7, col: 3, row: 5 };
+
+      case PILE_ID_SORT_PILE_8:
+        return { pile: sortPile8, col: 4, row: 5 };
+
+      case PILE_ID_SORT_PILE_9:
+        return { pile: sortPile9, col: 5, row: 5 };
+
+      case PILE_ID_SORT_PILE_10:
+        return { pile: sortPile10, col: 6, row: 5 };
+
+      case PILE_ID_SORT_PILE_11:
+        return { pile: sortPile11, col: 7, row: 5 };
+
       default:
         return null;
     }
@@ -177,6 +236,17 @@ export const GameStateContextProvider = ({ children }) => {
     downPileHearts,
     downPileDiamonds,
     downPileClubs,
+    sortPile1,
+    sortPile2,
+    sortPile3,
+    sortPile4,
+    sortPile5,
+    sortPile6,
+    sortPile7,
+    sortPile8,
+    sortPile9,
+    sortPile10,
+    sortPile11,
   ]);
 
   // set the given pile
@@ -270,6 +340,50 @@ export const GameStateContextProvider = ({ children }) => {
         setDownPileClubs(pile);
         break;
 
+      case PILE_ID_SORT_PILE_1:
+        setSortPile1(pile);
+        break;
+
+      case PILE_ID_SORT_PILE_2:
+        setSortPile2(pile);
+        break;
+
+      case PILE_ID_SORT_PILE_3:
+        setSortPile3(pile);
+        break;
+
+      case PILE_ID_SORT_PILE_4:
+        setSortPile4(pile);
+        break;
+
+      case PILE_ID_SORT_PILE_5:
+        setSortPile5(pile);
+        break;
+
+      case PILE_ID_SORT_PILE_6:
+        setSortPile6(pile);
+        break;
+
+      case PILE_ID_SORT_PILE_7:
+        setSortPile7(pile);
+        break;
+
+      case PILE_ID_SORT_PILE_8:
+        setSortPile8(pile);
+        break;
+
+      case PILE_ID_SORT_PILE_9:
+        setSortPile9(pile);
+        break;
+
+      case PILE_ID_SORT_PILE_10:
+        setSortPile10(pile);
+        break;
+
+      case PILE_ID_SORT_PILE_11:
+        setSortPile11(pile);
+        break;
+
       default:
         console.error(`setPile cannot cope with pileId ${pileId}`);
         break;
@@ -301,6 +415,17 @@ export const GameStateContextProvider = ({ children }) => {
     setDownPileDiamonds([]);
     setDownPileClubs([]);
     setPileFlashes([]);
+    setSortPile1([]);
+    setSortPile2([]);
+    setSortPile3([]);
+    setSortPile4([]);
+    setSortPile5([]);
+    setSortPile6([]);
+    setSortPile7([]);
+    setSortPile8([]);
+    setSortPile9([]);
+    setSortPile10([]);
+    setSortPile11([]);
   };
 
   // move a card from pile1 to pile 2
@@ -491,7 +616,7 @@ export const GameStateContextProvider = ({ children }) => {
       return;
     }
 
-    // danger: going to update in situ - let's see what happens
+    // danger: going to update in situ - is okay - as that card is already at that position anyway
     const topCard = pile[0];
     topCard.prevCol = col;
     topCard.prevRow = row;
@@ -503,6 +628,7 @@ export const GameStateContextProvider = ({ children }) => {
   // the pile flash animation has completed for the given pileId
   const pileFlashAnimationComplete = useCallback((pileId) => {
     // console.log(`pileFlashAnimationComplete: pile flash complete for ${pileId}`);
+    // remove this one from the piles that are flashing
     const newPileFlashes = pileFlashes.filter((pileFlashId) => pileFlashId !== pileId);
     setPileFlashes(newPileFlashes);
   }, [pileFlashes]);
@@ -678,6 +804,17 @@ export const GameStateContextProvider = ({ children }) => {
     downPileHearts,
     downPileDiamonds,
     downPileClubs,
+    sortPile1,
+    sortPile2,
+    sortPile3,
+    sortPile4,
+    sortPile5,
+    sortPile6,
+    sortPile7,
+    sortPile8,
+    sortPile9,
+    sortPile10,
+    sortPile11,
 
     // the actions
     actions,
@@ -724,6 +861,17 @@ export const GameStateContextProvider = ({ children }) => {
     downPileHearts,
     downPileDiamonds,
     downPileClubs,
+    sortPile1,
+    sortPile2,
+    sortPile3,
+    sortPile4,
+    sortPile5,
+    sortPile6,
+    sortPile7,
+    sortPile8,
+    sortPile9,
+    sortPile10,
+    sortPile11,
     actions,
     currentMoveAction,
     gamePlaying,
