@@ -8,10 +8,12 @@ import {
   numberToPlayPileId,
   suitToUpPileId,
   suitToDownPileId,
+  isSortPileId,
 } from '../shared/pile-functions';
 import {
   ACTION_DEAL_CARD,
   ACTION_MOVE_CARD,
+  ACTION_REALIGN_RIGHT_SORT,
   PILE_ID_DEAL_PILE,
   PILE_ID_PLONK_PILE,
   PILE_ID_PLAY_PILE_1,
@@ -568,14 +570,20 @@ export const GameStateContextProvider = ({ children }) => {
 
     // okay - we have at least one next action - so do it
     // take the top action
-    const newActions = [...theActions];
+    let newActions = [...theActions];
 
     // we need to continue processing the actions until we have actually started to move a card
     let cardMoving = false;
 
     while (!cardMoving) {
+      // below could result in empty newActions - so check here
+      if (!newActions.length) {
+        break;
+      }
+
       // get and process the next action
       const nextAction = newActions.shift();
+      console.log(`performNextAction: processing nextAction ${JSON.stringify(nextAction)}`);
       const { action } = nextAction;
       if (action === ACTION_DEAL_CARD) {
         // this action is to deal the current top card from the deal pile to the nextDealPileId pile
@@ -609,6 +617,83 @@ export const GameStateContextProvider = ({ children }) => {
         // remember we are moving this card
         setCurrentMoveAction(nextAction);
         cardMoving = true;
+      } else if (action === ACTION_REALIGN_RIGHT_SORT) {
+        // a card has just moved out of the right of the sort piles, so we need to realign that
+        // this algorithm assumes there is only one empty pile - which is the one named in the action
+        // we convert this to the required MOVE_CARD actions
+        const moveActions = [];
+        let { nowEmptySortPileId } = nextAction;
+        while (nowEmptySortPileId) {
+          // while we have an empty sort pile id to fill - fill if the next to the left has content
+          let addedAction = false;
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_13 && sortPile12.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_12, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_12;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_12 && sortPile11.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_11, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_11;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_11 && sortPile10.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_10, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_10;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_10 && sortPile9.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_9, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_9;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_9 && sortPile8.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_8, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_8;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_8 && sortPile7.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_7, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_7;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_7 && sortPile6.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_6, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_6;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_6 && sortPile5.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_5, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_5;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_5 && sortPile4.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_4, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_4;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_4 && sortPile3.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_3, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_3;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_3 && sortPile2.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_2, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_2;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_2 && sortPile1.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_1, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = null;
+            addedAction = true;
+          }
+          // if didn't add an action from this time round, then stop the loop
+          if (!addedAction) {
+            nowEmptySortPileId = null;
+          }
+        }
+        // put these new move actions to the front of the newsactions
+        newActions = [...moveActions, ...newActions];
+        console.log(`performNextAction: newActions new ${JSON.stringify(newActions)}`);
       } else {
         console.error(`performNextAction unknown action ${action}`);
       }
@@ -616,7 +701,23 @@ export const GameStateContextProvider = ({ children }) => {
 
     // remember the new actions
     setActions(newActions);
-  }, [moveCard, nextDealPileId, dealPile]);
+  }, [
+    moveCard,
+    nextDealPileId,
+    dealPile,
+    sortPile1,
+    sortPile2,
+    sortPile3,
+    sortPile4,
+    sortPile5,
+    sortPile6,
+    sortPile7,
+    sortPile8,
+    sortPile9,
+    sortPile10,
+    sortPile11,
+    sortPile12,
+  ]);
 
   // the animation has completed for a card - if this card is the current MOVE_CARD action to pileId then that action is complete, so perform the next action (if there is one)
   const cardAnimationComplete = useCallback((pileId) => {
@@ -910,6 +1011,10 @@ export const GameStateContextProvider = ({ children }) => {
     if (cardIsForUpPile) {
       // yes, move this card onto the up pile
       const newActions = [...actions];
+      // and realign sort pile on the right, if this was from a sort pile
+      if (isSortPileId(clickPileId)) {
+        newActions.unshift({ action: ACTION_REALIGN_RIGHT_SORT, nowEmptySortPileId: clickPileId });
+      }
       newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: clickPileId, toPileId: upPileId });
       performNextAction(newActions);
       return;
@@ -942,26 +1047,17 @@ export const GameStateContextProvider = ({ children }) => {
     if (cardIsForDownPile) {
       // yes, move this card onto the up pile
       const newActions = [...actions];
+      // and realign sort pile on the right, if this was from a sort pile
+      if (isSortPileId(clickPileId)) {
+        newActions.unshift({ action: ACTION_REALIGN_RIGHT_SORT, nowEmptySortPileId: clickPileId });
+      }
       newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: clickPileId, toPileId: downPileId });
       performNextAction(newActions);
       return;
     }
 
     // if click is for a sort pile, and it wasn't for a build up or a build down pile, then we are sorting
-    if (clickPileId === PILE_ID_SORT_PILE_1
-      || clickPileId === PILE_ID_SORT_PILE_2
-      || clickPileId === PILE_ID_SORT_PILE_3
-      || clickPileId === PILE_ID_SORT_PILE_4
-      || clickPileId === PILE_ID_SORT_PILE_5
-      || clickPileId === PILE_ID_SORT_PILE_6
-      || clickPileId === PILE_ID_SORT_PILE_7
-      || clickPileId === PILE_ID_SORT_PILE_8
-      || clickPileId === PILE_ID_SORT_PILE_9
-      || clickPileId === PILE_ID_SORT_PILE_10
-      || clickPileId === PILE_ID_SORT_PILE_11
-      || clickPileId === PILE_ID_SORT_PILE_12
-      || clickPileId === PILE_ID_SORT_PILE_13
-    ) {
+    if (isSortPileId(clickPileId)) {
       // see if there is an empty sort pile to the left, if there is move to there
       // best algorithm is to decide how many sort piles to check, based on clickPilId, then have one lot of code to check for empties
       let nLeftToCheck = 0;
@@ -1051,8 +1147,9 @@ export const GameStateContextProvider = ({ children }) => {
       }
 
       if (leftEmptySortPileId) {
-        // yes, move this card to that sort pile
+        // yes, move this card to that sort pile, and fill the gap
         const newActions = [...actions];
+        newActions.unshift({ action: ACTION_REALIGN_RIGHT_SORT, nowEmptySortPileId: clickPileId });
         newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: clickPileId, toPileId: leftEmptySortPileId });
         performNextAction(newActions);
         return;

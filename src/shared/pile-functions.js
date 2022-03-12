@@ -292,3 +292,20 @@ export const pileIdToColRow = (pileId) => {
       return null;
   }
 };
+
+// is the pile id a sort pile?
+export const isSortPileId = (pileId) => (
+  pileId === PILE_ID_SORT_PILE_1
+  || pileId === PILE_ID_SORT_PILE_2
+  || pileId === PILE_ID_SORT_PILE_3
+  || pileId === PILE_ID_SORT_PILE_4
+  || pileId === PILE_ID_SORT_PILE_5
+  || pileId === PILE_ID_SORT_PILE_6
+  || pileId === PILE_ID_SORT_PILE_7
+  || pileId === PILE_ID_SORT_PILE_8
+  || pileId === PILE_ID_SORT_PILE_9
+  || pileId === PILE_ID_SORT_PILE_10
+  || pileId === PILE_ID_SORT_PILE_11
+  || pileId === PILE_ID_SORT_PILE_12
+  || pileId === PILE_ID_SORT_PILE_13
+);
