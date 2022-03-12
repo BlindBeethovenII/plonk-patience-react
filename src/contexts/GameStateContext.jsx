@@ -14,6 +14,7 @@ import {
   ACTION_DEAL_CARD,
   ACTION_MOVE_CARD,
   ACTION_REALIGN_RIGHT_SORT,
+  ACTION_REALIGN_LEFT_SORT,
   PILE_ID_DEAL_PILE,
   PILE_ID_PLONK_PILE,
   PILE_ID_PLAY_PILE_1,
@@ -688,6 +689,83 @@ export const GameStateContextProvider = ({ children }) => {
           }
           // if didn't add an action from this time round, then stop the loop
           if (!addedAction) {
+            nowEmptySortPileId = null; // need to stop here - at the end of the list
+          }
+        }
+        // put these new move actions to the front of the newsactions
+        newActions = [...moveActions, ...newActions];
+        console.log(`performNextAction: newActions new ${JSON.stringify(newActions)}`);
+      } else if (action === ACTION_REALIGN_LEFT_SORT) {
+        // a card has just moved out of the left of the sort piles, so we need to realign that
+        // this algorithm assumes there is only one empty pile - which is the one named in the action
+        // we convert this to the required MOVE_CARD actions
+        const moveActions = [];
+        let { nowEmptySortPileId } = nextAction;
+        while (nowEmptySortPileId) {
+          // while we have an empty sort pile id to fill - fill if the next to the left has content
+          let addedAction = false;
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_1 && sortPile2.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_2, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_2;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_2 && sortPile3.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_3, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_3;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_3 && sortPile4.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_4, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_4;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_4 && sortPile5.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_5, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_5;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_5 && sortPile6.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_6, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_6;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_6 && sortPile7.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_7, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_7;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_7 && sortPile8.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_8, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_8;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_8 && sortPile9.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_9, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_9;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_9 && sortPile10.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_10, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_10;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_10 && sortPile11.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_11, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_11;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_11 && sortPile12.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_12, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = PILE_ID_SORT_PILE_12;
+            addedAction = true;
+          }
+          if (nowEmptySortPileId === PILE_ID_SORT_PILE_12 && sortPile13.length) {
+            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_13, toPileId: nowEmptySortPileId });
+            nowEmptySortPileId = null; // need to stop here - at the end of the list
+            addedAction = true;
+          }
+          // if didn't add an action from this time round, then stop the loop
+          if (!addedAction) {
             nowEmptySortPileId = null;
           }
         }
@@ -717,6 +795,7 @@ export const GameStateContextProvider = ({ children }) => {
     sortPile10,
     sortPile11,
     sortPile12,
+    sortPile13,
   ]);
 
   // the animation has completed for a card - if this card is the current MOVE_CARD action to pileId then that action is complete, so perform the next action (if there is one)
@@ -803,6 +882,134 @@ export const GameStateContextProvider = ({ children }) => {
     if (dealPile?.length) {
       return;
     }
+
+    // helper function to return true if the given pile id is in the occupied right sort piles
+    const pileIdInRightSortPiles = (pileId) => {
+      if (pileId === PILE_ID_SORT_PILE_13 && sortPile13.length) {
+        return true;
+      }
+
+      if (pileId === PILE_ID_SORT_PILE_12 && sortPile12.length && sortPile13.length) {
+        return true;
+      }
+
+      if (pileId === PILE_ID_SORT_PILE_11 && sortPile11.length && sortPile12.length && sortPile13.length) {
+        return true;
+      }
+
+      if (pileId === PILE_ID_SORT_PILE_10 && sortPile10.length && sortPile11.length && sortPile12.length && sortPile13.length) {
+        return true;
+      }
+
+      if (pileId === PILE_ID_SORT_PILE_9 && sortPile9.length && sortPile10.length && sortPile11.length && sortPile12.length && sortPile13.length) {
+        return true;
+      }
+
+      if (pileId === PILE_ID_SORT_PILE_8 && sortPile8.length && sortPile9.length && sortPile10.length && sortPile11.length && sortPile12.length && sortPile13.length) {
+        return true;
+      }
+
+      if (pileId === PILE_ID_SORT_PILE_7
+        && sortPile7.length
+        && sortPile8.length
+        && sortPile9.length
+        && sortPile10.length
+        && sortPile11.length
+        && sortPile12.length
+        && sortPile13.length) {
+        return true;
+      }
+
+      if (pileId === PILE_ID_SORT_PILE_6
+        && sortPile6.length
+        && sortPile7.length
+        && sortPile8.length
+        && sortPile9.length
+        && sortPile10.length
+        && sortPile11.length
+        && sortPile12.length
+        && sortPile13.length) {
+        return true;
+      }
+
+      if (pileId === PILE_ID_SORT_PILE_5
+        && sortPile5.length
+        && sortPile6.length
+        && sortPile7.length
+        && sortPile8.length
+        && sortPile9.length
+        && sortPile10.length
+        && sortPile11.length
+        && sortPile12.length
+        && sortPile13.length) {
+        return true;
+      }
+
+      if (pileId === PILE_ID_SORT_PILE_4
+        && sortPile4.length
+        && sortPile5.length
+        && sortPile6.length
+        && sortPile7.length
+        && sortPile8.length
+        && sortPile9.length
+        && sortPile10.length
+        && sortPile11.length
+        && sortPile12.length
+        && sortPile13.length) {
+        return true;
+      }
+
+      if (pileId === PILE_ID_SORT_PILE_3
+        && sortPile3.length
+        && sortPile4.length
+        && sortPile5.length
+        && sortPile6.length
+        && sortPile7.length
+        && sortPile8.length
+        && sortPile9.length
+        && sortPile10.length
+        && sortPile11.length
+        && sortPile12.length
+        && sortPile13.length) {
+        return true;
+      }
+
+      if (pileId === PILE_ID_SORT_PILE_2
+        && sortPile2.length
+        && sortPile3.length
+        && sortPile4.length
+        && sortPile5.length
+        && sortPile6.length
+        && sortPile7.length
+        && sortPile8.length
+        && sortPile9.length
+        && sortPile10.length
+        && sortPile11.length
+        && sortPile12.length
+        && sortPile13.length) {
+        return true;
+      }
+
+      if (pileId === PILE_ID_SORT_PILE_1
+        && sortPile1.length
+        && sortPile2.length
+        && sortPile3.length
+        && sortPile4.length
+        && sortPile5.length
+        && sortPile6.length
+        && sortPile7.length
+        && sortPile8.length
+        && sortPile9.length
+        && sortPile10.length
+        && sortPile11.length
+        && sortPile12.length
+        && sortPile13.length) {
+        return true;
+      }
+
+      // nope, not in right sort piles
+      return false;
+    };
 
     // process the pile clicked on
 
@@ -1011,9 +1218,16 @@ export const GameStateContextProvider = ({ children }) => {
     if (cardIsForUpPile) {
       // yes, move this card onto the up pile
       const newActions = [...actions];
-      // and realign sort pile on the right, if this was from a sort pile
+      // and realign sort pile if this was from a sort pile
       if (isSortPileId(clickPileId)) {
-        newActions.unshift({ action: ACTION_REALIGN_RIGHT_SORT, nowEmptySortPileId: clickPileId });
+        // this could be a realign on the left or the right - need to decide which
+        if (pileIdInRightSortPiles(clickPileId)) {
+          // this is from the right sort piles
+          newActions.unshift({ action: ACTION_REALIGN_RIGHT_SORT, nowEmptySortPileId: clickPileId });
+        } else {
+          // this is from the left sort piles
+          newActions.unshift({ action: ACTION_REALIGN_LEFT_SORT, nowEmptySortPileId: clickPileId });
+        }
       }
       newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: clickPileId, toPileId: upPileId });
       performNextAction(newActions);
@@ -1047,9 +1261,16 @@ export const GameStateContextProvider = ({ children }) => {
     if (cardIsForDownPile) {
       // yes, move this card onto the up pile
       const newActions = [...actions];
-      // and realign sort pile on the right, if this was from a sort pile
+      // and realign sort pile if this was from a sort pile
       if (isSortPileId(clickPileId)) {
-        newActions.unshift({ action: ACTION_REALIGN_RIGHT_SORT, nowEmptySortPileId: clickPileId });
+        // this could be a realign on the left or the right - need to decide which
+        if (pileIdInRightSortPiles(clickPileId)) {
+          // this is from the right sort piles
+          newActions.unshift({ action: ACTION_REALIGN_RIGHT_SORT, nowEmptySortPileId: clickPileId });
+        } else {
+          // this is from the left sort piles
+          newActions.unshift({ action: ACTION_REALIGN_LEFT_SORT, nowEmptySortPileId: clickPileId });
+        }
       }
       newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: clickPileId, toPileId: downPileId });
       performNextAction(newActions);

@@ -52,6 +52,7 @@ export const ROW5_Y_OFFSET = 18;
 export const ACTION_DEAL_CARD = 'DEAL_CARD';
 export const ACTION_MOVE_CARD = 'MOVE_CARD';
 export const ACTION_REALIGN_RIGHT_SORT = 'REALIGN_RIGHT_SORT';
+export const ACTION_REALIGN_LEFT_SORT = 'REALIGN_LEFT_SORT';
 
 export const PILE_ID_DEAL_PILE = 'DEAL_PILE';
 export const PILE_ID_PLONK_PILE = 'PLONK_PILE';
