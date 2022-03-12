@@ -6,7 +6,7 @@ import { colToLeft, rowToTop } from '../shared/card-functions';
 import gitLog from '../_generated_git_log';
 
 const left = colToLeft(0) + 6;
-const top = rowToTop(6) + 44;
+const top = rowToTop(6) + 24;
 
 const builtstyle = {
   position: 'absolute',

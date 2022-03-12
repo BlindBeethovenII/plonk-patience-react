@@ -869,7 +869,7 @@ export const GameStateContextProvider = ({ children }) => {
       return;
     }
 
-    // we must be one of the 12 piles by this point
+    // we must be on a play pile or a sort pile by this point
     const { pile: clickPile } = getPileWithInfo(clickPileId);
 
     // there should be at least one card in this pile by here - but checking anyway
