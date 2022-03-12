@@ -16,7 +16,13 @@ import {
 
 import { pileIdToColRow } from '../shared/pile-functions';
 
-import { SUIT_CLUBS, SUIT_SPADES, PLAYAREA_X_OFFSET } from '../shared/constants';
+import {
+  SUIT_SPADES,
+  SUIT_HEARTS,
+  SUIT_DIAMONDS,
+  SUIT_CLUBS,
+  PLAYAREA_X_OFFSET,
+} from '../shared/constants';
 
 import GameStateContext from '../contexts/GameStateContext';
 
@@ -26,6 +32,7 @@ const Card = (props) => {
     pileId,
     card,
     underCard,
+    faceUp,
   } = props;
 
   // there are the card details - including where it was showing before
@@ -83,6 +90,38 @@ const Card = (props) => {
     height,
   };
 
+  const smallcardsuitspadesstyle = {
+    position: 'absolute',
+    left: '2px',
+    top: '2px',
+    width: '20px',
+    height: '19px',
+  };
+
+  const smallcardsuitheartsstyle = {
+    position: 'absolute',
+    left: '40px',
+    top: '0px',
+    width: '20px',
+    height: '21px',
+  };
+
+  const smallcardsuitdiamondsstyle = {
+    position: 'absolute',
+    left: '2px',
+    top: '58px',
+    width: '20px',
+    height: '21px',
+  };
+
+  const smallcardsuitclubstyle = {
+    position: 'absolute',
+    left: '40px',
+    top: '58px',
+    width: '20px',
+    height: '20px',
+  };
+
   const onAnimationStart = () => {
     // console.log(`onAnimationStart card ${cardNumberToString(number)} ${suit} on pile ${pileId} (${prevCol},${prevRow}) (${col},${row})`);
 
@@ -121,6 +160,26 @@ const Card = (props) => {
   );
   const cardsuit = <img src={cardSuitToImage(suit)} alt="cardsuit" style={cardsuitstyle} />;
 
+  // showCard
+  const cardShowing = (
+    <>
+      {cardblank}
+      {cardnumber}
+      {cardsuit}
+    </>
+  );
+
+  // showCardBack
+  const cardBackShowing = (
+    <>
+      {cardblank}
+      <img src={cardSuitToImage(SUIT_SPADES)} alt="smallcardsuitspades" style={smallcardsuitspadesstyle} />
+      <img src={cardSuitToImage(SUIT_HEARTS)} alt="smallcardsuithearts" style={smallcardsuitheartsstyle} />
+      <img src={cardSuitToImage(SUIT_DIAMONDS)} alt="smallcardsuitdiamonds" style={smallcardsuitdiamondsstyle} />
+      <img src={cardSuitToImage(SUIT_CLUBS)} alt="smallcardsuitclubs" style={smallcardsuitclubstyle} />
+    </>
+  );
+
   // we don't need to animate if we are already in place, or we are the undercard
   if ((prevCol === col && prevRow === row) || underCard) {
     const inPlaceDivStyle = {
@@ -139,9 +198,7 @@ const Card = (props) => {
         onClick={cardClicked}
         onKeyDown={cardClicked}
       >
-        {cardblank}
-        {cardnumber}
-        {cardsuit}
+        {faceUp ? cardShowing : cardBackShowing}
       </div>
     );
   }
@@ -162,9 +219,7 @@ const Card = (props) => {
       onClick={cardClicked}
       onKeyDown={cardClicked}
     >
-      {cardblank}
-      {cardnumber}
-      {cardsuit}
+      {faceUp || isAnimating ? cardShowing : cardBackShowing}
     </motion.div>
   );
 };
@@ -178,7 +233,7 @@ Card.propTypes = {
     prevCol: PropTypes.number.isRequired,
     prevRow: PropTypes.number.isRequired,
   }).isRequired,
-  // faceUp: PropTypes.bool.isRequired,
+  faceUp: PropTypes.bool.isRequired,
   underCard: PropTypes.bool,
 };
 
