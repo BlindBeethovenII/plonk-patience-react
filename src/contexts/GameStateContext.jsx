@@ -947,6 +947,118 @@ export const GameStateContextProvider = ({ children }) => {
       return;
     }
 
+    // if click is for a sort pile, and it wasn't for a build up or a build down pile, then we are sorting
+    if (clickPileId === PILE_ID_SORT_PILE_1
+      || clickPileId === PILE_ID_SORT_PILE_2
+      || clickPileId === PILE_ID_SORT_PILE_3
+      || clickPileId === PILE_ID_SORT_PILE_4
+      || clickPileId === PILE_ID_SORT_PILE_5
+      || clickPileId === PILE_ID_SORT_PILE_6
+      || clickPileId === PILE_ID_SORT_PILE_7
+      || clickPileId === PILE_ID_SORT_PILE_8
+      || clickPileId === PILE_ID_SORT_PILE_9
+      || clickPileId === PILE_ID_SORT_PILE_10
+      || clickPileId === PILE_ID_SORT_PILE_11
+      || clickPileId === PILE_ID_SORT_PILE_12
+      || clickPileId === PILE_ID_SORT_PILE_13
+    ) {
+      // see if there is an empty sort pile to the left, if there is move to there
+      // best algorithm is to decide how many sort piles to check, based on clickPilId, then have one lot of code to check for empties
+      let nLeftToCheck = 0;
+      switch (clickPileId) {
+        case PILE_ID_SORT_PILE_1:
+          nLeftToCheck = 0;
+          break;
+
+        case PILE_ID_SORT_PILE_2:
+          nLeftToCheck = 1;
+          break;
+
+        case PILE_ID_SORT_PILE_3:
+          nLeftToCheck = 2;
+          break;
+
+        case PILE_ID_SORT_PILE_4:
+          nLeftToCheck = 3;
+          break;
+
+        case PILE_ID_SORT_PILE_5:
+          nLeftToCheck = 4;
+          break;
+
+        case PILE_ID_SORT_PILE_6:
+          nLeftToCheck = 5;
+          break;
+
+        case PILE_ID_SORT_PILE_7:
+          nLeftToCheck = 6;
+          break;
+
+        case PILE_ID_SORT_PILE_8:
+          nLeftToCheck = 7;
+          break;
+
+        case PILE_ID_SORT_PILE_9:
+          nLeftToCheck = 8;
+          break;
+
+        case PILE_ID_SORT_PILE_10:
+          nLeftToCheck = 9;
+          break;
+
+        case PILE_ID_SORT_PILE_11:
+          nLeftToCheck = 10;
+          break;
+
+        case PILE_ID_SORT_PILE_12:
+          nLeftToCheck = 11;
+          break;
+
+        case PILE_ID_SORT_PILE_13:
+          nLeftToCheck = 12;
+          break;
+
+        default:
+          nLeftToCheck = 0;
+          break;
+      }
+
+      let leftEmptySortPileId = null;
+      if (nLeftToCheck >= 1 && !sortPile1.length) {
+        leftEmptySortPileId = PILE_ID_SORT_PILE_1;
+      } else if (nLeftToCheck >= 2 && !sortPile2.length) {
+        leftEmptySortPileId = PILE_ID_SORT_PILE_2;
+      } else if (nLeftToCheck >= 3 && !sortPile3.length) {
+        leftEmptySortPileId = PILE_ID_SORT_PILE_3;
+      } else if (nLeftToCheck >= 4 && !sortPile4.length) {
+        leftEmptySortPileId = PILE_ID_SORT_PILE_4;
+      } else if (nLeftToCheck >= 5 && !sortPile5.length) {
+        leftEmptySortPileId = PILE_ID_SORT_PILE_5;
+      } else if (nLeftToCheck >= 6 && !sortPile6.length) {
+        leftEmptySortPileId = PILE_ID_SORT_PILE_6;
+      } else if (nLeftToCheck >= 7 && !sortPile7.length) {
+        leftEmptySortPileId = PILE_ID_SORT_PILE_7;
+      } else if (nLeftToCheck >= 8 && !sortPile8.length) {
+        leftEmptySortPileId = PILE_ID_SORT_PILE_8;
+      } else if (nLeftToCheck >= 9 && !sortPile9.length) {
+        leftEmptySortPileId = PILE_ID_SORT_PILE_9;
+      } else if (nLeftToCheck >= 10 && !sortPile10.length) {
+        leftEmptySortPileId = PILE_ID_SORT_PILE_10;
+      } else if (nLeftToCheck >= 11 && !sortPile11.length) {
+        leftEmptySortPileId = PILE_ID_SORT_PILE_11;
+      } else if (nLeftToCheck >= 12 && !sortPile12.length) {
+        leftEmptySortPileId = PILE_ID_SORT_PILE_12;
+      }
+
+      if (leftEmptySortPileId) {
+        // yes, move this card to that sort pile
+        const newActions = [...actions];
+        newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: clickPileId, toPileId: leftEmptySortPileId });
+        performNextAction(newActions);
+        return;
+      }
+    }
+
     // cannot move the card clicked on - so flash it, for user feedback for the click
     console.log(`clickOnCard: flashing pile ${clickPileId}`);
     const newPileFlashes = [...pileFlashes];
