@@ -711,22 +711,73 @@ export const GameStateContextProvider = ({ children }) => {
     }
 
     if (clickPileId === PILE_ID_PLONK_PILE) {
-      // TODO - if there is a selected pile - then need to put it back here
-
       // should never be empty - but let's check anyway
       if (!plonkPile?.length) {
         console.error(`clickOnCard: ${clickPileId} is empty but it should have at least one card in it`);
         return;
       }
 
+      // the actions for this click
+      const newActions = [];
+
+      // helper function to create the actions to put the selected pile back
+      const createActionsToPutSelectedPileBack = () => {
+        if (sortPile1.length) {
+          newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_1, toPileId: selectedPileId });
+        }
+        if (sortPile2.length) {
+          newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_2, toPileId: selectedPileId });
+        }
+        if (sortPile3.length) {
+          newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_3, toPileId: selectedPileId });
+        }
+        if (sortPile4.length) {
+          newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_4, toPileId: selectedPileId });
+        }
+        if (sortPile5.length) {
+          newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_5, toPileId: selectedPileId });
+        }
+        if (sortPile6.length) {
+          newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_6, toPileId: selectedPileId });
+        }
+        if (sortPile7.length) {
+          newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_7, toPileId: selectedPileId });
+        }
+        if (sortPile8.length) {
+          newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_8, toPileId: selectedPileId });
+        }
+        if (sortPile9.length) {
+          newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_9, toPileId: selectedPileId });
+        }
+        if (sortPile10.length) {
+          newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_10, toPileId: selectedPileId });
+        }
+        if (sortPile11.length) {
+          newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_11, toPileId: selectedPileId });
+        }
+        if (sortPile12.length) {
+          newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_12, toPileId: selectedPileId });
+        }
+        if (sortPile13.length) {
+          newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_13, toPileId: selectedPileId });
+        }
+      };
+
+      // if there is a selected pile then put it back here
+      if (selectedPileId) {
+        createActionsToPutSelectedPileBack();
+      }
+
       // get the top card from the plonk pile, and convert to play pile id
       const { number: plonkPileNumber } = plonkPile[0];
       const playPileId = numberToPlayPileId(plonkPileNumber);
       console.log(`clickOnCard: clicked on ${plonkPileNumber} on plonk pile so selected pile is ${playPileId}`);
+
+      // need to know if this is the same as the currently selected pile
+      const isSameSelectedPile = (playPileId === selectedPileId);
       setSelectedPileId(playPileId);
 
-      // create and perform the actions to move the top plonk card and all the selected pile's cards to the sort piles
-      const newActions = [...actions];
+      // move the top plonk card and all the selected pile's cards to the sort piles
       newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_PLONK_PILE, toPileId: PILE_ID_SORT_PILE_13 });
 
       let nextSortPileId = PILE_ID_SORT_PILE_12;
@@ -785,12 +836,24 @@ export const GameStateContextProvider = ({ children }) => {
       };
 
       const { pile: playPile } = getPileWithInfo(playPileId);
-      playPile.forEach(() => {
+
+      // if the new selected pile is the same as the previous pile then that pile will actually be empty
+      // so in that case the number of cards to move is the length of newActions - 1 (for the above action to move the plonk card, we've just created)
+      let nMoveActionsNeeded = 0;
+      if (isSameSelectedPile) {
+        nMoveActionsNeeded = newActions.length - 1;
+      } else {
+        nMoveActionsNeeded = playPile.length;
+      }
+
+      // now add that many moves
+      for (let n = 0; n < nMoveActionsNeeded; n += 1) {
         newActions.push({ action: ACTION_MOVE_CARD, fromPileId: playPileId, toPileId: nextSortPileId });
         moveToNextSortPileId();
-      });
+      }
 
-      performNextAction(newActions);
+      // perform the actions we've just set up - along with any we are still to do
+      performNextAction([...actions, ...newActions]);
       return;
     }
 
@@ -889,7 +952,28 @@ export const GameStateContextProvider = ({ children }) => {
     const newPileFlashes = [...pileFlashes];
     newPileFlashes.push(clickPileId);
     setPileFlashes(newPileFlashes);
-  }, [dealPile, getPileWithInfo, actions, performNextAction, pileFlashes, plonkPile]);
+  }, [
+    dealPile,
+    getPileWithInfo,
+    actions,
+    performNextAction,
+    pileFlashes,
+    plonkPile,
+    selectedPileId,
+    sortPile1,
+    sortPile2,
+    sortPile3,
+    sortPile4,
+    sortPile5,
+    sortPile6,
+    sortPile7,
+    sortPile8,
+    sortPile9,
+    sortPile10,
+    sortPile11,
+    sortPile12,
+    sortPile13,
+  ]);
 
   // expose our state and state functions via the context
   // we are encouraged to do this via a useMemo now

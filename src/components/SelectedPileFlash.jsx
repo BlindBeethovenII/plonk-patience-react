@@ -42,9 +42,9 @@ const SelectedPileFlash = () => {
       id={`selected_pile_flash_motion_${selectedPileId}`}
       style={motiondivstyle}
       animate={{
-        opacity: [1, 0],
+        opacity: [0.5, 0.1, 0.5],
       }}
-      transition={{ repeat: Infinity }}
+      transition={{ repeat: Infinity, duration: 1.5 }}
     >
       <img src={CardBlankImage} alt="cardblank" style={cardbasestyle} />
     </motion.div>
