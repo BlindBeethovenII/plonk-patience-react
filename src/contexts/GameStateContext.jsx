@@ -1166,14 +1166,106 @@ export const GameStateContextProvider = ({ children }) => {
     }
 
     if (clickPileId === PILE_ID_UP_PILE_S || clickPileId === PILE_ID_UP_PILE_H || clickPileId === PILE_ID_UP_PILE_D || clickPileId === PILE_ID_UP_PILE_C) {
-      // TODO
-      console.log('clickOnCard: TODO code clicking on an up pile');
+      // get that pile
+      const { pile: upPile } = getPileWithInfo(clickPileId);
+
+      // there should be at least one card in this pile by here - but checking anyway
+      if (!upPile?.length) {
+        console.error(`clickOnCard: ${clickPileId} is empty but it should have at least one card in it`);
+        return;
+      }
+
+      // get the top card from the clicked up pile
+      const { suit: upPileSuit, number: upPileNumber } = upPile[0];
+
+      // get the corresponding down pile
+      const downPileId = suitToDownPileId(upPileSuit);
+
+      // get that down pile
+      const { pile: downPile } = getPileWithInfo(downPileId);
+
+      // remember our decision to move this card to the down pile
+      let cardIsForDownPile = false;
+
+      // the down pile might be empty, if so, we want to move the King
+      if (!downPile.length && upPileNumber === NUMBER_K) {
+        cardIsForDownPile = true;
+      }
+
+      // if the down pile is not empty, then we can move the next card down
+      if (downPile.length) {
+        // get the top card from the down pile
+        const { number: downPileNumber } = downPile[0];
+
+        if (upPileNumber === downPileNumber - 1) {
+          cardIsForDownPile = true;
+        }
+      }
+
+      if (cardIsForDownPile) {
+        // yes, move this card onto the up pile
+        const newActions = [...actions];
+        newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: clickPileId, toPileId: downPileId });
+        performNextAction(newActions);
+      } else {
+        // cannot move the card clicked on - so flash it, for user feedback for the click
+        const newPileFlashes = [...pileFlashes];
+        newPileFlashes.push(clickPileId);
+        setPileFlashes(newPileFlashes);
+      }
+
       return;
     }
 
     if (clickPileId === PILE_ID_DOWN_PILE_S || clickPileId === PILE_ID_DOWN_PILE_H || clickPileId === PILE_ID_DOWN_PILE_D || clickPileId === PILE_ID_DOWN_PILE_C) {
-      // TODO
-      console.log('clickOnCard: TODO code clicking on a down pile');
+      // get that pile
+      const { pile: downPile } = getPileWithInfo(clickPileId);
+
+      // there should be at least one card in this pile by here - but checking anyway
+      if (!downPile?.length) {
+        console.error(`clickOnCard: ${clickPileId} is empty but it should have at least one card in it`);
+        return;
+      }
+
+      // get the top card from the clicked down pile
+      const { suit: downPileSuit, number: downPileNumber } = downPile[0];
+
+      // get the corresponding up pile
+      const upPileId = suitToUpPileId(downPileSuit);
+
+      // get that up pile
+      const { pile: upPile } = getPileWithInfo(upPileId);
+
+      // remember our decision to move this card to the updown pile
+      let cardIsForUpPile = false;
+
+      // the up pile might be empty, if so, we want to move the Ace
+      if (!upPile.length && downPileNumber === NUMBER_A) {
+        cardIsForUpPile = true;
+      }
+
+      // if the up pile is not empty, then we can move the next card up
+      if (upPile.length) {
+        // get the top card from the up pile
+        const { number: upPileNumber } = upPile[0];
+
+        if (downPileNumber === upPileNumber + 1) {
+          cardIsForUpPile = true;
+        }
+      }
+
+      if (cardIsForUpPile) {
+        // yes, move this card onto the up pile
+        const newActions = [...actions];
+        newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: clickPileId, toPileId: upPileId });
+        performNextAction(newActions);
+      } else {
+        // cannot move the card clicked on - so flash it, for user feedback for the click
+        const newPileFlashes = [...pileFlashes];
+        newPileFlashes.push(clickPileId);
+        setPileFlashes(newPileFlashes);
+      }
+
       return;
     }
 
