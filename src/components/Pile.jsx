@@ -82,7 +82,7 @@ const Pile = (props) => {
       const shadowSuitDivStyle = {
         position: 'absolute',
         zIndex: 0,
-        left: colToLeft(col) + PLAYAREA_X_OFFSET,
+        left: colToLeft(col, row) + PLAYAREA_X_OFFSET,
         top: rowToTop(row),
       };
 

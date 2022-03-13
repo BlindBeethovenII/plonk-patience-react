@@ -12,7 +12,7 @@ const BlankSpace = (props) => {
   const { col, row } = props;
 
   // calc the left and top values
-  const left = colToLeft(col) + PLAYAREA_X_OFFSET;
+  const left = colToLeft(col, row) + PLAYAREA_X_OFFSET;
   const top = rowToTop(row);
 
   const blankspacestyle = {

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import styled from 'styled-components';
+
 import PlayAreaImage from '../images/playarea.png';
 import BorderTopLeftImage from '../images/borders/topleft.png';
 import BorderTopImage from '../images/borders/top.png';
@@ -10,7 +12,14 @@ import BorderTopRightImage from '../images/borders/topright.png';
 import BorderBottomRightImage from '../images/borders/bottomright.png';
 import BorderRightImage from '../images/borders/right.png';
 
-import { COL_INDEXES, ROW_INDEXES, PLAYAREA_X_OFFSET } from '../shared/constants';
+import {
+  COL_INDEXES,
+  ROW_INDEXES,
+  PLAYAREA_X_OFFSET,
+  UP_DOWN_GAP,
+  CARD_HEIGHT,
+  CARD_WIDTH,
+} from '../shared/constants';
 
 import BlankSpace from './BlankSpace';
 
@@ -90,12 +99,63 @@ const playarea = {
   left: `${PLAYAREA_X_OFFSET}px`,
 };
 
+const playareaup = {
+  position: 'absolute',
+  top: '2px',
+  left: `${PLAYAREA_X_OFFSET - UP_DOWN_GAP - 4}px`,
+  width: `${UP_DOWN_GAP + 14}px`,
+  height: `${5 * CARD_HEIGHT}px`,
+};
+
+const playareadown = {
+  position: 'absolute',
+  top: '2px',
+  left: `${PLAYAREA_X_OFFSET + (5 * CARD_WIDTH) + 28}px`,
+  width: `${UP_DOWN_GAP + 14}px`,
+  height: `${5 * CARD_HEIGHT}px`,
+};
+
+const UpDownLabel = styled.h2`
+  color: white;
+  font-size: 1.5em;
+  margin: 0.6em;
+  padding: 0.2em 1em 0.2em 0.2em;
+`;
+
+const uplabelstyle = {
+  position: 'absolute',
+  left: `${PLAYAREA_X_OFFSET - UP_DOWN_GAP + 4}px`,
+  top: `${4 * CARD_HEIGHT + 6}px`,
+  width: '30px',
+  height: '20px',
+  textAlign: 'left',
+  zIndex: 5,
+};
+
+const downlabelstyle = {
+  position: 'absolute',
+  left: `${PLAYAREA_X_OFFSET + (5 * CARD_WIDTH) + 16}px`,
+  top: `${4 * CARD_HEIGHT + 6}px`,
+  width: '30px',
+  height: '20px',
+  textAlign: 'left',
+  zIndex: 5,
+};
+
 const PlayArea = () => (
   <div>
     <svg style={playbackgroundsvg}>
       <rect style={playbackgroundrect} />
     </svg>
     <img src={PlayAreaImage} alt="playarea" style={playarea} />
+    <img src={PlayAreaImage} alt="playareaup" style={playareaup} />
+    <div style={uplabelstyle}>
+      <UpDownLabel>Up</UpDownLabel>
+    </div>
+    <img src={PlayAreaImage} alt="playareadown" style={playareadown} />
+    <div style={downlabelstyle}>
+      <UpDownLabel>Down</UpDownLabel>
+    </div>
     <img src={BorderTopLeftImage} alt="bordertopleft" style={bordertopleft} />
     <img src={BorderTopImage} alt="bordertop" style={bordertop} />
     <img src={BorderLeftImage} alt="borderleft" style={borderleft} />

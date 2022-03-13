@@ -21,7 +21,7 @@ const SelectedPileFlash = () => {
 
   // convert the pile's cols and rows into left/top
   const { col, row } = pileIdToColRow(selectedPileId);
-  const left = colToLeft(col) + PLAYAREA_X_OFFSET;
+  const left = colToLeft(col, row) + PLAYAREA_X_OFFSET;
   const top = rowToTop(row);
 
   const cardbasestyle = {

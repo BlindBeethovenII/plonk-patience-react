@@ -53,9 +53,9 @@ const Card = (props) => {
   const { col, row } = pileIdToColRow(pileId);
 
   // convert the cols and rows into left/top
-  const left = colToLeft(col) + PLAYAREA_X_OFFSET;
+  const left = colToLeft(col, row) + PLAYAREA_X_OFFSET;
   const top = rowToTop(row);
-  const prevLeft = colToLeft(prevCol) + PLAYAREA_X_OFFSET;
+  const prevLeft = colToLeft(prevCol, prevRow) + PLAYAREA_X_OFFSET;
   const prevTop = rowToTop(prevRow);
 
   const cardbasestyle = {

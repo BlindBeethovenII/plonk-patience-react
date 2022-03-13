@@ -120,8 +120,8 @@ const Input = styled.input`
   }
 `;
 
-const left = colToLeft(0);
-const top = rowToTop(4) + 36;
+const left = colToLeft(10, 4) + 30;
+const top = rowToTop(4) + 48;
 
 const divstyle = {
   position: 'absolute',

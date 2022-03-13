@@ -43,7 +43,7 @@ const Progress = styled(BaseBox)`
 const PercentageComplete = () => {
   const { percentageComplete } = useContext(GameStateContext);
 
-  const left = colToLeft(0) + PLAYAREA_X_OFFSET;
+  const left = colToLeft(0, 6) + PLAYAREA_X_OFFSET;
   const top = rowToTop(6) + 16;
 
   const divstyle = {

@@ -6,6 +6,7 @@ import {
   CARD_WIDTH,
   CARD_HEIGHT,
   ROW5_Y_OFFSET,
+  UP_DOWN_GAP,
   SUITS,
   NUMBERS,
   NUMBER_A,
@@ -24,8 +25,21 @@ import CardSuitDiamondsImage from '../images/cards/diamonds.png';
 import CardSuitClubsImage from '../images/cards/clubs.png';
 
 // calc left based on given column
-export function colToLeft(col) {
-  return 21 + col * CARD_WIDTH;
+export function colToLeft(col, row) {
+  // adjust for UP_DOWN_GAPs
+  let adjust = 0;
+  const gap = UP_DOWN_GAP + 16;
+
+  // only applies to rows 0 to 3
+  if (row <= 3) {
+    if (col <= 0) {
+      adjust = -gap;
+    } else if (col >= 4) {
+      adjust = gap;
+    }
+  }
+
+  return 21 + (col * CARD_WIDTH) + adjust;
 }
 
 // calc top based on given row - adjusting for row 5

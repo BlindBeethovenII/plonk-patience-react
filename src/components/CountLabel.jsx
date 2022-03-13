@@ -24,7 +24,7 @@ const CountLabel = (props) => {
     row,
   } = props;
 
-  const left = colToLeft(col) + PLAYAREA_X_OFFSET - 6;
+  const left = colToLeft(col, row) + PLAYAREA_X_OFFSET - 6;
   const top = rowToTop(row) + 16;
 
   const divstyle = {
