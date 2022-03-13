@@ -7,6 +7,7 @@ import DealButton from './components/DealButton';
 import DebugButton from './components/DebugButton';
 import Slider from './components/Slider';
 import SelectedPileFlash from './components/SelectedPileFlash';
+import PercentageComplete from './components/PercentageComplete';
 
 // import MainMenuModal from './components/MainMenuModal';
 
@@ -20,6 +21,7 @@ const App = () => (
     <SelectedPileFlash />
     <DealButton />
     <Slider />
+    <PercentageComplete />
     <DebugButton />
   </GameStateContextProvider>
 );

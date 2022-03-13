@@ -1534,6 +1534,17 @@ export const GameStateContextProvider = ({ children }) => {
     // the selected pile
     selectedPileId,
 
+    // the percentage complete
+    percentageComplete: (((
+      upPileSpades.length
+      + upPileHearts.length
+      + upPileDiamonds.length
+      + upPileClubs.length
+      + downPileSpades.length
+      + downPileHearts.length
+      + downPileDiamonds.length
+      + downPileClubs.length) * 100) / 104).toFixed(0),
+
     // card functions
     resetCards,
     performNextAction,
