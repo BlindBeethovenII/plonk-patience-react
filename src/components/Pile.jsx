@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import Card from './Card';
 import CountLabel from './CountLabel';
 import TickIcon from './TickIcon';
-import BullseyeIcon from './BullseyeIcon';
 import SortedIcon from './SortedIcon';
 
 import { colToLeft, rowToTop, cardSuitToImage } from '../shared/card-functions';
@@ -20,7 +19,6 @@ import {
   PILE_ID_DOWN_PILE_H,
   PILE_ID_DOWN_PILE_D,
   PILE_ID_DOWN_PILE_C,
-  PILE_ID_PLONK_PILE,
   SUIT_CLUBS,
   SUIT_DIAMONDS,
   SUIT_HEARTS,
@@ -122,10 +120,6 @@ const Pile = (props) => {
 
   if (showTick) {
     componentsToShow.push(<TickIcon key={`tick_icon_${card.id}`} col={col} row={row} />);
-  }
-
-  if (pileId === PILE_ID_PLONK_PILE) {
-    componentsToShow.push(<BullseyeIcon key={`bullseye_icon_${card.id}`} col={col} row={row} />);
   }
 
   if (isSortedPlayPile(pileId)) {

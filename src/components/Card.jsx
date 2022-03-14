@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 
 import { motion } from 'framer-motion';
 
+import styled from 'styled-components';
+import { Bullseye } from '@styled-icons/boxicons-regular';
+
 import CardBlankImage from '../images/cards/cardblank.png';
 
 import {
@@ -22,9 +25,15 @@ import {
   SUIT_DIAMONDS,
   SUIT_CLUBS,
   PLAYAREA_X_OFFSET,
+  PILE_ID_PLONK_PILE,
 } from '../shared/constants';
 
 import GameStateContext from '../contexts/GameStateContext';
+
+const StyledBullseye = styled(Bullseye)`
+  color: rgb(85,107,47);
+  font-weight: bold;
+`;
 
 const Card = (props) => {
   // we are given the card and the col/row it is to be shown at
@@ -122,6 +131,15 @@ const Card = (props) => {
     height: '20px',
   };
 
+  const bullseyestyle = {
+    position: 'absolute',
+    left: '11px',
+    top: '20px',
+    width: '42px',
+    height: '30px',
+    pointerEvents: 'none',
+  };
+
   const onAnimationStart = () => {
     // console.log(`onAnimationStart card ${cardNumberToString(number)} ${suit} on pile ${pileId} (${prevCol},${prevRow}) (${col},${row})`);
 
@@ -169,6 +187,12 @@ const Card = (props) => {
     </>
   );
 
+  const bullseye = pileId === PILE_ID_PLONK_PILE ? (
+    <div style={bullseyestyle}>
+      <StyledBullseye />
+    </div>
+  ) : null;
+
   // showCardBack
   const cardBackShowing = (
     <>
@@ -177,6 +201,7 @@ const Card = (props) => {
       <img src={cardSuitToImage(SUIT_HEARTS)} alt="smallcardsuithearts" style={smallcardsuitheartsstyle} />
       <img src={cardSuitToImage(SUIT_DIAMONDS)} alt="smallcardsuitdiamonds" style={smallcardsuitdiamondsstyle} />
       <img src={cardSuitToImage(SUIT_CLUBS)} alt="smallcardsuitclubs" style={smallcardsuitclubstyle} />
+      {bullseye}
     </>
   );
 
