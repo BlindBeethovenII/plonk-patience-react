@@ -112,7 +112,8 @@ const Pile = (props) => {
   // and now the top card
   componentsToShow.push(<Card key={card.id} pileId={pileId} card={card} faceDown={faceDown} />);
 
-  if (isDebugMode) {
+  // only show count label if we are not showing the 'complete' tick
+  if (isDebugMode && !showTick) {
     componentsToShow.push(<CountLabel key={`count_label_${card.id}`} count={cards.length} col={col} row={row} />);
   }
 

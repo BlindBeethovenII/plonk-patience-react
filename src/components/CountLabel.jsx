@@ -25,7 +25,7 @@ const CountLabel = (props) => {
     row,
   } = props;
 
-  const left = colToLeft(col, row) + PLAYAREA_X_OFFSET - 6;
+  const left = colToLeft(col, row) + PLAYAREA_X_OFFSET - 4;
   const top = rowToTop(row) + 16;
 
   // adjust the width for 1, 2, 3 digit numbers

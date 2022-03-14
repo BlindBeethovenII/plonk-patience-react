@@ -20,8 +20,8 @@ const TickIcon = (props) => {
     row,
   } = props;
 
-  const left = colToLeft(col, row) + PLAYAREA_X_OFFSET + 36;
-  const top = rowToTop(row) + 44;
+  const left = colToLeft(col, row) + PLAYAREA_X_OFFSET - 4;
+  const top = rowToTop(row) + 16;
 
   const divstyle = {
     position: 'absolute',
