@@ -9,7 +9,7 @@ import BullseyeIcon from './BullseyeIcon';
 import SortedIcon from './SortedIcon';
 
 import { colToLeft, rowToTop, cardSuitToImage } from '../shared/card-functions';
-import { pileIdToColRow } from '../shared/pile-functions';
+import { pileIdToColRow, isSortPileId } from '../shared/pile-functions';
 
 import {
   PILE_ID_UP_PILE_S,
@@ -115,8 +115,8 @@ const Pile = (props) => {
   // and now the top card
   componentsToShow.push(<Card key={card.id} pileId={pileId} card={card} faceDown={faceDown} />);
 
-  // only show count label if we are not showing the 'complete' tick
-  if (showCountLabels && !showTick) {
+  // only show count label if we are not showing the 'complete' tick, and we are not on a sort pile
+  if (showCountLabels && !showTick && !isSortPileId(pileId)) {
     componentsToShow.push(<CountLabel key={`count_label_${card.id}`} count={cards.length} col={col} row={row} />);
   }
 
