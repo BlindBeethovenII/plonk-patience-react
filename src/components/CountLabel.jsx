@@ -15,6 +15,7 @@ const Label = styled.h2`
   padding: 0.2em 1em 0.2em 0.2em;
   border: 1px solid #761d38;
   border-radius: 2px;
+  pointer-events: none;
 `;
 
 const CountLabel = (props) => {
@@ -34,6 +35,7 @@ const CountLabel = (props) => {
     width: '30px',
     height: '20px',
     textAlign: 'left',
+    pointerEvents: 'none',
     zIndex: 5,
   };
 
