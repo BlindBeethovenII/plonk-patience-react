@@ -123,6 +123,9 @@ export const GameStateContextProvider = ({ children }) => {
   // the selected pile
   const [selectedPileId, setSelectedPileId] = useState(null);
 
+  // if we are to show the count labels
+  const [showCountLabels, setShowCountLabels] = useState(true);
+
   // convert a pile constant to the actual pile, with its col/row info
   const getPileWithInfo = useCallback((pileId) => {
     switch (pileId) {
@@ -1522,7 +1525,7 @@ export const GameStateContextProvider = ({ children }) => {
 
     // further game state
     gamePlaying,
-    isDebugMode: true,
+    isDebugMode: false,
 
     // the animation speed
     animationSpeedPercentage,
@@ -1544,6 +1547,10 @@ export const GameStateContextProvider = ({ children }) => {
       + downPileHearts.length
       + downPileDiamonds.length
       + downPileClubs.length) * 100) / 104).toFixed(0),
+
+    // show count labels
+    showCountLabels,
+    setShowCountLabels,
 
     // card functions
     resetCards,
@@ -1600,6 +1607,8 @@ export const GameStateContextProvider = ({ children }) => {
     pileFlashAnimationComplete,
     dealCards,
     clickOnCard,
+    showCountLabels,
+    setShowCountLabels,
   ]);
 
   return <GameStateContext.Provider value={context}>{children}</GameStateContext.Provider>;

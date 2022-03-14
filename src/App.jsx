@@ -8,6 +8,7 @@ import DebugButton from './components/DebugButton';
 import Slider from './components/Slider';
 import SelectedPileFlash from './components/SelectedPileFlash';
 import PercentageComplete from './components/PercentageComplete';
+import ShowCountLabelsCheckbox from './components/ShowCountLabelsCheckbox';
 
 // import MainMenuModal from './components/MainMenuModal';
 
@@ -22,6 +23,7 @@ const App = () => (
     <DealButton />
     <Slider />
     <PercentageComplete />
+    <ShowCountLabelsCheckbox />
     <DebugButton />
   </GameStateContextProvider>
 );

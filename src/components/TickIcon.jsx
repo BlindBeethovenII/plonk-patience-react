@@ -44,4 +44,5 @@ TickIcon.propTypes = {
   col: PropTypes.number.isRequired,
   row: PropTypes.number.isRequired,
 };
+
 export default TickIcon;

@@ -35,7 +35,7 @@ const Pile = (props) => {
     showTick,
   } = props;
 
-  const { isDebugMode } = useContext(GameStateContext);
+  const { showCountLabels } = useContext(GameStateContext);
 
   // look up our col/row
   const { col, row } = pileIdToColRow(pileId);
@@ -113,7 +113,7 @@ const Pile = (props) => {
   componentsToShow.push(<Card key={card.id} pileId={pileId} card={card} faceDown={faceDown} />);
 
   // only show count label if we are not showing the 'complete' tick
-  if (isDebugMode && !showTick) {
+  if (showCountLabels && !showTick) {
     componentsToShow.push(<CountLabel key={`count_label_${card.id}`} count={cards.length} col={col} row={row} />);
   }
 
