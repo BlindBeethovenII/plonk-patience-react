@@ -32,7 +32,7 @@ const Card = (props) => {
     pileId,
     card,
     underCard,
-    faceUp,
+    faceDown,
   } = props;
 
   // there are the card details - including where it was showing before
@@ -198,7 +198,7 @@ const Card = (props) => {
         onClick={cardClicked}
         onKeyDown={cardClicked}
       >
-        {faceUp ? cardShowing : cardBackShowing}
+        {faceDown ? cardBackShowing : cardShowing }
       </div>
     );
   }
@@ -219,7 +219,7 @@ const Card = (props) => {
       onClick={cardClicked}
       onKeyDown={cardClicked}
     >
-      {faceUp || isAnimating ? cardShowing : cardBackShowing}
+      {faceDown && !isAnimating ? cardBackShowing : cardShowing }
     </motion.div>
   );
 };
@@ -233,11 +233,12 @@ Card.propTypes = {
     prevCol: PropTypes.number.isRequired,
     prevRow: PropTypes.number.isRequired,
   }).isRequired,
-  faceUp: PropTypes.bool.isRequired,
+  faceDown: PropTypes.bool,
   underCard: PropTypes.bool,
 };
 
 Card.defaultProps = {
+  faceDown: false,
   underCard: false,
 };
 

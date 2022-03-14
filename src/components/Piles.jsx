@@ -87,49 +87,49 @@ const Piles = () => {
   const pilesToShow = [];
 
   // add in the deal pile
-  pilesToShow.push(<Pile key="deal_pile" pileId={PILE_ID_DEAL_PILE} cards={dealPile} faceUp />);
+  pilesToShow.push(<Pile key="deal_pile" pileId={PILE_ID_DEAL_PILE} cards={dealPile} />);
 
   // and the plonk pile
-  pilesToShow.push(<Pile key="plonk_pile" pileId={PILE_ID_PLONK_PILE} cards={plonkPile} faceUp={false} />);
+  pilesToShow.push(<Pile key="plonk_pile" pileId={PILE_ID_PLONK_PILE} cards={plonkPile} faceDown />);
 
   // and the play piles
-  pilesToShow.push(<Pile key="play_pile_1" pileId={PILE_ID_PLAY_PILE_1} cards={playPile1} faceUp />);
-  pilesToShow.push(<Pile key="play_pile_2" pileId={PILE_ID_PLAY_PILE_2} cards={playPile2} faceUp />);
-  pilesToShow.push(<Pile key="play_pile_3" pileId={PILE_ID_PLAY_PILE_3} cards={playPile3} faceUp />);
-  pilesToShow.push(<Pile key="play_pile_4" pileId={PILE_ID_PLAY_PILE_4} cards={playPile4} faceUp />);
-  pilesToShow.push(<Pile key="play_pile_5" pileId={PILE_ID_PLAY_PILE_5} cards={playPile5} faceUp />);
-  pilesToShow.push(<Pile key="play_pile_6" pileId={PILE_ID_PLAY_PILE_6} cards={playPile6} faceUp />);
-  pilesToShow.push(<Pile key="play_pile_7" pileId={PILE_ID_PLAY_PILE_7} cards={playPile7} faceUp />);
-  pilesToShow.push(<Pile key="play_pile_8" pileId={PILE_ID_PLAY_PILE_8} cards={playPile8} faceUp />);
-  pilesToShow.push(<Pile key="play_pile_9" pileId={PILE_ID_PLAY_PILE_9} cards={playPile9} faceUp />);
-  pilesToShow.push(<Pile key="play_pile_10" pileId={PILE_ID_PLAY_PILE_10} cards={playPile10} faceUp />);
-  pilesToShow.push(<Pile key="play_pile_11" pileId={PILE_ID_PLAY_PILE_11} cards={playPile11} faceUp />);
-  pilesToShow.push(<Pile key="play_pile_12" pileId={PILE_ID_PLAY_PILE_12} cards={playPile12} faceUp />);
+  pilesToShow.push(<Pile key="play_pile_1" pileId={PILE_ID_PLAY_PILE_1} cards={playPile1} />);
+  pilesToShow.push(<Pile key="play_pile_2" pileId={PILE_ID_PLAY_PILE_2} cards={playPile2} />);
+  pilesToShow.push(<Pile key="play_pile_3" pileId={PILE_ID_PLAY_PILE_3} cards={playPile3} />);
+  pilesToShow.push(<Pile key="play_pile_4" pileId={PILE_ID_PLAY_PILE_4} cards={playPile4} />);
+  pilesToShow.push(<Pile key="play_pile_5" pileId={PILE_ID_PLAY_PILE_5} cards={playPile5} />);
+  pilesToShow.push(<Pile key="play_pile_6" pileId={PILE_ID_PLAY_PILE_6} cards={playPile6} />);
+  pilesToShow.push(<Pile key="play_pile_7" pileId={PILE_ID_PLAY_PILE_7} cards={playPile7} />);
+  pilesToShow.push(<Pile key="play_pile_8" pileId={PILE_ID_PLAY_PILE_8} cards={playPile8} />);
+  pilesToShow.push(<Pile key="play_pile_9" pileId={PILE_ID_PLAY_PILE_9} cards={playPile9} />);
+  pilesToShow.push(<Pile key="play_pile_10" pileId={PILE_ID_PLAY_PILE_10} cards={playPile10} />);
+  pilesToShow.push(<Pile key="play_pile_11" pileId={PILE_ID_PLAY_PILE_11} cards={playPile11} />);
+  pilesToShow.push(<Pile key="play_pile_12" pileId={PILE_ID_PLAY_PILE_12} cards={playPile12} />);
 
   // and the up and down piles
-  pilesToShow.push(<Pile key="up_pile_s" pileId={PILE_ID_UP_PILE_S} cards={upPileSpades} faceUp />);
-  pilesToShow.push(<Pile key="up_pile_h" pileId={PILE_ID_UP_PILE_H} cards={upPileHearts} faceUp />);
-  pilesToShow.push(<Pile key="up_pile_d" pileId={PILE_ID_UP_PILE_D} cards={upPileDiamonds} faceUp />);
-  pilesToShow.push(<Pile key="up_pile_c" pileId={PILE_ID_UP_PILE_C} cards={upPileClubs} faceUp />);
-  pilesToShow.push(<Pile key="down_pile_s" pileId={PILE_ID_DOWN_PILE_S} cards={downPileSpades} faceUp />);
-  pilesToShow.push(<Pile key="down_pile_h" pileId={PILE_ID_DOWN_PILE_H} cards={downPileHearts} faceUp />);
-  pilesToShow.push(<Pile key="down_pile_d" pileId={PILE_ID_DOWN_PILE_D} cards={downPileDiamonds} faceUp />);
-  pilesToShow.push(<Pile key="down_pile_c" pileId={PILE_ID_DOWN_PILE_C} cards={downPileClubs} faceUp />);
+  pilesToShow.push(<Pile key="up_pile_s" pileId={PILE_ID_UP_PILE_S} cards={upPileSpades} showTick={upPileSpades.length === 13} />);
+  pilesToShow.push(<Pile key="up_pile_h" pileId={PILE_ID_UP_PILE_H} cards={upPileHearts} showTick={upPileHearts.length === 13} />);
+  pilesToShow.push(<Pile key="up_pile_d" pileId={PILE_ID_UP_PILE_D} cards={upPileDiamonds} showTick={upPileDiamonds.length === 13} />);
+  pilesToShow.push(<Pile key="up_pile_c" pileId={PILE_ID_UP_PILE_C} cards={upPileClubs} showTick={upPileClubs.length === 13} />);
+  pilesToShow.push(<Pile key="down_pile_s" pileId={PILE_ID_DOWN_PILE_S} cards={downPileSpades} showTick={downPileSpades.length === 13} />);
+  pilesToShow.push(<Pile key="down_pile_h" pileId={PILE_ID_DOWN_PILE_H} cards={downPileHearts} showTick={downPileHearts.length === 13} />);
+  pilesToShow.push(<Pile key="down_pile_d" pileId={PILE_ID_DOWN_PILE_D} cards={downPileDiamonds} showTick={downPileDiamonds.length === 13} />);
+  pilesToShow.push(<Pile key="down_pile_c" pileId={PILE_ID_DOWN_PILE_C} cards={downPileClubs} showTick={downPileClubs.length === 13} />);
 
   // and the sort piles
-  pilesToShow.push(<Pile key="sort_pile_1" pileId={PILE_ID_SORT_PILE_1} cards={sortPile1} faceUp />);
-  pilesToShow.push(<Pile key="sort_pile_2" pileId={PILE_ID_SORT_PILE_2} cards={sortPile2} faceUp />);
-  pilesToShow.push(<Pile key="sort_pile_3" pileId={PILE_ID_SORT_PILE_3} cards={sortPile3} faceUp />);
-  pilesToShow.push(<Pile key="sort_pile_4" pileId={PILE_ID_SORT_PILE_4} cards={sortPile4} faceUp />);
-  pilesToShow.push(<Pile key="sort_pile_5" pileId={PILE_ID_SORT_PILE_5} cards={sortPile5} faceUp />);
-  pilesToShow.push(<Pile key="sort_pile_6" pileId={PILE_ID_SORT_PILE_6} cards={sortPile6} faceUp />);
-  pilesToShow.push(<Pile key="sort_pile_7" pileId={PILE_ID_SORT_PILE_7} cards={sortPile7} faceUp />);
-  pilesToShow.push(<Pile key="sort_pile_8" pileId={PILE_ID_SORT_PILE_8} cards={sortPile8} faceUp />);
-  pilesToShow.push(<Pile key="sort_pile_9" pileId={PILE_ID_SORT_PILE_9} cards={sortPile9} faceUp />);
-  pilesToShow.push(<Pile key="sort_pile_10" pileId={PILE_ID_SORT_PILE_10} cards={sortPile10} faceUp />);
-  pilesToShow.push(<Pile key="sort_pile_11" pileId={PILE_ID_SORT_PILE_11} cards={sortPile11} faceUp />);
-  pilesToShow.push(<Pile key="sort_pile_12" pileId={PILE_ID_SORT_PILE_12} cards={sortPile12} faceUp />);
-  pilesToShow.push(<Pile key="sort_pile_13" pileId={PILE_ID_SORT_PILE_13} cards={sortPile13} faceUp />);
+  pilesToShow.push(<Pile key="sort_pile_1" pileId={PILE_ID_SORT_PILE_1} cards={sortPile1} />);
+  pilesToShow.push(<Pile key="sort_pile_2" pileId={PILE_ID_SORT_PILE_2} cards={sortPile2} />);
+  pilesToShow.push(<Pile key="sort_pile_3" pileId={PILE_ID_SORT_PILE_3} cards={sortPile3} />);
+  pilesToShow.push(<Pile key="sort_pile_4" pileId={PILE_ID_SORT_PILE_4} cards={sortPile4} />);
+  pilesToShow.push(<Pile key="sort_pile_5" pileId={PILE_ID_SORT_PILE_5} cards={sortPile5} />);
+  pilesToShow.push(<Pile key="sort_pile_6" pileId={PILE_ID_SORT_PILE_6} cards={sortPile6} />);
+  pilesToShow.push(<Pile key="sort_pile_7" pileId={PILE_ID_SORT_PILE_7} cards={sortPile7} />);
+  pilesToShow.push(<Pile key="sort_pile_8" pileId={PILE_ID_SORT_PILE_8} cards={sortPile8} />);
+  pilesToShow.push(<Pile key="sort_pile_9" pileId={PILE_ID_SORT_PILE_9} cards={sortPile9} />);
+  pilesToShow.push(<Pile key="sort_pile_10" pileId={PILE_ID_SORT_PILE_10} cards={sortPile10} />);
+  pilesToShow.push(<Pile key="sort_pile_11" pileId={PILE_ID_SORT_PILE_11} cards={sortPile11} />);
+  pilesToShow.push(<Pile key="sort_pile_12" pileId={PILE_ID_SORT_PILE_12} cards={sortPile12} />);
+  pilesToShow.push(<Pile key="sort_pile_13" pileId={PILE_ID_SORT_PILE_13} cards={sortPile13} />);
 
   // and the flashing piles
   pileFlashes.forEach((pileId) => {

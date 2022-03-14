@@ -8,7 +8,7 @@ import { colToLeft, rowToTop } from '../shared/card-functions';
 import { PLAYAREA_X_OFFSET } from '../shared/constants';
 
 const Label = styled.h2`
-  background: #761d38;
+  background: rgb(85,107,47);
   color: white;
   font-size: 0.6em;
   margin: 0.6em;
@@ -28,11 +28,19 @@ const CountLabel = (props) => {
   const left = colToLeft(col, row) + PLAYAREA_X_OFFSET - 6;
   const top = rowToTop(row) + 16;
 
+  // adjust the width for 1, 2, 3 digit numbers
+  let width = 30;
+  if (count > 99) {
+    width = 36;
+  } else if (count < 10) {
+    width = 24;
+  }
+
   const divstyle = {
     position: 'absolute',
     left: `${left}px`,
     top: `${top}px`,
-    width: '30px',
+    width: `${width}px`,
     height: '20px',
     textAlign: 'left',
     pointerEvents: 'none',

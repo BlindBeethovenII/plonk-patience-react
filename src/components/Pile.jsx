@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Card from './Card';
 import CountLabel from './CountLabel';
+import TickIcon from './TickIcon';
 
 import { colToLeft, rowToTop, cardSuitToImage } from '../shared/card-functions';
 import { pileIdToColRow } from '../shared/pile-functions';
@@ -30,7 +31,8 @@ const Pile = (props) => {
   const {
     pileId,
     cards,
-    faceUp,
+    faceDown,
+    showTick,
   } = props;
 
   const { isDebugMode } = useContext(GameStateContext);
@@ -104,14 +106,18 @@ const Pile = (props) => {
 
   const card2 = cards[1];
   if (card2) {
-    componentsToShow.push(<Card key={card2.id} pileId={pileId} card={card2} faceUp={faceUp} underCard />);
+    componentsToShow.push(<Card key={card2.id} pileId={pileId} card={card2} faceDown={faceDown} underCard />);
   }
 
   // and now the top card
-  componentsToShow.push(<Card key={card.id} pileId={pileId} card={card} faceUp={faceUp} />);
+  componentsToShow.push(<Card key={card.id} pileId={pileId} card={card} faceDown={faceDown} />);
 
   if (isDebugMode) {
     componentsToShow.push(<CountLabel key={`count_label_${card.id}`} count={cards.length} col={col} row={row} />);
+  }
+
+  if (showTick) {
+    componentsToShow.push(<TickIcon key={`tick_icon_${card.id}`} col={col} row={row} />);
   }
 
   // and return them
@@ -125,7 +131,13 @@ Pile.propTypes = {
     suit: PropTypes.string.isRequired,
     number: PropTypes.number.isRequired,
   })).isRequired,
-  faceUp: PropTypes.bool.isRequired,
+  faceDown: PropTypes.bool,
+  showTick: PropTypes.bool,
+};
+
+Pile.defaultProps = {
+  faceDown: false,
+  showTick: false,
 };
 
 export default Pile;
