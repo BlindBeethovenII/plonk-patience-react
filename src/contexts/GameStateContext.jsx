@@ -126,6 +126,9 @@ export const GameStateContextProvider = ({ children }) => {
   // if we are to show the count labels
   const [showCountLabels, setShowCountLabels] = useState(true);
 
+  // the sorted piles
+  const [sortedPlayPileIds, setSortedPlayPileIds] = useState([]);
+
   // convert a pile constant to the actual pile, with its col/row info
   const getPileWithInfo = useCallback((pileId) => {
     switch (pileId) {
@@ -465,8 +468,10 @@ export const GameStateContextProvider = ({ children }) => {
     setActions([]);
     setCurrentMoveAction(null);
     setNextDealPileId(PILE_ID_PLONK_PILE);
+    setGamePlaying(false);
     setPileFlashes([]);
     setSelectedPileId(null);
+    setSortedPlayPileIds([]);
   };
 
   // move a card from pile1 to pile 2
@@ -1163,6 +1168,11 @@ export const GameStateContextProvider = ({ children }) => {
         moveToNextSortPileId();
       }
 
+      // this play pile can now be considered sorted - add to array (we don't care about duplicates - there will only be a few)
+      const newSortedPlayPileIds = [...sortedPlayPileIds];
+      newSortedPlayPileIds.push(playPileId);
+      setSortedPlayPileIds(newSortedPlayPileIds);
+
       // perform the actions we've just set up - along with any we are still to do
       performNextAction([...actions, ...newActions]);
       return;
@@ -1477,7 +1487,11 @@ export const GameStateContextProvider = ({ children }) => {
     sortPile11,
     sortPile12,
     sortPile13,
+    sortedPlayPileIds,
   ]);
+
+  // returns true if given pile id is a sorted play pile
+  const isSortedPlayPile = useCallback((pileId) => sortedPlayPileIds.includes(pileId), [sortedPlayPileIds]);
 
   // expose our state and state functions via the context
   // we are encouraged to do this via a useMemo now
@@ -1559,6 +1573,7 @@ export const GameStateContextProvider = ({ children }) => {
     pileFlashAnimationComplete,
     dealCards,
     clickOnCard,
+    isSortedPlayPile,
   }), [
     dealPile,
     plonkPile,
@@ -1602,13 +1617,14 @@ export const GameStateContextProvider = ({ children }) => {
     setAnimationSpeedPercentage,
     pileFlashes,
     selectedPileId,
+    showCountLabels,
+    setShowCountLabels,
     performNextAction,
     cardAnimationComplete,
     pileFlashAnimationComplete,
     dealCards,
     clickOnCard,
-    showCountLabels,
-    setShowCountLabels,
+    isSortedPlayPile,
   ]);
 
   return <GameStateContext.Provider value={context}>{children}</GameStateContext.Provider>;

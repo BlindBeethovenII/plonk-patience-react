@@ -102,16 +102,16 @@ const Card = (props) => {
     position: 'absolute',
     left: '40px',
     top: '0px',
-    width: '20px',
-    height: '21px',
+    width: '22px',
+    height: '22px',
   };
 
   const smallcardsuitdiamondsstyle = {
     position: 'absolute',
     left: '2px',
     top: '58px',
-    width: '20px',
-    height: '21px',
+    width: '22px',
+    height: '22px',
   };
 
   const smallcardsuitclubstyle = {
