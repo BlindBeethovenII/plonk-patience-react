@@ -1031,7 +1031,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.15.3":
+"@babel/runtime@^7.14.0", "@babel/runtime@^7.15.3":
   version "7.17.7"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.7.tgz#a5f3328dc41ff39d803f311cfe17703418cf9825"
   integrity sha512-L6rvG9GDxaLgFjg41K+5Yv9OMrU98sWe+Ykmc6FDJW/+vYZMhdOMKkISgzptMaERHvS2Y2lw9MDRm2gHhlQQoA==
@@ -1480,6 +1480,14 @@
   integrity sha512-xjhafoa0/EeYtQOyTw+ohuSlBx599t8l8++JH1tQlM0l73dP4icTpF4znYL+HhZeaUe3D+UhrkfWuBBua2w2Qw==
   dependencies:
     "@babel/runtime" "^7.15.3"
+    "@styled-icons/styled-icon" "^10.6.3"
+
+"@styled-icons/icomoon@^10.34.0":
+  version "10.34.0"
+  resolved "https://registry.yarnpkg.com/@styled-icons/icomoon/-/icomoon-10.34.0.tgz#f8e9ed47e408dc8ad0e363f53007dff23b787027"
+  integrity sha512-nimtxPqlA6K2iNDeGCCYrFvPbjJl2TwM+YtX55RYC3YJFrh+MeKL+F60uvzoKWY3vZ1vsmQR3iW+aRFQHvhIOw==
+  dependencies:
+    "@babel/runtime" "^7.14.0"
     "@styled-icons/styled-icon" "^10.6.3"
 
 "@styled-icons/styled-icon@^10.6.0", "@styled-icons/styled-icon@^10.6.3":

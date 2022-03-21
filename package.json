@@ -9,6 +9,7 @@
     "@babel/plugin-transform-react-jsx": "^7.16.7",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@styled-icons/boxicons-regular": "^10.38.0",
+    "@styled-icons/icomoon": "^10.34.0",
     "@styled-icons/typicons": "^10.18.0",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.2",

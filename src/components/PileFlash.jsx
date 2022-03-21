@@ -4,13 +4,19 @@ import PropTypes from 'prop-types';
 
 import { motion } from 'framer-motion';
 
-import CardBlankImage from '../images/cards/cardblank.png';
+import styled from 'styled-components';
+import { Cross } from '@styled-icons/icomoon';
 
 import { colToLeft, rowToTop } from '../shared/card-functions';
 import { pileIdToColRow } from '../shared/pile-functions';
 import { PLAYAREA_X_OFFSET } from '../shared/constants';
 
 import GameStateContext from '../contexts/GameStateContext';
+
+const StyledCross = styled(Cross)`
+  color: red;
+  font-weight: bold;
+`;
 
 const PileFlash = (props) => {
   const { pileId } = props;
@@ -22,17 +28,20 @@ const PileFlash = (props) => {
   const left = colToLeft(col, row) + PLAYAREA_X_OFFSET;
   const top = rowToTop(row);
 
-  const cardbasestyle = {
-    position: 'relative',
-    left: '0px',
-    top: '0px',
-  };
-
   const motiondivstyle = {
     position: 'absolute',
     left,
     top,
-    zIndex: 2,
+    zIndex: 7,
+  };
+
+  const crossstyle = {
+    position: 'relative',
+    left: '4px',
+    top: '12px',
+    width: '56px',
+    height: '56px',
+    zIndex: 7,
   };
 
   const onAnimationStart = () => {
@@ -49,13 +58,15 @@ const PileFlash = (props) => {
       id={`pile_flash_motion_${pileId}`}
       style={motiondivstyle}
       animate={{
-        opacity: [1, 0, 1, 0],
+        opacity: [1, 0, 1, 0, 1, 0],
       }}
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.8 }}
       onAnimationStart={onAnimationStart}
       onAnimationComplete={onAnimationComplete}
     >
-      <img src={CardBlankImage} alt="cardblank" style={cardbasestyle} />
+      <div style={crossstyle}>
+        <StyledCross />
+      </div>
     </motion.div>
   );
 };
