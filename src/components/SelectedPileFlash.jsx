@@ -10,7 +10,7 @@ import { PLAYAREA_X_OFFSET } from '../shared/constants';
 
 import GameStateContext from '../contexts/GameStateContext';
 
-// puts a flashing icon on the selected pile, if it exists
+// puts an infinite empty card white flash on the selected pile, if it exists - so user can see where the selected/sorted pile is going back to
 const SelectedPileFlash = () => {
   const { selectedPileId } = useContext(GameStateContext);
 
