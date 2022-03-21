@@ -19,8 +19,8 @@ const SortedIcon = (props) => {
     row,
   } = props;
 
-  const left = colToLeft(col, row) + PLAYAREA_X_OFFSET + 40;
-  const top = rowToTop(row) + 50;
+  const left = colToLeft(col, row) + PLAYAREA_X_OFFSET + 41;
+  const top = rowToTop(row) + 54;
 
   const divstyle = {
     position: 'absolute',
