@@ -117,7 +117,7 @@ export const GameStateContextProvider = ({ children }) => {
   const [gamePlaying, setGamePlaying] = useState(false);
 
   // the animation speed percentage
-  const [animationSpeedPercentage, setAnimationSpeedPercentage] = React.useState(50);
+  const [animationSpeedPercentage, setAnimationSpeedPercentage] = useLocalStorage('animationSpeedPercentage', 50);
 
   // the piles to flash (we only flash one for now)
   const [pileFlashes, setPileFlashes] = useState([]);
@@ -1619,6 +1619,7 @@ export const GameStateContextProvider = ({ children }) => {
     currentMoveAction,
     gamePlaying,
     animationSpeedPercentage,
+    setAnimationSpeedPercentage,
     pileFlashes,
     selectedPileId,
     showCountLabels,

@@ -120,14 +120,14 @@ const Input = styled.input`
   }
 `;
 
-const left = colToLeft(10, 4) + 30;
-const top = rowToTop(4) + 48;
+const left = colToLeft(9, 1) + 30;
+const top = rowToTop(1);
 
 const divstyle = {
   position: 'absolute',
   left: `${left}px`,
   top: `${top}px`,
-  width: '180px',
+  width: '160px',
   height: '60px',
   textAlign: 'center',
 };
@@ -140,6 +140,7 @@ const Slider = () => {
       <Input
         onInput={(e) => setAnimationSpeedPercentage(e.target.value)}
         type="range"
+        value={animationSpeedPercentage}
         style={{
           width: '100%',
           '--min': 0,
