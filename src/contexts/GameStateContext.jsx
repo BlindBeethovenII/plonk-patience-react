@@ -11,6 +11,8 @@ import {
   suitToUpPileId,
   suitToDownPileId,
   isSortPileId,
+  isUpPileId,
+  isDownPileId,
 } from '../shared/pile-functions';
 import {
   ACTION_DEAL_CARD,
@@ -1181,7 +1183,7 @@ export const GameStateContextProvider = ({ children }) => {
       return;
     }
 
-    if (clickPileId === PILE_ID_UP_PILE_S || clickPileId === PILE_ID_UP_PILE_H || clickPileId === PILE_ID_UP_PILE_D || clickPileId === PILE_ID_UP_PILE_C) {
+    if (isUpPileId(clickPileId)) {
       // get that pile
       const { pile: upPile } = getPileWithInfo(clickPileId);
 
@@ -1233,7 +1235,7 @@ export const GameStateContextProvider = ({ children }) => {
       return;
     }
 
-    if (clickPileId === PILE_ID_DOWN_PILE_S || clickPileId === PILE_ID_DOWN_PILE_H || clickPileId === PILE_ID_DOWN_PILE_D || clickPileId === PILE_ID_DOWN_PILE_C) {
+    if (isDownPileId(clickPileId)) {
       // get that pile
       const { pile: downPile } = getPileWithInfo(clickPileId);
 

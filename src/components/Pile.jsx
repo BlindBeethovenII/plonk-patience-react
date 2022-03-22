@@ -8,14 +8,17 @@ import TickIcon from './TickIcon';
 import SortedIcon from './SortedIcon';
 
 import { colToLeft, rowToTop, cardSuitToImage } from '../shared/card-functions';
-import { pileIdToColRow, isSortPileId } from '../shared/pile-functions';
+import {
+  pileIdToColRow,
+  isSortPileId,
+  isUpPileId,
+  isDownPileId,
+} from '../shared/pile-functions';
 
 import {
-  PILE_ID_UP_PILE_S,
   PILE_ID_UP_PILE_H,
   PILE_ID_UP_PILE_D,
   PILE_ID_UP_PILE_C,
-  PILE_ID_DOWN_PILE_S,
   PILE_ID_DOWN_PILE_H,
   PILE_ID_DOWN_PILE_D,
   PILE_ID_DOWN_PILE_C,
@@ -43,15 +46,7 @@ const Pile = (props) => {
 
   if (!cards?.length) {
     // if there are no cards - if we are a up pile or a down pile, then show our suit
-    if (pileId === PILE_ID_UP_PILE_S
-      || pileId === PILE_ID_UP_PILE_H
-      || pileId === PILE_ID_UP_PILE_D
-      || pileId === PILE_ID_UP_PILE_C
-      || pileId === PILE_ID_DOWN_PILE_S
-      || pileId === PILE_ID_DOWN_PILE_H
-      || pileId === PILE_ID_DOWN_PILE_D
-      || pileId === PILE_ID_DOWN_PILE_C
-    ) {
+    if (isUpPileId(pileId) || isDownPileId(pileId)) {
       let suit = SUIT_SPADES;
       if (pileId === PILE_ID_UP_PILE_H || pileId === PILE_ID_DOWN_PILE_H) {
         suit = SUIT_HEARTS;
@@ -114,7 +109,7 @@ const Pile = (props) => {
   componentsToShow.push(<Card key={card.id} pileId={pileId} card={card} faceDown={faceDown} />);
 
   // only show count label if we are not showing the 'complete' tick, and we are not on a sort pile
-  if (showCountLabels && !showTick && !isSortPileId(pileId)) {
+  if (showCountLabels && !showTick && !isSortPileId(pileId) && !isUpPileId(pileId) && !isDownPileId(pileId)) {
     componentsToShow.push(<CountLabel key={`count_label_${card.id}`} count={cards.length} col={col} row={row} />);
   }
 

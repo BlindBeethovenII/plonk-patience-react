@@ -309,3 +309,19 @@ export const isSortPileId = (pileId) => (
   || pileId === PILE_ID_SORT_PILE_12
   || pileId === PILE_ID_SORT_PILE_13
 );
+
+// is the pile id an up pile?
+export const isUpPileId = (pileId) => (
+  pileId === PILE_ID_UP_PILE_S
+  || pileId === PILE_ID_UP_PILE_H
+  || pileId === PILE_ID_UP_PILE_D
+  || pileId === PILE_ID_UP_PILE_C
+);
+
+// is the pile id a down pile?
+export const isDownPileId = (pileId) => (
+  pileId === PILE_ID_DOWN_PILE_S
+  || pileId === PILE_ID_DOWN_PILE_H
+  || pileId === PILE_ID_DOWN_PILE_D
+  || pileId === PILE_ID_DOWN_PILE_C
+);
