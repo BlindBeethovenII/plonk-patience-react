@@ -123,8 +123,9 @@ export const GameStateContextProvider = ({ children }) => {
   // the selected pile
   const [selectedPileId, setSelectedPileId] = useState(null);
 
-  // if we are to show the count labels
+  // show checkboxes
   const [showCountLabels, setShowCountLabels] = useState(true);
+  const [showSortedIcons, setShowSortedIcons] = useState(true);
 
   // the sorted piles
   const [sortedPlayPileIds, setSortedPlayPileIds] = useState([]);
@@ -1562,9 +1563,11 @@ export const GameStateContextProvider = ({ children }) => {
       + downPileDiamonds.length
       + downPileClubs.length) * 100) / 104).toFixed(0),
 
-    // show count labels
+    // show checkboxes functions
     showCountLabels,
     setShowCountLabels,
+    showSortedIcons,
+    setShowSortedIcons,
 
     // card functions
     resetCards,
@@ -1614,11 +1617,10 @@ export const GameStateContextProvider = ({ children }) => {
     currentMoveAction,
     gamePlaying,
     animationSpeedPercentage,
-    setAnimationSpeedPercentage,
     pileFlashes,
     selectedPileId,
     showCountLabels,
-    setShowCountLabels,
+    showSortedIcons,
     performNextAction,
     cardAnimationComplete,
     pileFlashAnimationComplete,

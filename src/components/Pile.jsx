@@ -36,7 +36,7 @@ const Pile = (props) => {
     showTick,
   } = props;
 
-  const { showCountLabels, isSortedPlayPile } = useContext(GameStateContext);
+  const { showCountLabels, isSortedPlayPile, showSortedIcons } = useContext(GameStateContext);
 
   // look up our col/row
   const { col, row } = pileIdToColRow(pileId);
@@ -122,7 +122,7 @@ const Pile = (props) => {
     componentsToShow.push(<TickIcon key={`tick_icon_${card.id}`} col={col} row={row} />);
   }
 
-  if (isSortedPlayPile(pileId)) {
+  if (isSortedPlayPile(pileId) && showSortedIcons) {
     componentsToShow.push(<SortedIcon key={`sorted_icon_${card.id}`} col={col} row={row} />);
   }
 
