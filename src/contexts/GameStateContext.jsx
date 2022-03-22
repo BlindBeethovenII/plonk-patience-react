@@ -2,6 +2,8 @@ import React, { useState, useMemo, useCallback } from 'react';
 
 import PropTypes from 'prop-types';
 
+import useLocalStorage from 'use-local-storage';
+
 import { createShuffledDeck } from '../shared/card-functions';
 import {
   numberMatchesDealPile,
@@ -124,8 +126,8 @@ export const GameStateContextProvider = ({ children }) => {
   const [selectedPileId, setSelectedPileId] = useState(null);
 
   // show checkboxes
-  const [showCountLabels, setShowCountLabels] = useState(true);
-  const [showSortedIcons, setShowSortedIcons] = useState(true);
+  const [showCountLabels, setShowCountLabels] = useLocalStorage('showCountLabels', true);
+  const [showSortedIcons, setShowSortedIcons] = useLocalStorage('showSortedIcons', true);
 
   // the sorted piles
   const [sortedPlayPileIds, setSortedPlayPileIds] = useState([]);
@@ -1620,7 +1622,9 @@ export const GameStateContextProvider = ({ children }) => {
     pileFlashes,
     selectedPileId,
     showCountLabels,
+    setShowCountLabels,
     showSortedIcons,
+    setShowSortedIcons,
     performNextAction,
     cardAnimationComplete,
     pileFlashAnimationComplete,
