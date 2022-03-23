@@ -1243,6 +1243,15 @@ export const GameStateContextProvider = ({ children }) => {
     }
 
     if (isUpPileId(clickPileId)) {
+      if (gameState === GAME_STATE_ANALYSING) {
+        // nope - not allowed now
+        console.log(`clickOnCard: not allowed to click on up pile ${clickPileId} while analysing`);
+        const newPileFlashes = [...pileFlashes];
+        newPileFlashes.push(clickPileId);
+        setPileFlashes(newPileFlashes);
+        return;
+      }
+
       // get that pile
       const { pile: upPile } = getPileWithInfo(clickPileId);
 
@@ -1295,6 +1304,15 @@ export const GameStateContextProvider = ({ children }) => {
     }
 
     if (isDownPileId(clickPileId)) {
+      if (gameState === GAME_STATE_ANALYSING) {
+        // nope - not allowed now
+        console.log(`clickOnCard: not allowed to click on down pile ${clickPileId} while analysing`);
+        const newPileFlashes = [...pileFlashes];
+        newPileFlashes.push(clickPileId);
+        setPileFlashes(newPileFlashes);
+        return;
+      }
+
       // get that pile
       const { pile: downPile } = getPileWithInfo(clickPileId);
 
