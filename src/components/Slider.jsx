@@ -156,7 +156,7 @@ const Slider = (props) => {
 };
 
 Slider.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
   left: PropTypes.number.isRequired,
   top: PropTypes.number.isRequired,

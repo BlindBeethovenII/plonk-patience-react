@@ -56,6 +56,9 @@ import {
   PILE_ID_SORT_PILE_13,
   NUMBER_A,
   NUMBER_K,
+  GAME_STATE_START,
+  GAME_STATE_DEALING,
+  GAME_STATE_PLAYING,
 } from '../shared/constants';
 
 const GameStateContext = React.createContext({});
@@ -115,8 +118,8 @@ export const GameStateContextProvider = ({ children }) => {
   // the next pile to deal a card to
   const [nextDealPileId, setNextDealPileId] = useState(PILE_ID_PLONK_PILE);
 
-  // if the game is playing
-  const [gamePlaying, setGamePlaying] = useState(false);
+  // the game state
+  const [gameState, setGameState] = useState(GAME_STATE_START);
 
   // the animation speeds
   const [dealSpeedPercentage, setDealSpeedPercentage] = useLocalStorage('dealSpeedPercentage', 50);
@@ -474,7 +477,7 @@ export const GameStateContextProvider = ({ children }) => {
     setActions([]);
     setCurrentMoveAction(null);
     setNextDealPileId(PILE_ID_PLONK_PILE);
-    setGamePlaying(false);
+    setGameState(GAME_STATE_START);
     setPileFlashes([]);
     setSelectedPileId(null);
     setSortedPlayPileIds([]);
@@ -502,6 +505,11 @@ export const GameStateContextProvider = ({ children }) => {
 
     setPile(fromPileId, newFromPile);
     setPile(toPileId, newToPile);
+
+    // if we have just moved the last card from the deal pile then we are now playing the game
+    if (fromPileId === PILE_ID_DEAL_PILE && !newFromPile.length) {
+      setGameState(GAME_STATE_PLAYING);
+    }
   }, [getPileWithInfo]);
 
   // do the next action (if any)
@@ -880,8 +888,8 @@ export const GameStateContextProvider = ({ children }) => {
     // the last deal card always goes to the plonk pile
     newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_DEAL_PILE, toPileId: PILE_ID_PLONK_PILE });
 
-    // we are now playing the game
-    setGamePlaying(true);
+    // we are now dealing
+    setGameState(GAME_STATE_DEALING);
 
     // perform the next action (i.e. first of these actions)
     // we know here there there is no current action in place, as we've just started to deal the cards - so these are the first actions
@@ -1543,8 +1551,8 @@ export const GameStateContextProvider = ({ children }) => {
     actions,
     currentMoveAction,
 
-    // further game state
-    gamePlaying,
+    // the game state
+    gameHasStarted: gameState !== GAME_STATE_START,
     isDebugMode: false,
 
     // the animation speeds
@@ -1552,6 +1560,7 @@ export const GameStateContextProvider = ({ children }) => {
     setDealSpeedPercentage,
     playSpeedPercentage,
     setPlaySpeedPercentage,
+    animationSpeedPercentage: gameState === GAME_STATE_DEALING ? dealSpeedPercentage : playSpeedPercentage,
 
     // the flashing piles
     pileFlashes,
@@ -1622,7 +1631,7 @@ export const GameStateContextProvider = ({ children }) => {
     sortPile13,
     actions,
     currentMoveAction,
-    gamePlaying,
+    gameState,
     dealSpeedPercentage,
     setDealSpeedPercentage,
     playSpeedPercentage,
