@@ -59,6 +59,8 @@ import {
   GAME_STATE_START,
   GAME_STATE_DEALING,
   GAME_STATE_PLAYING,
+  GAME_STATE_ANALYSING,
+  GAME_STATE_ENDGAME,
 } from '../shared/constants';
 
 const GameStateContext = React.createContext({});
@@ -139,7 +141,38 @@ export const GameStateContextProvider = ({ children }) => {
   const [sortedPlayPileIds, setSortedPlayPileIds] = useState([]);
 
   // historical scores
-  const [scoreHistory, setScoreHistory] = useLocalStorage('scoreHistory', []);
+  const [scoreHistory, _setScoreHistory] = useLocalStorage('scoreHistory', []);
+
+  // add the current score to the score history
+  const setScoreHistory = useCallback(() => {
+    // calc the current score
+    const currentScore = upPileSpades.length
+    + upPileHearts.length
+    + upPileDiamonds.length
+    + upPileClubs.length
+    + downPileSpades.length
+    + downPileHearts.length
+    + downPileDiamonds.length
+    + downPileClubs.length;
+
+    // add it and remember it
+    const newScoreHistory = [...scoreHistory, currentScore];
+    _setScoreHistory(newScoreHistory);
+
+    // and we are now in the analysing part of the game
+    setGameState(GAME_STATE_ANALYSING);
+  }, [
+    upPileSpades,
+    upPileHearts,
+    upPileDiamonds,
+    upPileClubs,
+    downPileSpades,
+    downPileHearts,
+    downPileDiamonds,
+    downPileClubs,
+    scoreHistory,
+    _setScoreHistory,
+  ]);
 
   // convert a pile constant to the actual pile, with its col/row info
   const getPileWithInfo = useCallback((pileId) => {
@@ -512,6 +545,11 @@ export const GameStateContextProvider = ({ children }) => {
     // if we have just moved the last card from the deal pile then we are now playing the game
     if (fromPileId === PILE_ID_DEAL_PILE && !newFromPile.length) {
       setGameState(GAME_STATE_PLAYING);
+    }
+
+    // if we have just moved the last card from the plonk pile then we are now into the end game
+    if (fromPileId === PILE_ID_PLONK_PILE && !newFromPile.length) {
+      setGameState(GAME_STATE_ENDGAME);
     }
   }, [getPileWithInfo]);
 
@@ -1556,6 +1594,7 @@ export const GameStateContextProvider = ({ children }) => {
 
     // the game state
     gameHasStarted: gameState !== GAME_STATE_START,
+    gameInEndGame: gameState === GAME_STATE_ENDGAME,
 
     // debug mode
     isDebugMode: true,
@@ -1586,6 +1625,7 @@ export const GameStateContextProvider = ({ children }) => {
 
     // score history
     scoreHistory,
+    _setScoreHistory,
     setScoreHistory,
 
     // show checkboxes functions
@@ -1648,6 +1688,7 @@ export const GameStateContextProvider = ({ children }) => {
     pileFlashes,
     selectedPileId,
     scoreHistory,
+    _setScoreHistory,
     setScoreHistory,
     showCountLabels,
     setShowCountLabels,

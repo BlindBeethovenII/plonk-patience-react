@@ -28,11 +28,11 @@ const Button = styled.button`
 `;
 
 const DebugButton = () => {
-  const { isDebugMode, setScoreHistory } = useContext(GameStateContext);
+  const { isDebugMode, _setScoreHistory } = useContext(GameStateContext);
 
   const doDebug = () => {
     console.log('Setting score history');
-    setScoreHistory([]);
+    _setScoreHistory([]);
   };
 
   // don't show anything if not in debug mode

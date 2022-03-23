@@ -58,6 +58,8 @@ export const ACTION_REALIGN_LEFT_SORT = 'REALIGN_LEFT_SORT';
 export const GAME_STATE_START = 'START';
 export const GAME_STATE_DEALING = 'DEALING';
 export const GAME_STATE_PLAYING = 'PLAYING';
+export const GAME_STATE_ENDGAME = 'ENDGAME';
+export const GAME_STATE_ANALYSING = 'ANALYSING';
 
 export const PILE_ID_DEAL_PILE = 'DEAL_PILE';
 export const PILE_ID_PLONK_PILE = 'PLONK_PILE';

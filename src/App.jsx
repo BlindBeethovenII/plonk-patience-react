@@ -12,6 +12,7 @@ import PercentageComplete from './components/PercentageComplete';
 import ShowCountLabelsCheckbox from './components/ShowCountLabelsCheckbox';
 import ShowSortedIconsCheckbox from './components/ShowSortedIconsCheckbox';
 import ScoreHistory from './components/ScoreHistory';
+import SaveScoreButton from './components/SaveScoreButton';
 
 // import MainMenuModal from './components/MainMenuModal';
 
@@ -30,6 +31,7 @@ const App = () => (
     <ShowCountLabelsCheckbox />
     <ShowSortedIconsCheckbox />
     <ScoreHistory />
+    <SaveScoreButton />
     <DebugButton />
   </GameStateContextProvider>
 );

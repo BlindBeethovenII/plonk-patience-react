@@ -27,24 +27,19 @@ const Button = styled.button`
   border-radius: 3px;
 `;
 
-const DealButton = () => {
-  const { dealCards, gameHasStarted } = useContext(GameStateContext);
+const SaveScoreButton = () => {
+  const { gameInEndGame, setScoreHistory } = useContext(GameStateContext);
 
-  // TODO rename this when I change the approach to card dealing at the start of the game
-  const dealCardAndAction = () => {
-    dealCards();
-  };
-
-  // don't show the deal button if the game has started
-  if (gameHasStarted) {
+  // don't show unless we are in the end game
+  if (!gameInEndGame) {
     return null;
   }
 
   return (
     <div style={divstyle}>
-      <Button onClick={dealCardAndAction}>Deal</Button>
+      <Button onClick={setScoreHistory}>Save Score to History</Button>
     </div>
   );
 };
 
-export default DealButton;
+export default SaveScoreButton;
