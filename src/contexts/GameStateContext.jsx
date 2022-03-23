@@ -13,6 +13,7 @@ import {
   isSortPileId,
   isUpPileId,
   isDownPileId,
+  isPlayPileId,
 } from '../shared/pile-functions';
 import {
   ACTION_DEAL_CARD,
@@ -1081,12 +1082,8 @@ export const GameStateContextProvider = ({ children }) => {
       return;
     }
 
-    if (clickPileId === PILE_ID_PLONK_PILE) {
-      // should never be empty - but let's check anyway
-      if (!plonkPile?.length) {
-        console.error(`clickOnCard: ${clickPileId} is empty but it should have at least one card in it`);
-        return;
-      }
+    if (clickPileId === PILE_ID_PLONK_PILE || (gameState === GAME_STATE_ANALYSING && isPlayPileId(clickPileId))) {
+      // the click was on the plonk pile (which must be normal game play) or on a play pile while analysing
 
       // the actions for this click
       const newActions = [];
@@ -1139,23 +1136,33 @@ export const GameStateContextProvider = ({ children }) => {
         createActionsToPutSelectedPileBack();
       }
 
-      // get the top card from the plonk pile, and convert to play pile id
-      const { number: plonkPileNumber } = plonkPile[0];
-      const playPileId = numberToPlayPileId(plonkPileNumber);
-      console.log(`clickOnCard: clicked on ${plonkPileNumber} on plonk pile so selected pile is ${playPileId}`);
+      // we need to find the play pile id, either that matches the top card or the plonk pile - or, when analysing, is actually the pile clicked on
+      let playPileId = clickPileId;
+      if (clickPileId === PILE_ID_PLONK_PILE) {
+        // get the top card from the plonk pile, and convert to play pile id
+        const { number: plonkPileNumber } = plonkPile[0];
+        playPileId = numberToPlayPileId(plonkPileNumber);
+        console.log(`clickOnCard: clicked on ${plonkPileNumber} on plonk pile so selected pile is ${playPileId}`);
+      }
 
-      // need to know if this is the same as the currently selected pile
+      // need to know if this is the same as the currently selected pile (won't be during analysis as cannot click on the empty play pile that is flashing)
       const isSameSelectedPile = (playPileId === selectedPileId);
       setSelectedPileId(playPileId);
 
-      // move the top plonk card and all the selected pile's cards to the sort piles
-      newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_PLONK_PILE, toPileId: PILE_ID_SORT_PILE_13 });
-
-      let nextSortPileId = PILE_ID_SORT_PILE_12;
+      let nextSortPileId = PILE_ID_SORT_PILE_13;
+      if (clickPileId === PILE_ID_PLONK_PILE) {
+        // move the top plonk card and all the selected pile's cards to the sort piles
+        newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_PLONK_PILE, toPileId: PILE_ID_SORT_PILE_13 });
+        nextSortPileId = PILE_ID_SORT_PILE_12;
+      }
 
       // move to next sort pile (we move from right to left)
       const moveToNextSortPileId = () => {
         switch (nextSortPileId) {
+          case PILE_ID_SORT_PILE_13:
+            nextSortPileId = PILE_ID_SORT_PILE_12;
+            break;
+
           case PILE_ID_SORT_PILE_12:
             nextSortPileId = PILE_ID_SORT_PILE_11;
             break;
@@ -1208,7 +1215,7 @@ export const GameStateContextProvider = ({ children }) => {
 
       const { pile: playPile } = getPileWithInfo(playPileId);
 
-      // if the new selected pile is the same as the previous pile then that pile will actually be empty
+      // if the newly selected pile is the same as the previously selected pile then that pile will actually be empty
       // so in that case the number of cards to move is the length of newActions - 1 (for the above action to move the plonk card, we've just created)
       let nMoveActionsNeeded = 0;
       if (isSameSelectedPile) {
@@ -1223,10 +1230,12 @@ export const GameStateContextProvider = ({ children }) => {
         moveToNextSortPileId();
       }
 
-      // this play pile can now be considered sorted - add to array (we don't care about duplicates - there will only be a few)
-      const newSortedPlayPileIds = [...sortedPlayPileIds];
-      newSortedPlayPileIds.push(playPileId);
-      setSortedPlayPileIds(newSortedPlayPileIds);
+      if (clickPileId === PILE_ID_PLONK_PILE) {
+        // if we came from the plonk pile, then this play pile can now be considered sorted - add to array (we don't care about duplicates - there will only be a few)
+        const newSortedPlayPileIds = [...sortedPlayPileIds];
+        newSortedPlayPileIds.push(playPileId);
+        setSortedPlayPileIds(newSortedPlayPileIds);
+      }
 
       // perform the actions we've just set up - along with any we are still to do
       performNextAction([...actions, ...newActions]);
@@ -1522,13 +1531,12 @@ export const GameStateContextProvider = ({ children }) => {
     newPileFlashes.push(clickPileId);
     setPileFlashes(newPileFlashes);
   }, [
-    dealPile,
-    getPileWithInfo,
     actions,
-    performNextAction,
     pileFlashes,
-    plonkPile,
+    gameState,
     selectedPileId,
+    dealPile,
+    plonkPile,
     sortPile1,
     sortPile2,
     sortPile3,
@@ -1543,6 +1551,8 @@ export const GameStateContextProvider = ({ children }) => {
     sortPile12,
     sortPile13,
     sortedPlayPileIds,
+    getPileWithInfo,
+    performNextAction,
   ]);
 
   // returns true if given pile id is a sorted play pile

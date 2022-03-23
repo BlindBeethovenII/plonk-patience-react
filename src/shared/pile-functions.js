@@ -325,3 +325,19 @@ export const isDownPileId = (pileId) => (
   || pileId === PILE_ID_DOWN_PILE_D
   || pileId === PILE_ID_DOWN_PILE_C
 );
+
+// is the pile id a play pile?
+export const isPlayPileId = (pileId) => (
+  pileId === PILE_ID_PLAY_PILE_1
+  || pileId === PILE_ID_PLAY_PILE_2
+  || pileId === PILE_ID_PLAY_PILE_3
+  || pileId === PILE_ID_PLAY_PILE_4
+  || pileId === PILE_ID_PLAY_PILE_5
+  || pileId === PILE_ID_PLAY_PILE_6
+  || pileId === PILE_ID_PLAY_PILE_7
+  || pileId === PILE_ID_PLAY_PILE_8
+  || pileId === PILE_ID_PLAY_PILE_9
+  || pileId === PILE_ID_PLAY_PILE_10
+  || pileId === PILE_ID_PLAY_PILE_11
+  || pileId === PILE_ID_PLAY_PILE_12
+);
