@@ -1364,6 +1364,15 @@ export const GameStateContextProvider = ({ children }) => {
       return;
     }
 
+    if (gameState === GAME_STATE_ANALYSING) {
+      // not allowed to click on a sort pile now
+      console.log(`clickOnCard: not allowed to click on sort pile ${clickPileId} while analysing`);
+      const newPileFlashes = [...pileFlashes];
+      newPileFlashes.push(clickPileId);
+      setPileFlashes(newPileFlashes);
+      return;
+    }
+
     // we must be on a play pile or a sort pile by this point
     const { pile: clickPile } = getPileWithInfo(clickPileId);
 
