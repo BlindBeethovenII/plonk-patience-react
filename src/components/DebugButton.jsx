@@ -35,7 +35,7 @@ const DebugButton = () => {
     _setScoreHistory([]);
   };
 
-  // don't show anything if not in debug mode
+  // nothing to show if not in debug mode
   if (!isDebugMode) {
     return null;
   }

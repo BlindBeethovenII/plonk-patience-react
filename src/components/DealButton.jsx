@@ -30,7 +30,7 @@ const Button = styled.button`
 const DealButton = () => {
   const { dealCards, gameHasStarted } = useContext(GameStateContext);
 
-  // TODO rename this when I change the approach to card dealing at the start of the game
+  // TODO this needs to be renamed when I change the approach to card dealing at the start of the game
   const dealCardAndAction = () => {
     dealCards();
   };

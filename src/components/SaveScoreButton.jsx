@@ -30,7 +30,7 @@ const Button = styled.button`
 const SaveScoreButton = () => {
   const { gameInEndGame, setScoreHistory } = useContext(GameStateContext);
 
-  // don't show unless we are in the end game
+  // nothing to show if we are not in the end game
   if (!gameInEndGame) {
     return null;
   }

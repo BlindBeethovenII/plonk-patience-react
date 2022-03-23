@@ -133,7 +133,7 @@ export const GameStateContextProvider = ({ children }) => {
   // the selected pile
   const [selectedPileId, setSelectedPileId] = useState(null);
 
-  // show checkboxes
+  // the show checkboxes
   const [showCountLabels, setShowCountLabels] = useLocalStorage('showCountLabels', true);
   const [showSortedIcons, setShowSortedIcons] = useLocalStorage('showSortedIcons', true);
 
@@ -1597,7 +1597,7 @@ export const GameStateContextProvider = ({ children }) => {
     gameInEndGame: gameState === GAME_STATE_ENDGAME,
 
     // debug mode
-    isDebugMode: true,
+    isDebugMode: process.env.NODE_ENV === 'development',
 
     // the animation speeds
     dealSpeedPercentage,
