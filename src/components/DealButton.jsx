@@ -6,8 +6,8 @@ import { colToLeft, rowToTop } from '../shared/card-functions';
 
 import GameStateContext from '../contexts/GameStateContext';
 
-const left = colToLeft(12, 6) - 14;
-const top = rowToTop(6);
+const left = colToLeft(12, 4) - 14;
+const top = rowToTop(4);
 
 const divstyle = {
   position: 'absolute',

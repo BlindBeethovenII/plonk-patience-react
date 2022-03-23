@@ -6,7 +6,7 @@ import { colToLeft, rowToTop } from '../shared/card-functions';
 
 import GameStateContext from '../contexts/GameStateContext';
 
-const left = colToLeft(10, 3);
+const left = colToLeft(10, 3) + 24;
 const top = rowToTop(3);
 
 const divstyle = {
@@ -28,10 +28,11 @@ const Button = styled.button`
 `;
 
 const DebugButton = () => {
-  const { isDebugMode } = useContext(GameStateContext);
+  const { isDebugMode, setScoreHistory } = useContext(GameStateContext);
 
   const doDebug = () => {
-    console.log('No debug at the moment');
+    console.log('Setting score history');
+    setScoreHistory([]);
   };
 
   // don't show anything if not in debug mode

@@ -138,6 +138,9 @@ export const GameStateContextProvider = ({ children }) => {
   // the sorted piles
   const [sortedPlayPileIds, setSortedPlayPileIds] = useState([]);
 
+  // historical scores
+  const [scoreHistory, setScoreHistory] = useLocalStorage('scoreHistory', []);
+
   // convert a pile constant to the actual pile, with its col/row info
   const getPileWithInfo = useCallback((pileId) => {
     switch (pileId) {
@@ -1553,7 +1556,9 @@ export const GameStateContextProvider = ({ children }) => {
 
     // the game state
     gameHasStarted: gameState !== GAME_STATE_START,
-    isDebugMode: false,
+
+    // debug mode
+    isDebugMode: true,
 
     // the animation speeds
     dealSpeedPercentage,
@@ -1578,6 +1583,10 @@ export const GameStateContextProvider = ({ children }) => {
       + downPileHearts.length
       + downPileDiamonds.length
       + downPileClubs.length) * 100) / 104).toFixed(0),
+
+    // score history
+    scoreHistory,
+    setScoreHistory,
 
     // show checkboxes functions
     showCountLabels,
@@ -1638,6 +1647,8 @@ export const GameStateContextProvider = ({ children }) => {
     setPlaySpeedPercentage,
     pileFlashes,
     selectedPileId,
+    scoreHistory,
+    setScoreHistory,
     showCountLabels,
     setShowCountLabels,
     showSortedIcons,

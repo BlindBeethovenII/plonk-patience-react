@@ -11,6 +11,7 @@ import SelectedPileFlash from './components/SelectedPileFlash';
 import PercentageComplete from './components/PercentageComplete';
 import ShowCountLabelsCheckbox from './components/ShowCountLabelsCheckbox';
 import ShowSortedIconsCheckbox from './components/ShowSortedIconsCheckbox';
+import ScoreHistory from './components/ScoreHistory';
 
 // import MainMenuModal from './components/MainMenuModal';
 
@@ -28,6 +29,7 @@ const App = () => (
     <PercentageComplete />
     <ShowCountLabelsCheckbox />
     <ShowSortedIconsCheckbox />
+    <ScoreHistory />
     <DebugButton />
   </GameStateContextProvider>
 );
