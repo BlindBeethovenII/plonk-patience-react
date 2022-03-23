@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
+
+import PropTypes from 'prop-types';
+
 import styled, { css } from 'styled-components';
-
-import { colToLeft, rowToTop } from '../shared/card-functions';
-
-import GameStateContext from '../contexts/GameStateContext';
 
 const trackH = '0.4em';
 const thumbD = '1.5em';
@@ -120,37 +119,48 @@ const Input = styled.input`
   }
 `;
 
-const left = colToLeft(9, 1) + 30;
-const top = rowToTop(1);
+const Slider = (props) => {
+  const {
+    value,
+    setValue,
+    left,
+    top,
+    label,
+  } = props;
 
-const divstyle = {
-  position: 'absolute',
-  left: `${left}px`,
-  top: `${top}px`,
-  width: '160px',
-  height: '60px',
-  textAlign: 'center',
-};
-
-const Slider = () => {
-  const { animationSpeedPercentage, setAnimationSpeedPercentage } = useContext(GameStateContext);
+  const divstyle = {
+    position: 'absolute',
+    left: `${left}px`,
+    top: `${top}px`,
+    width: '160px',
+    height: '60px',
+    textAlign: 'center',
+  };
 
   return (
     <div style={divstyle}>
       <Input
-        onInput={(e) => setAnimationSpeedPercentage(e.target.value)}
+        onInput={(e) => setValue(e.target.value)}
         type="range"
-        value={animationSpeedPercentage}
+        value={value}
         style={{
           width: '100%',
           '--min': 0,
           '--max': 100,
-          '--val': animationSpeedPercentage,
+          '--val': value,
         }}
       />
-      Animation Speed
+      {label}
     </div>
   );
+};
+
+Slider.propTypes = {
+  value: PropTypes.number.isRequired,
+  setValue: PropTypes.func.isRequired,
+  left: PropTypes.number.isRequired,
+  top: PropTypes.number.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default Slider;

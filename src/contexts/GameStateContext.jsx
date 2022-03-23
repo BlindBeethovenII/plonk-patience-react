@@ -118,8 +118,9 @@ export const GameStateContextProvider = ({ children }) => {
   // if the game is playing
   const [gamePlaying, setGamePlaying] = useState(false);
 
-  // the animation speed percentage
-  const [animationSpeedPercentage, setAnimationSpeedPercentage] = useLocalStorage('animationSpeedPercentage', 50);
+  // the animation speeds
+  const [dealSpeedPercentage, setDealSpeedPercentage] = useLocalStorage('dealSpeedPercentage', 50);
+  const [playSpeedPercentage, setPlaySpeedPercentage] = useLocalStorage('playSpeedPercentage', 50);
 
   // the piles to flash (we only flash one for now)
   const [pileFlashes, setPileFlashes] = useState([]);
@@ -1546,9 +1547,11 @@ export const GameStateContextProvider = ({ children }) => {
     gamePlaying,
     isDebugMode: false,
 
-    // the animation speed
-    animationSpeedPercentage,
-    setAnimationSpeedPercentage,
+    // the animation speeds
+    dealSpeedPercentage,
+    setDealSpeedPercentage,
+    playSpeedPercentage,
+    setPlaySpeedPercentage,
 
     // the flashing piles
     pileFlashes,
@@ -1620,8 +1623,10 @@ export const GameStateContextProvider = ({ children }) => {
     actions,
     currentMoveAction,
     gamePlaying,
-    animationSpeedPercentage,
-    setAnimationSpeedPercentage,
+    dealSpeedPercentage,
+    setDealSpeedPercentage,
+    playSpeedPercentage,
+    setPlaySpeedPercentage,
     pileFlashes,
     selectedPileId,
     showCountLabels,

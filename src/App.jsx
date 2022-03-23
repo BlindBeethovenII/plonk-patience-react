@@ -5,7 +5,8 @@ import GitInfo from './components/GitInfo';
 import Piles from './components/Piles';
 import DealButton from './components/DealButton';
 import DebugButton from './components/DebugButton';
-import Slider from './components/Slider';
+import DealSpeedSlider from './components/DealSpeedSlider';
+import PlaySpeedSlider from './components/PlaySpeedSlider';
 import SelectedPileFlash from './components/SelectedPileFlash';
 import PercentageComplete from './components/PercentageComplete';
 import ShowCountLabelsCheckbox from './components/ShowCountLabelsCheckbox';
@@ -22,7 +23,8 @@ const App = () => (
     <Piles />
     <SelectedPileFlash />
     <DealButton />
-    <Slider />
+    <DealSpeedSlider />
+    <PlaySpeedSlider />
     <PercentageComplete />
     <ShowCountLabelsCheckbox />
     <ShowSortedIconsCheckbox />
