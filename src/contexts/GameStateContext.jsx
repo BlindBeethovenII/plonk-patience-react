@@ -711,6 +711,13 @@ export const GameStateContextProvider = ({ children }) => {
 
         // cards are now moving, so we wait for animation to be complete
         cardsMoving = true;
+      } else if (action === ACTION_MOVE_CARDS) {
+        // this action is to move a list of top card from the named fromPileIds to the named toPileIds
+        const { moves } = nextAction;
+        moveCards(moves);
+
+        // cards are now moving, so we wait for animation to be complete
+        cardsMoving = true;
       } else if (action === ACTION_REALIGN_RIGHT_SORT) {
         // a card has just moved out of the right of the sort piles, so we need to realign that
         // this algorithm assumes there is only one empty pile - which is the one named in the action
