@@ -61,6 +61,9 @@ export const GAME_STATE_PLAYING = 'PLAYING';
 export const GAME_STATE_ENDGAME = 'ENDGAME';
 export const GAME_STATE_ANALYSING = 'ANALYSING';
 
+export const FLASH_ICON_CROSS = 'CROSS';
+export const FLASH_ICON_HAND = 'HAND';
+
 export const PILE_ID_DEAL_PILE = 'DEAL_PILE';
 export const PILE_ID_PLONK_PILE = 'PLONK_PILE';
 export const PILE_ID_PLAY_PILE_1 = 'PLAY_PILE_1';

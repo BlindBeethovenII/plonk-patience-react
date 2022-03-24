@@ -62,6 +62,8 @@ import {
   GAME_STATE_PLAYING,
   GAME_STATE_ANALYSING,
   GAME_STATE_ENDGAME,
+  FLASH_ICON_CROSS,
+  FLASH_ICON_HAND,
 } from '../shared/constants';
 
 const GameStateContext = React.createContext({});
@@ -128,7 +130,7 @@ export const GameStateContextProvider = ({ children }) => {
   const [dealSpeedPercentage, setDealSpeedPercentage] = useLocalStorage('dealSpeedPercentage', 50);
   const [playSpeedPercentage, setPlaySpeedPercentage] = useLocalStorage('playSpeedPercentage', 50);
 
-  // the piles to flash (we only flash one for now)
+  // the piles to flash, naming icon to flash
   const [pileFlashes, setPileFlashes] = useState([]);
 
   // the selected pile
@@ -497,7 +499,6 @@ export const GameStateContextProvider = ({ children }) => {
     setDownPileHearts([]);
     setDownPileDiamonds([]);
     setDownPileClubs([]);
-    setPileFlashes([]);
     setSortPile1([]);
     setSortPile2([]);
     setSortPile3([]);
@@ -905,10 +906,10 @@ export const GameStateContextProvider = ({ children }) => {
   }, [currentMoveAction, performNextAction, actions, getPileWithInfo]);
 
   // the pile flash animation has completed for the given pileId
-  const pileFlashAnimationComplete = useCallback((pileId) => {
+  const pileFlashAnimationComplete = useCallback((completedPileId) => {
     // console.log(`pileFlashAnimationComplete: pile flash complete for ${pileId}`);
     // remove this one from the piles that are flashing
-    const newPileFlashes = pileFlashes.filter((pileFlashId) => pileFlashId !== pileId);
+    const newPileFlashes = pileFlashes.filter(({ pileId }) => pileId !== completedPileId);
     setPileFlashes(newPileFlashes);
   }, [pileFlashes]);
 
@@ -942,8 +943,11 @@ export const GameStateContextProvider = ({ children }) => {
   const clickOnCard = useCallback((clickPileId) => {
     console.log(`clickOnCard: called for pile ${clickPileId}`);
 
-    // if deal pile is not empty, then we are not allowed to click - just ignore
-    if (dealPile?.length) {
+    // not allowed to click if we still have actions to process
+    if (actions?.length) {
+      const newPileFlashes = [...pileFlashes];
+      newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_HAND });
+      setPileFlashes(newPileFlashes);
       return;
     }
 
@@ -1247,7 +1251,7 @@ export const GameStateContextProvider = ({ children }) => {
         // nope - not allowed now
         console.log(`clickOnCard: not allowed to click on up pile ${clickPileId} while analysing`);
         const newPileFlashes = [...pileFlashes];
-        newPileFlashes.push(clickPileId);
+        newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_CROSS });
         setPileFlashes(newPileFlashes);
         return;
       }
@@ -1296,7 +1300,7 @@ export const GameStateContextProvider = ({ children }) => {
       } else {
         // cannot move the card clicked on - so flash it, for user feedback for the click
         const newPileFlashes = [...pileFlashes];
-        newPileFlashes.push(clickPileId);
+        newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_CROSS });
         setPileFlashes(newPileFlashes);
       }
 
@@ -1308,7 +1312,7 @@ export const GameStateContextProvider = ({ children }) => {
         // nope - not allowed now
         console.log(`clickOnCard: not allowed to click on down pile ${clickPileId} while analysing`);
         const newPileFlashes = [...pileFlashes];
-        newPileFlashes.push(clickPileId);
+        newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_CROSS });
         setPileFlashes(newPileFlashes);
         return;
       }
@@ -1357,7 +1361,7 @@ export const GameStateContextProvider = ({ children }) => {
       } else {
         // cannot move the card clicked on - so flash it, for user feedback for the click
         const newPileFlashes = [...pileFlashes];
-        newPileFlashes.push(clickPileId);
+        newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_CROSS });
         setPileFlashes(newPileFlashes);
       }
 
@@ -1368,7 +1372,7 @@ export const GameStateContextProvider = ({ children }) => {
       // not allowed to click on a sort pile now
       console.log(`clickOnCard: not allowed to click on sort pile ${clickPileId} while analysing`);
       const newPileFlashes = [...pileFlashes];
-      newPileFlashes.push(clickPileId);
+      newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_CROSS });
       setPileFlashes(newPileFlashes);
       return;
     }
@@ -1555,14 +1559,13 @@ export const GameStateContextProvider = ({ children }) => {
     // cannot move the card clicked on - so flash it, for user feedback for the click
     console.log(`clickOnCard: flashing pile ${clickPileId}`);
     const newPileFlashes = [...pileFlashes];
-    newPileFlashes.push(clickPileId);
+    newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_CROSS });
     setPileFlashes(newPileFlashes);
   }, [
     actions,
     pileFlashes,
     gameState,
     selectedPileId,
-    dealPile,
     plonkPile,
     sortPile1,
     sortPile2,

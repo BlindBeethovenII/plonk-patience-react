@@ -5,11 +5,13 @@ import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 
 import styled from 'styled-components';
+
 import { Cross } from '@styled-icons/icomoon';
+import { Hand } from '@styled-icons/boxicons-solid';
 
 import { colToLeft, rowToTop } from '../shared/card-functions';
 import { pileIdToColRow } from '../shared/pile-functions';
-import { PLAYAREA_X_OFFSET } from '../shared/constants';
+import { PLAYAREA_X_OFFSET, FLASH_ICON_HAND } from '../shared/constants';
 
 import GameStateContext from '../contexts/GameStateContext';
 
@@ -18,8 +20,13 @@ const StyledCross = styled(Cross)`
   font-weight: bold;
 `;
 
+const StyledHand = styled(Hand)`
+  color: red;
+  font-weight: bold;
+`;
+
 const PileFlash = (props) => {
-  const { pileId } = props;
+  const { pileId, icon } = props;
 
   const { pileFlashAnimationComplete } = useContext(GameStateContext);
 
@@ -44,6 +51,8 @@ const PileFlash = (props) => {
     zIndex: 7,
   };
 
+  const StyledIcon = icon === FLASH_ICON_HAND ? StyledHand : StyledCross;
+
   const onAnimationStart = () => {
     // console.log(`PileFlash onAnimationStart for pile ${pileId}`);
   };
@@ -65,7 +74,7 @@ const PileFlash = (props) => {
       onAnimationComplete={onAnimationComplete}
     >
       <div style={crossstyle}>
-        <StyledCross />
+        <StyledIcon />
       </div>
     </motion.div>
   );
@@ -73,6 +82,7 @@ const PileFlash = (props) => {
 
 PileFlash.propTypes = {
   pileId: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
 };
 
 export default PileFlash;

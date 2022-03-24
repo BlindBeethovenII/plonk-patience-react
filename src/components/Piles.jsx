@@ -132,8 +132,8 @@ const Piles = () => {
   pilesToShow.push(<Pile key="sort_pile_13" pileId={PILE_ID_SORT_PILE_13} cards={sortPile13} />);
 
   // and the flashing piles
-  pileFlashes.forEach((pileId) => {
-    pilesToShow.push(<PileFlash key={`pileflash_${pileId}`} pileId={pileId} />);
+  pileFlashes.forEach(({ pileId, icon }) => {
+    pilesToShow.push(<PileFlash key={`pileflash_${pileId}`} pileId={pileId} icon={icon} />);
   });
 
   return pilesToShow;
