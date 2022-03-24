@@ -963,8 +963,8 @@ export const GameStateContextProvider = ({ children }) => {
       return;
     }
 
-    // these will be our new actions
-    const newActions = [...actions];
+    // we are at the start of the game - so don't care about any current actions (there will be none)
+    const newActions = [];
 
     // add in a DEAL_CARD action for every card in the deal pile, except the last one
     const nCards = dealPile.length;
@@ -980,7 +980,10 @@ export const GameStateContextProvider = ({ children }) => {
     // perform the next action (i.e. first of these actions)
     // we know here there there is no current action in place, as we've just started to deal the cards - so these are the first actions
     performNextAction(newActions);
-  }, [dealPile, actions, performNextAction]);
+  }, [
+    dealPile,
+    performNextAction,
+  ]);
 
   // click on a card
   const clickOnCard = useCallback((clickPileId) => {
@@ -1125,7 +1128,8 @@ export const GameStateContextProvider = ({ children }) => {
     // process the pile clicked on
 
     if (clickPileId === PILE_ID_DEAL_PILE) {
-      // the deal pile can never be clicked on
+      // click on the deal pile, deals
+      dealCards();
       return;
     }
 
@@ -1625,6 +1629,7 @@ export const GameStateContextProvider = ({ children }) => {
     sortPile13,
     sortedPlayPileIds,
     getPileWithInfo,
+    dealCards,
     performNextAction,
   ]);
 

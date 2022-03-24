@@ -3,7 +3,7 @@ import React from 'react';
 import PlayArea from './components/PlayArea';
 import GitInfo from './components/GitInfo';
 import Piles from './components/Piles';
-import DealButton from './components/DealButton';
+// import DealButton from './components/DealButton';
 import DebugButton from './components/DebugButton';
 import DealSpeedSlider from './components/DealSpeedSlider';
 import PlaySpeedSlider from './components/PlaySpeedSlider';
@@ -24,7 +24,6 @@ const App = () => (
     <GitInfo />
     <Piles />
     <SelectedPileFlash />
-    <DealButton />
     <DealSpeedSlider />
     <PlaySpeedSlider />
     <PercentageComplete />

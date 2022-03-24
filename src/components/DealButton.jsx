@@ -27,6 +27,8 @@ const Button = styled.button`
   border-radius: 3px;
 `;
 
+// NO LONGER USED
+
 const DealButton = () => {
   const { dealCards, gameHasStarted } = useContext(GameStateContext);
 
