@@ -524,6 +524,61 @@ export const GameStateContextProvider = ({ children }) => {
     setSortedPlayPileIds([]);
   };
 
+  // helper function to find an empty play pile, if there is one - noting that this cannot be the selected pile (as its cards are being sorted)
+  const findEmptyPlayPile = useCallback(() => {
+    if (!playPile1.length && selectedPileId !== PILE_ID_PLAY_PILE_1) {
+      return PILE_ID_PLAY_PILE_1;
+    }
+    if (!playPile2.length && selectedPileId !== PILE_ID_PLAY_PILE_2) {
+      return PILE_ID_PLAY_PILE_2;
+    }
+    if (!playPile3.length && selectedPileId !== PILE_ID_PLAY_PILE_3) {
+      return PILE_ID_PLAY_PILE_3;
+    }
+    if (!playPile4.length && selectedPileId !== PILE_ID_PLAY_PILE_4) {
+      return PILE_ID_PLAY_PILE_4;
+    }
+    if (!playPile5.length && selectedPileId !== PILE_ID_PLAY_PILE_5) {
+      return PILE_ID_PLAY_PILE_5;
+    }
+    if (!playPile6.length && selectedPileId !== PILE_ID_PLAY_PILE_6) {
+      return PILE_ID_PLAY_PILE_6;
+    }
+    if (!playPile7.length && selectedPileId !== PILE_ID_PLAY_PILE_7) {
+      return PILE_ID_PLAY_PILE_7;
+    }
+    if (!playPile8.length && selectedPileId !== PILE_ID_PLAY_PILE_8) {
+      return PILE_ID_PLAY_PILE_8;
+    }
+    if (!playPile9.length && selectedPileId !== PILE_ID_PLAY_PILE_9) {
+      return PILE_ID_PLAY_PILE_9;
+    }
+    if (!playPile10.length && selectedPileId !== PILE_ID_PLAY_PILE_10) {
+      return PILE_ID_PLAY_PILE_10;
+    }
+    if (!playPile11.length && selectedPileId !== PILE_ID_PLAY_PILE_11) {
+      return PILE_ID_PLAY_PILE_11;
+    }
+    if (!playPile12.length && selectedPileId !== PILE_ID_PLAY_PILE_12) {
+      return PILE_ID_PLAY_PILE_12;
+    }
+    return null;
+  }, [
+    playPile1,
+    playPile2,
+    playPile3,
+    playPile4,
+    playPile5,
+    playPile6,
+    playPile7,
+    playPile8,
+    playPile9,
+    playPile10,
+    playPile11,
+    playPile12,
+    selectedPileId,
+  ]);
+
   // move cards - the array is a list of {fromPileId, toPileId}
   const moveCards = useCallback((moves) => {
     // the list of moves can involve duplicate pileIds - we manage the new pile values in the following object
@@ -1414,7 +1469,7 @@ export const GameStateContextProvider = ({ children }) => {
     }
 
     if (gameState === GAME_STATE_ANALYSING) {
-      // not allowed to click on a sort pile now
+      // in this if, the click was not the plonk pile, nor play pile, nor up or down pile, so it must be a sort pile now
       console.log(`clickOnCard: not allowed to click on sort pile ${clickPileId} while analysing`);
       const newPileFlashes = [...pileFlashes];
       newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_CROSS });
@@ -1601,6 +1656,20 @@ export const GameStateContextProvider = ({ children }) => {
       }
     }
 
+    // here is must be a play pile, and the game state must be PLAYING
+    if (fillEmptyPiles) {
+      // see if we have an empty pile available
+      const emptyPileId = findEmptyPlayPile();
+
+      if (emptyPileId) {
+        // found an empty pile, so move this card to that pile
+        const newActions = [...actions];
+        newActions.unshift({ action: ACTION_MOVE_CARD, fromPileId: clickPileId, toPileId: emptyPileId });
+        performNextAction(newActions);
+        return;
+      }
+    }
+
     // cannot move the card clicked on - so flash it, for user feedback for the click
     console.log(`clickOnCard: flashing pile ${clickPileId}`);
     const newPileFlashes = [...pileFlashes];
@@ -1626,6 +1695,8 @@ export const GameStateContextProvider = ({ children }) => {
     sortPile12,
     sortPile13,
     sortedPlayPileIds,
+    fillEmptyPiles,
+    findEmptyPlayPile,
     getPileWithInfo,
     dealCards,
     performNextAction,
