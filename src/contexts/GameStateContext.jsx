@@ -18,6 +18,7 @@ import {
 import {
   ACTION_DEAL_CARD,
   ACTION_MOVE_CARD,
+  ACTION_MOVE_CARDS,
   ACTION_REALIGN_RIGHT_SORT,
   ACTION_REALIGN_LEFT_SORT,
   PILE_ID_DEAL_PILE,
@@ -117,8 +118,9 @@ export const GameStateContextProvider = ({ children }) => {
   // the actions to be done when the current animation stops
   const [actions, setActions] = useState([]);
 
-  // the current move action - so we know if the animation complete is for the current move action, and so we should perform the next action
-  const [currentMoveAction, setCurrentMoveAction] = useState(null);
+  // the cards that are currently moving - the array contains the toPileId
+  // this is used to process each animation complete, until there are none left, and then we can perform the next action
+  const [movingCards, setMovingCards] = useState([]);
 
   // the next pile to deal a card to
   const [nextDealPileId, setNextDealPileId] = useState(PILE_ID_PLONK_PILE);
@@ -513,7 +515,7 @@ export const GameStateContextProvider = ({ children }) => {
     setSortPile12([]);
     setSortPile13([]);
     setActions([]);
-    setCurrentMoveAction(null);
+    setMovingCards([]);
     setNextDealPileId(PILE_ID_PLONK_PILE);
     setGameState(GAME_STATE_START);
     setPileFlashes([]);
@@ -521,52 +523,79 @@ export const GameStateContextProvider = ({ children }) => {
     setSortedPlayPileIds([]);
   };
 
-  // move a card from pile1 to pile 2
-  const moveCard = useCallback((fromPileId, toPileId) => {
-    const { pile: fromPile, col, row } = getPileWithInfo(fromPileId);
-    const { pile: toPile } = getPileWithInfo(toPileId);
+  // move cards - the array is a list of {fromPileId, toPileId}
+  const moveCards = useCallback((moves) => {
+    // the list of moves can involve duplicate pileIds - we manage the new pile values in the following object
+    const piles = {};
 
-    // this only makes sense if we have some cards in the from pile to move to the to pile
-    if (!fromPile?.length) {
-      return;
-    }
+    // we need to keep track of the new moving cards toPileIds
+    const newMovingCards = [];
 
-    // create new objects for context rendering
-    const newFromPile = [...fromPile];
-    const newToPile = [...toPile];
+    moves.forEach(({ fromPileId, toPileId }) => {
+      // get the original info for the piles
+      const { pile: fromPile, col, row } = getPileWithInfo(fromPileId);
+      const { pile: toPile } = getPileWithInfo(toPileId);
 
-    // take the top card from the first pile
-    const topCard = newFromPile.shift();
+      // create the new piles - taking one's we've already created if we've already processed this pile
+      let newFromPile = [];
+      if (piles[fromPileId]) {
+        newFromPile = piles[fromPileId];
+      } else {
+        newFromPile = [...fromPile];
+      }
 
-    // and put it on the second pile
-    newToPile.unshift({ ...topCard, prevCol: col, prevRow: row });
+      // this only makes sense if we have some cards in the from pile to move to the to pile
+      if (!newFromPile?.length) {
+        return;
+      }
 
-    setPile(fromPileId, newFromPile);
-    setPile(toPileId, newToPile);
+      let newToPile = [];
+      if (piles[toPileId]) {
+        newToPile = piles[toPileId];
+      } else {
+        newToPile = [...toPile];
+      }
 
-    // if we have just moved the last card from the deal pile then we are now playing the game
-    if (fromPileId === PILE_ID_DEAL_PILE && !newFromPile.length) {
-      setGameState(GAME_STATE_PLAYING);
-    }
+      // take the top card from the from pile
+      const topCard = newFromPile.shift();
 
-    // if we have just moved the last card from the plonk pile then we are now into the end game
-    if (fromPileId === PILE_ID_PLONK_PILE && !newFromPile.length) {
-      setGameState(GAME_STATE_ENDGAME);
-    }
+      // and put it on the to pile
+      newToPile.unshift({ ...topCard, prevCol: col, prevRow: row });
+
+      // remember the new piles
+      piles[fromPileId] = newFromPile;
+      piles[toPileId] = newToPile;
+
+      // if we have just moved the last card from the deal pile then we are now playing the game
+      if (fromPileId === PILE_ID_DEAL_PILE && !newFromPile.length) {
+        setGameState(GAME_STATE_PLAYING);
+      }
+
+      // if we have just moved the last card from the plonk pile then we are now into the end game
+      if (fromPileId === PILE_ID_PLONK_PILE && !newFromPile.length) {
+        setGameState(GAME_STATE_ENDGAME);
+      }
+
+      // keep track of the new moving cards toPileIds
+      if (!newMovingCards.includes(toPileId)) {
+        newMovingCards.push(toPileId);
+      }
+    });
+
+    // put all the new piles back in the game state
+    Object.keys(piles).forEach((pileId) => {
+      setPile(pileId, piles[pileId]);
+    });
+
+    // remember we are moving these card
+    // note: cardAnimationComplete will have emptied out movingCards by now, and due to useState() behaviour, movingCards might not actually be empty - but this will reset it
+    setMovingCards(newMovingCards);
   }, [getPileWithInfo]);
 
   // do the next action (if any)
-  // this is called from useCallback functions in this GameStateContext
-  // and so, the set state functions will not have effected by this call (which I don't fully understand)
-  // so we pass in the current/new values for those states and set them here
+  // this is called from useCallback functions in this GameStateContext and so, the set state functions will not have effected by this call
+  // so we pass in the current/new values for those states and set them here - at the moment only actions with have been updated by this point
   const performNextAction = useCallback((theActions) => {
-    // if there already is an action in progress, then ignore this call - it will be called again when that action completes
-    // Note: we no longer call performNextAction when there is a currentAction in place - so commenting out this code
-    // if (currentAction) {
-    //   console.log(`performNextAction there is a currentAction ${JSON.stringify(currentAction)}`);
-    //   return;
-    // }
-
     // set the given pile
     const incrementNextDealPileId = () => {
       switch (nextDealPileId) {
@@ -639,9 +668,9 @@ export const GameStateContextProvider = ({ children }) => {
     let newActions = [...theActions];
 
     // we need to continue processing the actions until we have actually started to move a card
-    let cardMoving = false;
+    let cardsMoving = false;
 
-    while (!cardMoving) {
+    while (!cardsMoving) {
       // below could result in empty newActions - so check here
       if (!newActions.length) {
         break;
@@ -678,77 +707,76 @@ export const GameStateContextProvider = ({ children }) => {
       } else if (action === ACTION_MOVE_CARD) {
         // this action is to move the current top card from the named fromPileId to the named toPileId
         const { fromPileId, toPileId } = nextAction;
-        moveCard(fromPileId, toPileId);
+        moveCards([{ fromPileId, toPileId }]);
 
-        // remember we are moving this card
-        setCurrentMoveAction(nextAction);
-        cardMoving = true;
+        // cards are now moving, so we wait for animation to be complete
+        cardsMoving = true;
       } else if (action === ACTION_REALIGN_RIGHT_SORT) {
         // a card has just moved out of the right of the sort piles, so we need to realign that
         // this algorithm assumes there is only one empty pile - which is the one named in the action
-        // we convert this to the required MOVE_CARD actions
-        const moveActions = [];
+        // we convert this to a MOVE_CARDS action
+        const moves = [];
         let { nowEmptySortPileId } = nextAction;
         while (nowEmptySortPileId) {
           // while we have an empty sort pile id to fill - fill if the next to the left has content
           let addedAction = false;
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_13 && sortPile12.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_12, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_12, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_12;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_12 && sortPile11.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_11, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_11, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_11;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_11 && sortPile10.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_10, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_10, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_10;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_10 && sortPile9.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_9, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_9, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_9;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_9 && sortPile8.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_8, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_8, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_8;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_8 && sortPile7.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_7, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_7, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_7;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_7 && sortPile6.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_6, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_6, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_6;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_6 && sortPile5.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_5, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_5, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_5;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_5 && sortPile4.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_4, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_4, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_4;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_4 && sortPile3.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_3, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_3, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_3;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_3 && sortPile2.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_2, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_2, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_2;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_2 && sortPile1.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_1, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_1, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = null;
             addedAction = true;
           }
@@ -758,7 +786,7 @@ export const GameStateContextProvider = ({ children }) => {
           }
         }
         // put these new move actions to the front of the newsactions
-        newActions = [...moveActions, ...newActions];
+        newActions = [{ action: ACTION_MOVE_CARDS, moves }, ...newActions];
         console.log(`performNextAction: newActions new ${JSON.stringify(newActions)}`);
       } else if (action === ACTION_REALIGN_LEFT_SORT) {
         // a card has just moved out of the left of the sort piles, so we need to realign that
@@ -845,8 +873,6 @@ export const GameStateContextProvider = ({ children }) => {
     // remember the new actions
     setActions(newActions);
   }, [
-    moveCard,
-    nextDealPileId,
     dealPile,
     sortPile1,
     sortPile2,
@@ -861,32 +887,36 @@ export const GameStateContextProvider = ({ children }) => {
     sortPile11,
     sortPile12,
     sortPile13,
+    nextDealPileId,
+    moveCards,
   ]);
 
-  // the animation has completed for a card - if this card is the current MOVE_CARD action to pileId then that action is complete, so perform the next action (if there is one)
+  // the animation has completed for a card, which has now moved to the named pileId
+  // we remove this pileId from the movingCards and if that is empty we can then perform the next action (if there is one)
   const cardAnimationComplete = useCallback((pileId) => {
-    // if there is no current action, then nothing to do
-    if (!currentMoveAction) {
-      console.log(`cardAnimationComplete pileId ${pileId}: no current move action`);
+    // if there are no cards currently moving then nothing to do
+    if (!movingCards.length) {
+      console.error(`cardAnimationComplete pileId ${pileId}: no cards are currently moving`);
       return;
     }
 
-    const { toPileId } = currentMoveAction;
-
-    // if the current action is for a different pile, the nothing to do
-    if (toPileId !== pileId) {
-      console.log(`cardAnimationComplete pileId ${pileId}: toPileId ${toPileId} of current move action is not pileId`);
+    // check we are expecting this pileId
+    if (!movingCards.includes(pileId)) {
+      console.error(`cardAnimationComplete pileId ${pileId} not in movingCards ${JSON.stringify(movingCards)}`);
       return;
     }
 
     // current MOVE_CARD action is complete
-    console.log(`cardAnimationComplete: currentMoveAction ${JSON.stringify(currentMoveAction)} complete`);
+    console.log(`cardAnimationComplete: animation complete for pileId ${pileId}`);
 
-    // because performNextAction no longer cares if there is a current action (as it can never be called when there is one)
-    // and because setCurrentAction(null) here will not be effected before performNextAction() is called anyway - we don't setCurrentAction(null) now
-    // setCurrentAction(null);
+    // remove this pile from the moving cards
+    const newMovingCards = movingCards.filter((toPileId) => pileId !== toPileId);
+    setMovingCards(newMovingCards);
+    // note: performNextAction doesn't care about contents of movingCards - and will overwrite if it recreats - so we don't have to pass this new movingCards to it
 
     // the top card of this pile is now considered at this col/row
+    // so we need to update the prevCol/prevRow of the top card in this pile
+    // danger: going to update in situ - is okay - as that card is already at that position anyway
     // get the pile
     const { pile, col, row } = getPileWithInfo(pileId);
 
@@ -896,14 +926,20 @@ export const GameStateContextProvider = ({ children }) => {
       return;
     }
 
-    // danger: going to update in situ - is okay - as that card is already at that position anyway
     const topCard = pile[0];
     topCard.prevCol = col;
     topCard.prevRow = row;
 
-    // perform the next action
-    performNextAction(actions);
-  }, [currentMoveAction, performNextAction, actions, getPileWithInfo]);
+    // perform the next action, if all cards have been moved
+    if (!newMovingCards.length) {
+      performNextAction(actions);
+    }
+  }, [
+    actions,
+    movingCards,
+    getPileWithInfo,
+    performNextAction,
+  ]);
 
   // the pile flash animation has completed for the given pileId
   const pileFlashAnimationComplete = useCallback((completedPileId) => {
@@ -1630,7 +1666,6 @@ export const GameStateContextProvider = ({ children }) => {
 
     // the actions
     actions,
-    currentMoveAction,
 
     // the game state
     gameHasStarted: gameState !== GAME_STATE_START,
@@ -1719,7 +1754,6 @@ export const GameStateContextProvider = ({ children }) => {
     sortPile12,
     sortPile13,
     actions,
-    currentMoveAction,
     gameState,
     dealSpeedPercentage,
     setDealSpeedPercentage,
