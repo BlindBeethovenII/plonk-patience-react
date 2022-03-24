@@ -6,8 +6,8 @@ import Slider from './Slider';
 
 import GameStateContext from '../contexts/GameStateContext';
 
-const left = colToLeft(9, 1) + 30;
-const top = rowToTop(1);
+const left = colToLeft(9, 2) + 30;
+const top = rowToTop(2);
 
 const DealSpeedSlider = () => {
   const { dealSpeedPercentage, setDealSpeedPercentage } = useContext(GameStateContext);

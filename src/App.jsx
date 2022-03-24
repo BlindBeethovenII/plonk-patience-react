@@ -11,6 +11,7 @@ import SelectedPileFlash from './components/SelectedPileFlash';
 import PercentageComplete from './components/PercentageComplete';
 import ShowCountLabelsCheckbox from './components/ShowCountLabelsCheckbox';
 import ShowSortedIconsCheckbox from './components/ShowSortedIconsCheckbox';
+import FileEmptyPilesCheckbox from './components/FillEmptyPilesCheckbox';
 import ScoreHistory from './components/ScoreHistory';
 import SaveScoreButton from './components/SaveScoreButton';
 
@@ -29,6 +30,7 @@ const App = () => (
     <PercentageComplete />
     <ShowCountLabelsCheckbox />
     <ShowSortedIconsCheckbox />
+    <FileEmptyPilesCheckbox />
     <ScoreHistory />
     <SaveScoreButton />
     <DebugButton />

@@ -138,9 +138,10 @@ export const GameStateContextProvider = ({ children }) => {
   // the selected pile
   const [selectedPileId, setSelectedPileId] = useState(null);
 
-  // the show checkboxes
+  // the checkboxes
   const [showCountLabels, setShowCountLabels] = useLocalStorage('showCountLabels', true);
   const [showSortedIcons, setShowSortedIcons] = useLocalStorage('showSortedIcons', true);
+  const [fillEmptyPiles, setFillEmptyPiles] = useLocalStorage('fillEmptyPiles', true);
 
   // the sorted piles
   const [sortedPlayPileIds, setSortedPlayPileIds] = useState([]);
@@ -1712,11 +1713,13 @@ export const GameStateContextProvider = ({ children }) => {
     _setScoreHistory,
     setScoreHistory,
 
-    // show checkboxes functions
+    // checkboxes and set functions
     showCountLabels,
     setShowCountLabels,
     showSortedIcons,
     setShowSortedIcons,
+    fillEmptyPiles,
+    setFillEmptyPiles,
 
     // card functions
     resetCards,
@@ -1777,6 +1780,8 @@ export const GameStateContextProvider = ({ children }) => {
     setShowCountLabels,
     showSortedIcons,
     setShowSortedIcons,
+    fillEmptyPiles,
+    setFillEmptyPiles,
     performNextAction,
     cardAnimationComplete,
     pileFlashAnimationComplete,
