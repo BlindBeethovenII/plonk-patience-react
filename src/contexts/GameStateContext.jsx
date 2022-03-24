@@ -1141,8 +1141,8 @@ export const GameStateContextProvider = ({ children }) => {
       // the actions for this click
       const newActions = [];
 
-      // helper function to create the actions to put the selected pile back
-      const createActionsToPutSelectedPileBack = () => {
+      // if there is a selected pile then put it back here
+      if (selectedPileId) {
         if (sortPile1.length) {
           newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_1, toPileId: selectedPileId });
         }
@@ -1182,11 +1182,13 @@ export const GameStateContextProvider = ({ children }) => {
         if (sortPile13.length) {
           newActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_13, toPileId: selectedPileId });
         }
-      };
 
-      // if there is a selected pile then put it back here
-      if (selectedPileId) {
-        createActionsToPutSelectedPileBack();
+        // and this selected pile is now consider sorted, if we've not already marked it as sorted, and unless we are analysing
+        if (gameState !== GAME_STATE_ANALYSING && !sortedPlayPileIds.includes(selectedPileId)) {
+          const newSortedPlayPileIds = [...sortedPlayPileIds];
+          newSortedPlayPileIds.push(selectedPileId);
+          setSortedPlayPileIds(newSortedPlayPileIds);
+        }
       }
 
       // we need to find the play pile id, either that matches the top card or the plonk pile - or, when analysing, is actually the pile clicked on
@@ -1281,13 +1283,6 @@ export const GameStateContextProvider = ({ children }) => {
       for (let n = 0; n < nMoveActionsNeeded; n += 1) {
         newActions.push({ action: ACTION_MOVE_CARD, fromPileId: playPileId, toPileId: nextSortPileId });
         moveToNextSortPileId();
-      }
-
-      if (clickPileId === PILE_ID_PLONK_PILE) {
-        // if we came from the plonk pile, then this play pile can now be considered sorted - add to array (we don't care about duplicates - there will only be a few)
-        const newSortedPlayPileIds = [...sortedPlayPileIds];
-        newSortedPlayPileIds.push(playPileId);
-        setSortedPlayPileIds(newSortedPlayPileIds);
       }
 
       // perform the actions we've just set up - along with any we are still to do
