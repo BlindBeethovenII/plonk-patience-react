@@ -18,7 +18,7 @@ const divstyle = {
 };
 
 const Button = styled.button`
-  background: #761d38;
+  background: #ff1d38; 
   color: white;
   font-size: 1em;
   margin: 1em;
