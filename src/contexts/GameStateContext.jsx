@@ -784,7 +784,7 @@ export const GameStateContextProvider = ({ children }) => {
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_2 && sortPile1.length) {
             moves.push({ fromPileId: PILE_ID_SORT_PILE_1, toPileId: nowEmptySortPileId });
-            nowEmptySortPileId = null;
+            nowEmptySortPileId = null; // need to stop here - at the end of the list
             addedAction = true;
           }
           // if didn't add an action from this time round, then stop the loop
@@ -792,75 +792,75 @@ export const GameStateContextProvider = ({ children }) => {
             nowEmptySortPileId = null; // need to stop here - at the end of the list
           }
         }
-        // put these new move actions to the front of the newsactions
+        // put this move cards action to the front of the news actions
         newActions = [{ action: ACTION_MOVE_CARDS, moves }, ...newActions];
         console.log(`performNextAction: newActions new ${JSON.stringify(newActions)}`);
       } else if (action === ACTION_REALIGN_LEFT_SORT) {
         // a card has just moved out of the left of the sort piles, so we need to realign that
         // this algorithm assumes there is only one empty pile - which is the one named in the action
-        // we convert this to the required MOVE_CARD actions
-        const moveActions = [];
+        // we convert this to a MOVE_CARDS actions
+        const moves = [];
         let { nowEmptySortPileId } = nextAction;
         while (nowEmptySortPileId) {
           // while we have an empty sort pile id to fill - fill if the next to the left has content
           let addedAction = false;
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_1 && sortPile2.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_2, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_2, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_2;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_2 && sortPile3.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_3, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_3, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_3;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_3 && sortPile4.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_4, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_4, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_4;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_4 && sortPile5.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_5, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_5, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_5;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_5 && sortPile6.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_6, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_6, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_6;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_6 && sortPile7.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_7, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_7, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_7;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_7 && sortPile8.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_8, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_8, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_8;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_8 && sortPile9.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_9, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_9, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_9;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_9 && sortPile10.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_10, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_10, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_10;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_10 && sortPile11.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_11, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_11, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_11;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_11 && sortPile12.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_12, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_12, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = PILE_ID_SORT_PILE_12;
             addedAction = true;
           }
           if (nowEmptySortPileId === PILE_ID_SORT_PILE_12 && sortPile13.length) {
-            moveActions.push({ action: ACTION_MOVE_CARD, fromPileId: PILE_ID_SORT_PILE_13, toPileId: nowEmptySortPileId });
+            moves.push({ fromPileId: PILE_ID_SORT_PILE_13, toPileId: nowEmptySortPileId });
             nowEmptySortPileId = null; // need to stop here - at the end of the list
             addedAction = true;
           }
@@ -869,8 +869,8 @@ export const GameStateContextProvider = ({ children }) => {
             nowEmptySortPileId = null;
           }
         }
-        // put these new move actions to the front of the newsactions
-        newActions = [...moveActions, ...newActions];
+        // put this move cards actions to the front of the news actions
+        newActions = [{ action: ACTION_MOVE_CARDS, moves }, ...newActions];
         console.log(`performNextAction: newActions new ${JSON.stringify(newActions)}`);
       } else {
         console.error(`performNextAction unknown action ${action}`);
