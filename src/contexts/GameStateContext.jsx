@@ -566,11 +566,6 @@ export const GameStateContextProvider = ({ children }) => {
       piles[fromPileId] = newFromPile;
       piles[toPileId] = newToPile;
 
-      // if we have just moved the last card from the deal pile then we are now playing the game
-      if (fromPileId === PILE_ID_DEAL_PILE && !newFromPile.length) {
-        setGameState(GAME_STATE_PLAYING);
-      }
-
       // if we have just moved the last card from the plonk pile then we are now into the end game
       if (fromPileId === PILE_ID_PLONK_PILE && !newFromPile.length) {
         setGameState(GAME_STATE_ENDGAME);
@@ -937,12 +932,19 @@ export const GameStateContextProvider = ({ children }) => {
     topCard.prevCol = col;
     topCard.prevRow = row;
 
+    // if we have just completed the animation to the plonk pile while we are dealing and the deal pile is empty then we are now playing the game
+    if (pileId === PILE_ID_PLONK_PILE && !dealPile.length && gameState === GAME_STATE_DEALING) {
+      setGameState(GAME_STATE_PLAYING);
+    }
+
     // perform the next action, if all cards have been moved
     if (!newMovingCards.length) {
       performNextAction(actions);
     }
   }, [
     actions,
+    dealPile,
+    gameState,
     movingCards,
     getPileWithInfo,
     performNextAction,
