@@ -21,7 +21,6 @@ const FileEmptyPilesCheckbox = () => {
   };
 
   const handleCheckboxChange = (event) => {
-    // console.log(`handleCheckboxChange ${event.target.checked}`);
     setFillEmptyPiles(event.target.checked);
   };
 

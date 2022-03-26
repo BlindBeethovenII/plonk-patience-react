@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import useLocalStorage from 'use-local-storage';
 
+import logIfDevEnv from '../shared/logIfDevEnv';
 import { createShuffledDeck } from '../shared/card-functions';
 import {
   numberMatchesDealPile,
@@ -710,7 +711,7 @@ export const GameStateContextProvider = ({ children }) => {
 
     // protect ourselves for when there are no actions left to perform
     if (!theActions?.length) {
-      console.log('performNextAction: there are no actions to perform');
+      logIfDevEnv('performNextAction: there are no actions to perform');
       return;
     }
 
@@ -729,7 +730,7 @@ export const GameStateContextProvider = ({ children }) => {
 
       // get and process the next action
       const nextAction = newActions.shift();
-      console.log(`performNextAction: processing nextAction ${JSON.stringify(nextAction)}`);
+      logIfDevEnv(`performNextAction: processing nextAction ${JSON.stringify(nextAction)}`);
       const { action } = nextAction;
       if (action === ACTION_DEAL_CARD) {
         // this action is to deal the current top card from the deal pile to the nextDealPileId pile
@@ -845,7 +846,7 @@ export const GameStateContextProvider = ({ children }) => {
         }
         // put this move cards action to the front of the news actions
         newActions = [{ action: ACTION_MOVE_CARDS, moves }, ...newActions];
-        console.log(`performNextAction: newActions new ${JSON.stringify(newActions)}`);
+        logIfDevEnv(`performNextAction: newActions new ${JSON.stringify(newActions)}`);
       } else if (action === ACTION_REALIGN_LEFT_SORT) {
         // a card has just moved out of the left of the sort piles, so we need to realign that
         // this algorithm assumes there is only one empty pile - which is the one named in the action
@@ -922,7 +923,7 @@ export const GameStateContextProvider = ({ children }) => {
         }
         // put this move cards actions to the front of the news actions
         newActions = [{ action: ACTION_MOVE_CARDS, moves }, ...newActions];
-        console.log(`performNextAction: newActions new ${JSON.stringify(newActions)}`);
+        logIfDevEnv(`performNextAction: newActions new ${JSON.stringify(newActions)}`);
       } else {
         console.error(`performNextAction unknown action ${action}`);
       }
@@ -965,7 +966,7 @@ export const GameStateContextProvider = ({ children }) => {
     }
 
     // current MOVE_CARD action is complete
-    console.log(`cardAnimationComplete: animation complete for pileId ${pileId}`);
+    logIfDevEnv(`cardAnimationComplete: animation complete for pileId ${pileId}`);
 
     // remove this pile from the moving cards
     const newMovingCards = movingCards.filter((toPileId) => pileId !== toPileId);
@@ -1008,7 +1009,6 @@ export const GameStateContextProvider = ({ children }) => {
 
   // the pile flash animation has completed for the given pileId
   const pileFlashAnimationComplete = useCallback((completedPileId) => {
-    // console.log(`pileFlashAnimationComplete: pile flash complete for ${pileId}`);
     // remove this one from the piles that are flashing
     const newPileFlashes = pileFlashes.filter(({ pileId }) => pileId !== completedPileId);
     setPileFlashes(newPileFlashes);
@@ -1045,7 +1045,7 @@ export const GameStateContextProvider = ({ children }) => {
 
   // click on a card
   const clickOnCard = useCallback((clickPileId) => {
-    console.log(`clickOnCard: called for pile ${clickPileId}`);
+    logIfDevEnv(`clickOnCard: called for pile ${clickPileId}`);
 
     // not allowed to click if we still have actions to process
     if (actions?.length) {
@@ -1253,7 +1253,7 @@ export const GameStateContextProvider = ({ children }) => {
         // get the top card from the plonk pile, and convert to play pile id
         const { number: plonkPileNumber } = plonkPile[0];
         playPileId = numberToPlayPileId(plonkPileNumber);
-        console.log(`clickOnCard: clicked on ${plonkPileNumber} on plonk pile so selected pile is ${playPileId}`);
+        logIfDevEnv(`clickOnCard: clicked on ${plonkPileNumber} on plonk pile so selected pile is ${playPileId}`);
       }
 
       // need to know if this is the same as the currently selected pile (won't be during analysis as cannot click on the empty play pile that is flashing)
@@ -1349,7 +1349,7 @@ export const GameStateContextProvider = ({ children }) => {
     if (isUpPileId(clickPileId)) {
       if (gameState === GAME_STATE_ANALYSING) {
         // nope - not allowed now
-        console.log(`clickOnCard: not allowed to click on up pile ${clickPileId} while analysing`);
+        logIfDevEnv(`clickOnCard: not allowed to click on up pile ${clickPileId} while analysing`);
         const newPileFlashes = [...pileFlashes];
         newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_CROSS });
         setPileFlashes(newPileFlashes);
@@ -1410,7 +1410,7 @@ export const GameStateContextProvider = ({ children }) => {
     if (isDownPileId(clickPileId)) {
       if (gameState === GAME_STATE_ANALYSING) {
         // nope - not allowed now
-        console.log(`clickOnCard: not allowed to click on down pile ${clickPileId} while analysing`);
+        logIfDevEnv(`clickOnCard: not allowed to click on down pile ${clickPileId} while analysing`);
         const newPileFlashes = [...pileFlashes];
         newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_CROSS });
         setPileFlashes(newPileFlashes);
@@ -1470,7 +1470,7 @@ export const GameStateContextProvider = ({ children }) => {
 
     if (gameState === GAME_STATE_ANALYSING) {
       // in this if, the click was not the plonk pile, nor play pile, nor up or down pile, so it must be a sort pile now
-      console.log(`clickOnCard: not allowed to click on sort pile ${clickPileId} while analysing`);
+      logIfDevEnv(`clickOnCard: not allowed to click on sort pile ${clickPileId} while analysing`);
       const newPileFlashes = [...pileFlashes];
       newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_CROSS });
       setPileFlashes(newPileFlashes);
@@ -1489,7 +1489,7 @@ export const GameStateContextProvider = ({ children }) => {
     // get the top card from the click pile
     const { suit: clickPileSuit, number: clickPileNumber } = clickPile[0];
 
-    console.log(`clickOnCard: clicked on ${clickPileNumber} ${clickPileSuit}`);
+    logIfDevEnv(`clickOnCard: clicked on ${clickPileNumber} ${clickPileSuit}`);
 
     // first check the build up pile for this suit
     const upPileId = suitToUpPileId(clickPileSuit);
@@ -1671,7 +1671,7 @@ export const GameStateContextProvider = ({ children }) => {
     }
 
     // cannot move the card clicked on - so flash it, for user feedback for the click
-    console.log(`clickOnCard: flashing pile ${clickPileId}`);
+    logIfDevEnv(`clickOnCard: flashing pile ${clickPileId}`);
     const newPileFlashes = [...pileFlashes];
     newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_CROSS });
     setPileFlashes(newPileFlashes);
@@ -1778,6 +1778,17 @@ export const GameStateContextProvider = ({ children }) => {
       + downPileHearts.length
       + downPileDiamonds.length
       + downPileClubs.length) * 100) / 104).toFixed(0),
+
+    // up/down piles complete
+    updownPilesComplete: (
+      upPileSpades.length
+      + upPileHearts.length
+      + upPileDiamonds.length
+      + upPileClubs.length
+      + downPileSpades.length
+      + downPileHearts.length
+      + downPileDiamonds.length
+      + downPileClubs.length) === 104,
 
     // score history
     scoreHistory,

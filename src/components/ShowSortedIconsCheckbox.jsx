@@ -21,7 +21,6 @@ const ShowSortedIconsCheckbox = () => {
   };
 
   const handleCheckboxChange = (event) => {
-    // console.log(`handleCheckboxChange ${event.target.checked}`);
     setShowSortedIcons(event.target.checked);
   };
 

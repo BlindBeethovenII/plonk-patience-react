@@ -20,10 +20,20 @@ const StyledArrowUnsorted = styled(ArrowUnsorted)`
 
 // puts an infinite empty card white flash on the selected pile, if it exists - so user can see where the selected/sorted pile is going back to
 const SelectedPileFlash = () => {
-  const { selectedPileId, isSortedPlayPile, showSortedIcons } = useContext(GameStateContext);
+  const {
+    selectedPileId,
+    isSortedPlayPile,
+    showSortedIcons,
+    updownPilesComplete,
+  } = useContext(GameStateContext);
 
   // if not selected pile, then nothing to show
   if (!selectedPileId) {
+    return null;
+  }
+
+  // if up/down piles are complete, then nothing to show also
+  if (updownPilesComplete) {
     return null;
   }
 

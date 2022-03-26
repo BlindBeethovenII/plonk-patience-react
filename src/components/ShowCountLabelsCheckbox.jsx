@@ -21,7 +21,6 @@ const ShowCountLabelsCheckbox = () => {
   };
 
   const handleCheckboxChange = (event) => {
-    // console.log(`handleCheckboxChange ${event.target.checked}`);
     setShowCountLabels(event.target.checked);
   };
 
