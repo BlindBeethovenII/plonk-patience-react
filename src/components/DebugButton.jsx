@@ -6,7 +6,7 @@ import { colToLeft, rowToTop } from '../shared/card-functions';
 
 import GameStateContext from '../contexts/GameStateContext';
 
-const left = colToLeft(10, 3) - 16;
+const left = colToLeft(10, 3) - 14;
 const top = rowToTop(3) + 24;
 
 const divstyle = {
@@ -28,10 +28,10 @@ const Button = styled.button`
 `;
 
 const DebugButton = () => {
-  const { isDebugMode, setShowWin } = useContext(GameStateContext);
+  const { isDebugMode, setShowRedealButton } = useContext(GameStateContext);
 
   const doDebug = () => {
-    setShowWin(true);
+    setShowRedealButton(true);
   };
 
   // nothing to show if not in debug mode

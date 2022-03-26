@@ -6,7 +6,7 @@ import { colToLeft, rowToTop } from '../shared/card-functions';
 
 import GameStateContext from '../contexts/GameStateContext';
 
-const left = colToLeft(12, 4) - 14;
+const left = colToLeft(11, 4);
 const top = rowToTop(4);
 
 const divstyle = {
@@ -18,7 +18,7 @@ const divstyle = {
 };
 
 const Button = styled.button`
-  background: #761d38;
+  background: #ff1d38; 
   color: white;
   font-size: 1em;
   margin: 1em;
@@ -26,27 +26,26 @@ const Button = styled.button`
   border: 2px solid #761d38;
   border-radius: 3px;
 `;
-
-// NO LONGER USED
-
-const DealButton = () => {
-  const { dealCards, gameHasStarted } = useContext(GameStateContext);
+const RedealButton = () => {
+  const { dealCards, showRedealButton } = useContext(GameStateContext);
 
   // TODO this needs to be renamed when I change the approach to card dealing at the start of the game
   const dealCardAndAction = () => {
-    dealCards();
+    if (!showRedealButton) {
+      dealCards();
+    }
   };
 
-  // don't show the deal button if the game has started
-  if (gameHasStarted) {
+  // don't show the re-deal button until state says we should
+  if (!showRedealButton) {
     return null;
   }
 
   return (
     <div style={divstyle}>
-      <Button onClick={dealCardAndAction}>Deal</Button>
+      <Button onClick={dealCardAndAction}>Redeal</Button>
     </div>
   );
 };
 
-export default DealButton;
+export default RedealButton;

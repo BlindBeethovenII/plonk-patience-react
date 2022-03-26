@@ -16,6 +16,7 @@ import FileEmptyPilesCheckbox from './components/FillEmptyPilesCheckbox';
 import ScoreHistory from './components/ScoreHistory';
 import SaveScoreButton from './components/SaveScoreButton';
 import WinModal from './components/WinModal';
+import RedealButton from './components/RedealButton';
 
 import { GameStateContextProvider } from './contexts/GameStateContext';
 
@@ -36,6 +37,7 @@ const App = () => (
       <SaveScoreButton />
       <DebugButton />
       <WinModal />
+      <RedealButton />
     </GameStateContextProvider>
   </ModalProvider>
 );

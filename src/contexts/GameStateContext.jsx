@@ -153,6 +153,9 @@ export const GameStateContextProvider = ({ children }) => {
   // show a win
   const [showWin, setShowWin] = useState(false);
 
+  // show the redeal button
+  const [showRedealButton, setShowRedealButton] = useState(false);
+
   // add the current score to the score history
   const setScoreHistory = useCallback(() => {
     // calc the current score
@@ -176,6 +179,9 @@ export const GameStateContextProvider = ({ children }) => {
     if (currentScore === 104) {
       setShowWin(true);
     }
+
+    // we now need to show the redeal button
+    setShowRedealButton(true);
   }, [
     upPileSpades,
     upPileHearts,
@@ -1816,6 +1822,10 @@ export const GameStateContextProvider = ({ children }) => {
     showWin,
     setShowWin,
 
+    // the redeal button
+    showRedealButton,
+    setShowRedealButton,
+
     // card functions
     resetCards,
     performNextAction,
@@ -1878,6 +1888,7 @@ export const GameStateContextProvider = ({ children }) => {
     fillEmptyPiles,
     setFillEmptyPiles,
     showWin,
+    showRedealButton,
     performNextAction,
     cardAnimationComplete,
     pileFlashAnimationComplete,
