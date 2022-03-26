@@ -9,10 +9,18 @@ import GameStateContext from '../contexts/GameStateContext';
 const StyledModal = Modal.styled`
   width: 20rem;
   height: 20rem;
-  display: flex;
+  display: grid;
   align-items: center;
   justify-content: center;
-  background-color: white;
+  background-color: rgb(85,107,47);
+  border: 4px solid #761d38;
+  border-radius: 2px;
+`;
+
+const Text = styled.h2`
+  background: rgb(85,107,47);
+  color: white;
+  font-size: 1.2em;
 `;
 
 const Button = styled.button`
@@ -38,7 +46,8 @@ const WinModal = () => {
       onBackgroundClick={toggleModal}
       onEscapeKeydown={toggleModal}
     >
-      <span>Congratulation on the Win! You are a first class Plonker!</span>
+      <Text>Congratulation on the Win!</Text>
+      <Text>You are a first class Plonker!</Text>
       <Button onClick={toggleModal}>Continue</Button>
     </StyledModal>
   );
