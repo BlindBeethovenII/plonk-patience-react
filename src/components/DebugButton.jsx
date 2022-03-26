@@ -28,10 +28,10 @@ const Button = styled.button`
 `;
 
 const DebugButton = () => {
-  const { isDebugMode } = useContext(GameStateContext);
+  const { isDebugMode, setShowWin } = useContext(GameStateContext);
 
   const doDebug = () => {
-    // PUT CODE HERE
+    setShowWin(true);
   };
 
   // nothing to show if not in debug mode

@@ -1,9 +1,10 @@
 import React from 'react';
 
+import { ModalProvider } from 'styled-react-modal';
+
 import PlayArea from './components/PlayArea';
 import GitInfo from './components/GitInfo';
 import Piles from './components/Piles';
-// import DealButton from './components/DealButton';
 import DebugButton from './components/DebugButton';
 import DealSpeedSlider from './components/DealSpeedSlider';
 import PlaySpeedSlider from './components/PlaySpeedSlider';
@@ -14,27 +15,29 @@ import ShowSortedIconsCheckbox from './components/ShowSortedIconsCheckbox';
 import FileEmptyPilesCheckbox from './components/FillEmptyPilesCheckbox';
 import ScoreHistory from './components/ScoreHistory';
 import SaveScoreButton from './components/SaveScoreButton';
-
-// import MainMenuModal from './components/MainMenuModal';
+import WinModal from './components/WinModal';
 
 import { GameStateContextProvider } from './contexts/GameStateContext';
 
 const App = () => (
-  <GameStateContextProvider>
-    <PlayArea />
-    <GitInfo />
-    <Piles />
-    <SelectedPileFlash />
-    <DealSpeedSlider />
-    <PlaySpeedSlider />
-    <PercentageComplete />
-    <ShowCountLabelsCheckbox />
-    <ShowSortedIconsCheckbox />
-    <FileEmptyPilesCheckbox />
-    <ScoreHistory />
-    <SaveScoreButton />
-    <DebugButton />
-  </GameStateContextProvider>
+  <ModalProvider>
+    <GameStateContextProvider>
+      <PlayArea />
+      <GitInfo />
+      <Piles />
+      <SelectedPileFlash />
+      <DealSpeedSlider />
+      <PlaySpeedSlider />
+      <PercentageComplete />
+      <ShowCountLabelsCheckbox />
+      <ShowSortedIconsCheckbox />
+      <FileEmptyPilesCheckbox />
+      <ScoreHistory />
+      <SaveScoreButton />
+      <DebugButton />
+      <WinModal />
+    </GameStateContextProvider>
+  </ModalProvider>
 );
 
 export default App;

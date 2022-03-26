@@ -150,6 +150,9 @@ export const GameStateContextProvider = ({ children }) => {
   // historical scores
   const [scoreHistory, _setScoreHistory] = useLocalStorage('scoreHistory', []);
 
+  // show a win
+  const [showWin, setShowWin] = useState(false);
+
   // add the current score to the score history
   const setScoreHistory = useCallback(() => {
     // calc the current score
@@ -168,6 +171,11 @@ export const GameStateContextProvider = ({ children }) => {
 
     // and we are now in the analysing part of the game
     setGameState(GAME_STATE_ANALYSING);
+
+    // was it a win
+    if (currentScore === 104) {
+      setShowWin(true);
+    }
   }, [
     upPileSpades,
     upPileHearts,
@@ -1803,6 +1811,10 @@ export const GameStateContextProvider = ({ children }) => {
     fillEmptyPiles,
     setFillEmptyPiles,
 
+    // have we just won
+    showWin,
+    setShowWin,
+
     // card functions
     resetCards,
     performNextAction,
@@ -1864,6 +1876,7 @@ export const GameStateContextProvider = ({ children }) => {
     setShowSortedIcons,
     fillEmptyPiles,
     setFillEmptyPiles,
+    showWin,
     performNextAction,
     cardAnimationComplete,
     pileFlashAnimationComplete,
