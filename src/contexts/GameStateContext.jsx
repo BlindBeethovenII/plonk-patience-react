@@ -493,8 +493,8 @@ export const GameStateContextProvider = ({ children }) => {
     }
   };
 
-  // reset the cards to the starting position
-  const resetCards = () => {
+  // redeal the cards - resetting all the game state to the beginning of a new game
+  const redealCards = () => {
     setDealPile(createShuffledDeck());
     setPlonkPile([]);
     setPlayPile1([]);
@@ -537,6 +537,8 @@ export const GameStateContextProvider = ({ children }) => {
     setPileFlashes([]);
     setSelectedPileId(null);
     setSortedPlayPileIds([]);
+    setShowWin(false);
+    setShowRedealButton(false);
   };
 
   // helper function to find an empty play pile, if there is one - noting that this cannot be the selected pile (as its cards are being sorted)
@@ -1827,7 +1829,7 @@ export const GameStateContextProvider = ({ children }) => {
     setShowRedealButton,
 
     // card functions
-    resetCards,
+    redealCards,
     performNextAction,
     cardAnimationComplete,
     pileFlashAnimationComplete,

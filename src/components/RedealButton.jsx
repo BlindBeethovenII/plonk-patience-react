@@ -27,14 +27,7 @@ const Button = styled.button`
   border-radius: 3px;
 `;
 const RedealButton = () => {
-  const { dealCards, showRedealButton } = useContext(GameStateContext);
-
-  // TODO this needs to be renamed when I change the approach to card dealing at the start of the game
-  const dealCardAndAction = () => {
-    if (!showRedealButton) {
-      dealCards();
-    }
-  };
+  const { redealCards, showRedealButton } = useContext(GameStateContext);
 
   // don't show the re-deal button until state says we should
   if (!showRedealButton) {
@@ -43,7 +36,7 @@ const RedealButton = () => {
 
   return (
     <div style={divstyle}>
-      <Button onClick={dealCardAndAction}>Redeal</Button>
+      <Button onClick={redealCards}>Redeal</Button>
     </div>
   );
 };
