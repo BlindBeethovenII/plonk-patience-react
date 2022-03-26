@@ -25,6 +25,7 @@ import {
   SUIT_DIAMONDS,
   SUIT_CLUBS,
   PLAYAREA_X_OFFSET,
+  PILE_ID_DEAL_PILE,
   PILE_ID_PLONK_PILE,
 } from '../shared/constants';
 
@@ -53,7 +54,13 @@ const Card = (props) => {
     prevRow,
   } = card;
 
-  const { animationSpeedPercentage, cardAnimationComplete, clickOnCard } = useContext(GameStateContext);
+  const {
+    animationSpeedPercentage,
+    cardAnimationComplete,
+    clickOnCard,
+    gameDealing,
+    gameHasStarted,
+  } = useContext(GameStateContext);
 
   // we need to know if we are animating - both for the zIndex, and for card clicking
   const [isAnimating, setIsAnimating] = useState(false);
@@ -187,11 +194,15 @@ const Card = (props) => {
     </>
   );
 
-  const bullseye = pileId === PILE_ID_PLONK_PILE ? (
-    <div style={bullseyestyle}>
-      <StyledBullseye />
-    </div>
-  ) : null;
+  // bullseye shows when to click on deal pile or plonk pile (remember if pile empty then no card showing - so this code won't be reached in that situation)
+  let bullseye = null;
+  if ((pileId === PILE_ID_DEAL_PILE && !gameDealing) || (pileId === PILE_ID_PLONK_PILE && gameHasStarted && !gameDealing)) {
+    bullseye = (
+      <div style={bullseyestyle}>
+        <StyledBullseye />
+      </div>
+    );
+  }
 
   // showCardBack
   const cardBackShowing = (

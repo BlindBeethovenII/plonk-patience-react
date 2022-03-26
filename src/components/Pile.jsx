@@ -45,7 +45,7 @@ const Pile = (props) => {
   const { col, row } = pileIdToColRow(pileId);
 
   if (!cards?.length) {
-    // if there are no cards - if we are a up pile or a down pile, then show our suit
+    // if there are no cards and if we are a up pile or a down pile, then show our suit
     if (isUpPileId(pileId) || isDownPileId(pileId)) {
       let suit = SUIT_SPADES;
       if (pileId === PILE_ID_UP_PILE_H || pileId === PILE_ID_DOWN_PILE_H) {

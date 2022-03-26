@@ -87,7 +87,7 @@ const Piles = () => {
   const pilesToShow = [];
 
   // add in the deal pile
-  pilesToShow.push(<Pile key="deal_pile" pileId={PILE_ID_DEAL_PILE} cards={dealPile} />);
+  pilesToShow.push(<Pile key="deal_pile" pileId={PILE_ID_DEAL_PILE} cards={dealPile} faceDown />);
 
   // and the plonk pile
   pilesToShow.push(<Pile key="plonk_pile" pileId={PILE_ID_PLONK_PILE} cards={plonkPile} faceDown />);

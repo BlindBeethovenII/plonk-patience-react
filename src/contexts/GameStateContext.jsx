@@ -1757,6 +1757,7 @@ export const GameStateContextProvider = ({ children }) => {
     actions,
 
     // the game state
+    gameDealing: gameState === GAME_STATE_DEALING,
     gameHasStarted: gameState !== GAME_STATE_START,
     gameInEndGame: gameState === GAME_STATE_ENDGAME,
 
