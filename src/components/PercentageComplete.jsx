@@ -19,7 +19,7 @@ const BaseBox = styled.div`
   left: 0;
   top: 0;
   border-radius: 3px;
-  transition: width 10s ease-in-out;
+  transition: width 0.5s ease-in-out;
 `;
 
 const Background = styled(BaseBox)`
