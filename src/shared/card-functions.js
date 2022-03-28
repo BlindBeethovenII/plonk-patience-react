@@ -17,6 +17,7 @@ import {
   SUIT_DIAMONDS,
   SUIT_HEARTS,
   SUIT_SPADES,
+  PILE_ID_DEAL_PILE,
 } from './constants';
 
 import CardSuitSpadesImage from '../images/cards/spades.png';
@@ -80,8 +81,7 @@ export const createShuffledDeck = () => {
         id: generateCardId(1, suit, number),
         suit,
         number,
-        prevCol: 0,
-        prevRow: 4,
+        prevPileId: PILE_ID_DEAL_PILE,
       })));
 
   // in fact, we want two packs :-)
@@ -91,8 +91,7 @@ export const createShuffledDeck = () => {
         id: generateCardId(2, suit, number),
         suit,
         number,
-        prevCol: 0,
-        prevRow: 4,
+        prevPileId: PILE_ID_DEAL_PILE,
       })));
 
   // now shuffle them

@@ -195,113 +195,113 @@ export const GameStateContextProvider = ({ children }) => {
     _setScoreHistory,
   ]);
 
-  // convert a pile constant to the actual pile, with its col/row info
-  const getPileWithInfo = useCallback((pileId) => {
+  // convert a pile constant to the actual pile
+  const getPile = useCallback((pileId) => {
     switch (pileId) {
       case PILE_ID_DEAL_PILE:
-        return { pile: dealPile, col: 0, row: 4 };
+        return dealPile;
 
       case PILE_ID_PLONK_PILE:
-        return { pile: plonkPile, col: 4, row: 4 };
+        return plonkPile;
 
       case PILE_ID_PLAY_PILE_1:
-        return { pile: playPile1, col: 1, row: 0 };
+        return playPile1;
 
       case PILE_ID_PLAY_PILE_2:
-        return { pile: playPile2, col: 2, row: 0 };
+        return playPile2;
 
       case PILE_ID_PLAY_PILE_3:
-        return { pile: playPile3, col: 3, row: 0 };
+        return playPile3;
 
       case PILE_ID_PLAY_PILE_4:
-        return { pile: playPile4, col: 1, row: 1 };
+        return playPile4;
 
       case PILE_ID_PLAY_PILE_5:
-        return { pile: playPile5, col: 2, row: 1 };
+        return playPile5;
 
       case PILE_ID_PLAY_PILE_6:
-        return { pile: playPile6, col: 3, row: 1 };
+        return playPile6;
 
       case PILE_ID_PLAY_PILE_7:
-        return { pile: playPile7, col: 1, row: 2 };
+        return playPile7;
 
       case PILE_ID_PLAY_PILE_8:
-        return { pile: playPile8, col: 2, row: 2 };
+        return playPile8;
 
       case PILE_ID_PLAY_PILE_9:
-        return { pile: playPile9, col: 3, row: 2 };
+        return playPile9;
 
       case PILE_ID_PLAY_PILE_10:
-        return { pile: playPile10, col: 1, row: 3 };
+        return playPile10;
 
       case PILE_ID_PLAY_PILE_11:
-        return { pile: playPile11, col: 2, row: 3 };
+        return playPile11;
 
       case PILE_ID_PLAY_PILE_12:
-        return { pile: playPile12, col: 3, row: 3 };
+        return playPile12;
 
       case PILE_ID_UP_PILE_S:
-        return { pile: upPileSpades, col: 0, row: 0 };
+        return upPileSpades;
 
       case PILE_ID_UP_PILE_H:
-        return { pile: upPileHearts, col: 0, row: 1 };
+        return upPileHearts;
 
       case PILE_ID_UP_PILE_D:
-        return { pile: upPileDiamonds, col: 0, row: 2 };
+        return upPileDiamonds;
 
       case PILE_ID_UP_PILE_C:
-        return { pile: upPileClubs, col: 0, row: 3 };
+        return upPileClubs;
 
       case PILE_ID_DOWN_PILE_S:
-        return { pile: downPileSpades, col: 4, row: 0 };
+        return downPileSpades;
 
       case PILE_ID_DOWN_PILE_H:
-        return { pile: downPileHearts, col: 4, row: 1 };
+        return downPileHearts;
 
       case PILE_ID_DOWN_PILE_D:
-        return { pile: downPileDiamonds, col: 4, row: 2 };
+        return downPileDiamonds;
 
       case PILE_ID_DOWN_PILE_C:
-        return { pile: downPileClubs, col: 4, row: 3 };
+        return downPileClubs;
 
       case PILE_ID_SORT_PILE_1:
-        return { pile: sortPile1, col: -4, row: 5 };
+        return sortPile1;
 
       case PILE_ID_SORT_PILE_2:
-        return { pile: sortPile2, col: -3, row: 5 };
+        return sortPile2;
 
       case PILE_ID_SORT_PILE_3:
-        return { pile: sortPile3, col: -2, row: 5 };
+        return sortPile3;
 
       case PILE_ID_SORT_PILE_4:
-        return { pile: sortPile4, col: -1, row: 5 };
+        return sortPile4;
 
       case PILE_ID_SORT_PILE_5:
-        return { pile: sortPile5, col: 0, row: 5 };
+        return sortPile5;
 
       case PILE_ID_SORT_PILE_6:
-        return { pile: sortPile6, col: 1, row: 5 };
+        return sortPile6;
 
       case PILE_ID_SORT_PILE_7:
-        return { pile: sortPile7, col: 2, row: 5 };
+        return sortPile7;
 
       case PILE_ID_SORT_PILE_8:
-        return { pile: sortPile8, col: 3, row: 5 };
+        return sortPile8;
 
       case PILE_ID_SORT_PILE_9:
-        return { pile: sortPile9, col: 4, row: 5 };
+        return sortPile9;
 
       case PILE_ID_SORT_PILE_10:
-        return { pile: sortPile10, col: 5, row: 5 };
+        return sortPile10;
 
       case PILE_ID_SORT_PILE_11:
-        return { pile: sortPile11, col: 6, row: 5 };
+        return sortPile11;
 
       case PILE_ID_SORT_PILE_12:
-        return { pile: sortPile12, col: 7, row: 5 };
+        return sortPile12;
 
       case PILE_ID_SORT_PILE_13:
-        return { pile: sortPile13, col: 8, row: 5 };
+        return sortPile13;
 
       default:
         return null;
@@ -606,8 +606,8 @@ export const GameStateContextProvider = ({ children }) => {
 
     moves.forEach(({ fromPileId, toPileId }) => {
       // get the original info for the piles
-      const { pile: fromPile, col, row } = getPileWithInfo(fromPileId);
-      const { pile: toPile } = getPileWithInfo(toPileId);
+      const fromPile = getPile(fromPileId);
+      const toPile = getPile(toPileId);
 
       // create the new piles - taking one's we've already created if we've already processed this pile
       let newFromPile = [];
@@ -633,7 +633,7 @@ export const GameStateContextProvider = ({ children }) => {
       const topCard = newFromPile.shift();
 
       // and put it on the to pile
-      newToPile.unshift({ ...topCard, prevCol: col, prevRow: row });
+      newToPile.unshift({ ...topCard, prevPileId: fromPileId });
 
       // remember the new piles
       piles[fromPileId] = newFromPile;
@@ -658,7 +658,7 @@ export const GameStateContextProvider = ({ children }) => {
     // remember we are moving these card
     // note: cardAnimationComplete will have emptied out movingCards by now, and due to useState() behaviour, movingCards might not actually be empty - but this will reset it
     setMovingCards(newMovingCards);
-  }, [getPileWithInfo]);
+  }, [getPile]);
 
   // do the next action (if any)
   // this is called from useCallback functions in this GameStateContext and so, the set state functions will not have effected by this call
@@ -989,11 +989,10 @@ export const GameStateContextProvider = ({ children }) => {
     setMovingCards(newMovingCards);
     // note: performNextAction doesn't care about contents of movingCards - and will overwrite if it recreats - so we don't have to pass this new movingCards to it
 
-    // the top card of this pile is now considered at this col/row
-    // so we need to update the prevCol/prevRow of the top card in this pile
+    // the top card of this pile is now considered to be on this pile so we need to update the prevPileId of the top card in this pile
     // danger: going to update in situ - is okay - as that card is already at that position anyway
     // get the pile
-    const { pile, col, row } = getPileWithInfo(pileId);
+    const pile = getPile(pileId);
 
     // there should be at least one card in this pile by here - but checking anyway
     if (!pile?.length) {
@@ -1002,8 +1001,7 @@ export const GameStateContextProvider = ({ children }) => {
     }
 
     const topCard = pile[0];
-    topCard.prevCol = col;
-    topCard.prevRow = row;
+    topCard.prevPileId = pileId;
 
     // if we have just completed the animation to the plonk pile while we are dealing and the deal pile is empty then we are now playing the game
     if (pileId === PILE_ID_PLONK_PILE && !dealPile.length && gameState === GAME_STATE_DEALING) {
@@ -1019,7 +1017,7 @@ export const GameStateContextProvider = ({ children }) => {
     dealPile,
     gameState,
     movingCards,
-    getPileWithInfo,
+    getPile,
     performNextAction,
   ]);
 
@@ -1340,7 +1338,7 @@ export const GameStateContextProvider = ({ children }) => {
         }
       };
 
-      const { pile: playPile } = getPileWithInfo(playPileId);
+      const playPile = getPile(playPileId);
 
       // if the newly selected pile is the same as the previously selected pile then that pile will actually be empty
       // so in that case the number of cards to move is the length of newActions - 1 (for the above action to move the plonk card, we've just created)
@@ -1373,7 +1371,7 @@ export const GameStateContextProvider = ({ children }) => {
       }
 
       // get that pile
-      const { pile: upPile } = getPileWithInfo(clickPileId);
+      const upPile = getPile(clickPileId);
 
       // there should be at least one card in this pile by here - but checking anyway
       if (!upPile?.length) {
@@ -1388,7 +1386,7 @@ export const GameStateContextProvider = ({ children }) => {
       const downPileId = suitToDownPileId(upPileSuit);
 
       // get that down pile
-      const { pile: downPile } = getPileWithInfo(downPileId);
+      const downPile = getPile(downPileId);
 
       // remember our decision to move this card to the down pile
       let cardIsForDownPile = false;
@@ -1434,7 +1432,7 @@ export const GameStateContextProvider = ({ children }) => {
       }
 
       // get that pile
-      const { pile: downPile } = getPileWithInfo(clickPileId);
+      const downPile = getPile(clickPileId);
 
       // there should be at least one card in this pile by here - but checking anyway
       if (!downPile?.length) {
@@ -1449,7 +1447,7 @@ export const GameStateContextProvider = ({ children }) => {
       const upPileId = suitToUpPileId(downPileSuit);
 
       // get that up pile
-      const { pile: upPile } = getPileWithInfo(upPileId);
+      const upPile = getPile(upPileId);
 
       // remember our decision to move this card to the updown pile
       let cardIsForUpPile = false;
@@ -1494,7 +1492,7 @@ export const GameStateContextProvider = ({ children }) => {
     }
 
     // we must be on a play pile or a sort pile by this point
-    const { pile: clickPile } = getPileWithInfo(clickPileId);
+    const clickPile = getPile(clickPileId);
 
     // there should be at least one card in this pile by here - but checking anyway
     if (!clickPile?.length) {
@@ -1511,7 +1509,7 @@ export const GameStateContextProvider = ({ children }) => {
     const upPileId = suitToUpPileId(clickPileSuit);
 
     // get that up pile
-    const { pile: upPile } = getPileWithInfo(upPileId);
+    const upPile = getPile(upPileId);
 
     // remember our decision to move this card to the up pile
     let cardIsForUpPile = false;
@@ -1554,7 +1552,7 @@ export const GameStateContextProvider = ({ children }) => {
     const downPileId = suitToDownPileId(clickPileSuit);
 
     // get that down pile
-    const { pile: downPile } = getPileWithInfo(downPileId);
+    const downPile = getPile(downPileId);
 
     // remember our decision to move this card to the down pile
     let cardIsForDownPile = false;
@@ -1713,7 +1711,7 @@ export const GameStateContextProvider = ({ children }) => {
     sortedPlayPileIds,
     fillEmptyPiles,
     findEmptyPlayPile,
-    getPileWithInfo,
+    getPile,
     dealCards,
     performNextAction,
   ]);

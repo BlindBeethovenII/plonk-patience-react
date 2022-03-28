@@ -35,7 +35,6 @@ const Pile = (props) => {
   const {
     pileId,
     cards,
-    faceDown,
     showTick,
   } = props;
 
@@ -102,11 +101,11 @@ const Pile = (props) => {
 
   const card2 = cards[1];
   if (card2) {
-    componentsToShow.push(<Card key={card2.id} pileId={pileId} card={card2} faceDown={faceDown} underCard />);
+    componentsToShow.push(<Card key={card2.id} pileId={pileId} card={card2} underCard />);
   }
 
   // and now the top card
-  componentsToShow.push(<Card key={card.id} pileId={pileId} card={card} faceDown={faceDown} />);
+  componentsToShow.push(<Card key={card.id} pileId={pileId} card={card} />);
 
   // only show count label if we are not showing the 'complete' tick, and we are not on a sort pile
   if (showCountLabels && !showTick && !isSortPileId(pileId) && !isUpPileId(pileId) && !isDownPileId(pileId)) {
@@ -132,12 +131,10 @@ Pile.propTypes = {
     suit: PropTypes.string.isRequired,
     number: PropTypes.number.isRequired,
   })).isRequired,
-  faceDown: PropTypes.bool,
   showTick: PropTypes.bool,
 };
 
 Pile.defaultProps = {
-  faceDown: false,
   showTick: false,
 };
 

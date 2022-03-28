@@ -341,3 +341,6 @@ export const isPlayPileId = (pileId) => (
   || pileId === PILE_ID_PLAY_PILE_11
   || pileId === PILE_ID_PLAY_PILE_12
 );
+
+// is the pile id a face down pile?
+export const isFaceDownPileId = (pileId) => (pileId === PILE_ID_DEAL_PILE || pileId === PILE_ID_PLONK_PILE);
