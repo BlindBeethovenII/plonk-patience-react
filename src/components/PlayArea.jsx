@@ -124,12 +124,13 @@ const UpDownLabel = styled.h2`
 
 const uplabelstyle = {
   position: 'absolute',
-  left: `${PLAYAREA_X_OFFSET - UP_DOWN_GAP + 4}px`,
+  left: `${PLAYAREA_X_OFFSET - UP_DOWN_GAP}px`,
   top: `${4 * CARD_HEIGHT + 6}px`,
   width: '30px',
   height: '20px',
   textAlign: 'left',
   zIndex: 5,
+  fontSize: '0.9em',
 };
 
 const downlabelstyle = {
@@ -140,6 +141,7 @@ const downlabelstyle = {
   height: '20px',
   textAlign: 'left',
   zIndex: 5,
+  fontSize: '0.9em',
 };
 
 const PlayArea = () => (

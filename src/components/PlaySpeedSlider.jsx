@@ -7,7 +7,7 @@ import Slider from './Slider';
 import GameStateContext from '../contexts/GameStateContext';
 
 const left = colToLeft(9, 3) + 30;
-const top = rowToTop(3) - 16;
+const top = rowToTop(3) - 36;
 
 const PlaySpeedSlider = () => {
   const { playSpeedPercentage, setPlaySpeedPercentage } = useContext(GameStateContext);

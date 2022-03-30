@@ -134,7 +134,13 @@ const Slider = (props) => {
     top: `${top}px`,
     width: '160px',
     height: '60px',
+  };
+
+  const labelstyle = {
+    position: 'relative',
+    top: '-12px',
     textAlign: 'center',
+    fontSize: '0.8em',
   };
 
   return (
@@ -150,7 +156,7 @@ const Slider = (props) => {
           '--val': value,
         }}
       />
-      {label}
+      <div style={labelstyle}>{label}</div>
     </div>
   );
 };

@@ -17,6 +17,7 @@ import ScoreHistory from './components/ScoreHistory';
 import SaveScoreButton from './components/SaveScoreButton';
 import WinModal from './components/WinModal';
 import RedealButton from './components/RedealButton';
+import TutorialButton from './components/TutorialButton';
 
 import { GameStateContextProvider } from './contexts/GameStateContext';
 
@@ -38,6 +39,7 @@ const App = () => (
       <DebugButton />
       <WinModal />
       <RedealButton />
+      <TutorialButton />
     </GameStateContextProvider>
   </ModalProvider>
 );

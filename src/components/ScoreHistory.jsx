@@ -8,12 +8,12 @@ import { PLAYAREA_X_OFFSET } from '../shared/constants';
 import GameStateContext from '../contexts/GameStateContext';
 
 const left = colToLeft(5, 6) + PLAYAREA_X_OFFSET;
-const top = rowToTop(6) - 4;
+const top = rowToTop(6) - 16;
 
 const Label = styled.p`
   background: #761d38;
   color: white;
-  font-size: 1em;
+  font-size: 0.7em;
   margin: 1em;
   padding: 0.2em 1em 0.2em 0.2em;
   border: 1px solid #761d38;
@@ -50,7 +50,7 @@ const ScoreHistory = () => {
     position: 'absolute',
     left: `${left}px`,
     top: `${top}px`,
-    height: '20px',
+    height: '16px',
     textAlign: 'left',
     pointerEvents: 'none',
     zIndex: 5,

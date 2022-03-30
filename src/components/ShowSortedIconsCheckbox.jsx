@@ -18,6 +18,7 @@ const ShowSortedIconsCheckbox = () => {
     position: 'absolute',
     left: `${left}px`,
     top: `${top}px`,
+    fontSize: '0.8em',
   };
 
   const handleCheckboxChange = (event) => {

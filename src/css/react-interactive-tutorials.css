@@ -1,0 +1,134 @@
+@-webkit-keyframes directionPulse {
+  0% {
+    transform: scale(1); }
+  50% {
+    transform: scale(1.05); }
+  100% {
+    transform: scale(1); } }
+
+@keyframes directionPulse {
+  0% {
+    transform: scale(1); }
+  50% {
+    transform: scale(1.05); }
+  100% {
+    transform: scale(1); } }
+
+.react-tutorial-container .status, .react-tutorial-container .skipper {
+  position: fixed;
+  bottom: 0;
+  width: 300px;
+  padding: 20px;
+  color: #fff;
+  z-index: 1052; }
+
+.react-tutorial-container .status {
+  left: 0;
+  border-top-right-radius: 4px;
+  background: rgba(0, 0, 0, 0.85);
+  transition: background 0.2s ease; }
+  .react-tutorial-container .status h4 {
+    text-align: center;
+    margin: 0; }
+  .react-tutorial-container .status div.actions {
+    margin-top: 20px; }
+    .react-tutorial-container .status div.actions a {
+      margin: 0; }
+
+.react-tutorial-container.active .status {
+  background: rgba(0, 0, 0, 0.15); }
+
+.react-tutorial-container .skipper {
+  display: none;
+  right: 0; }
+  .react-tutorial-container .skipper p {
+    text-align: center; }
+    .react-tutorial-container .skipper p:last-child {
+      margin-bottom: 0; }
+
+.react-tutorial-container.active .skipper {
+  display: block; }
+
+.react-tutorial-container ul.steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: block;
+  text-align: center; }
+  .react-tutorial-container ul.steps li {
+    display: inline-block;
+    margin: 0 2px;
+    opacity: 0.5; }
+    .react-tutorial-container ul.steps li.active {
+      opacity: 1; }
+
+.react-tutorial-container .blackout, .react-tutorial-container .announcements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+  .react-tutorial-container .blackout div.too-high, .react-tutorial-container .blackout div.too-low, .react-tutorial-container .blackout div.announcement, .react-tutorial-container .announcements div.too-high, .react-tutorial-container .announcements div.too-low, .react-tutorial-container .announcements div.announcement {
+    position: fixed;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 24px; }
+
+.react-tutorial-container .announcements {
+  z-index: 1051; }
+  .react-tutorial-container .announcements div.announcement {
+    font-size: 20px;
+    line-height: 1.6em;
+    white-space: pre-wrap;
+    text-align: left;
+    max-width: 600px;
+    left: 50%;
+    -ms-transform: translateY(-50%) translateX(-50%);
+    transform: translateY(-50%) translateX(-50%); }
+    .react-tutorial-container .announcements div.announcement div.dismiss {
+      margin-top: 2em; }
+
+.react-tutorial-container .blackout {
+  background: #000;
+  z-index: 1050;
+  opacity: 0;
+  transition: opacity 0.2s ease; }
+  .react-tutorial-container .blackout div.too-high, .react-tutorial-container .blackout div.too-low {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 1s ease;
+    -webkit-animation: directionPulse 1s infinite;
+    animation: directionPulse 1s infinite; }
+  .react-tutorial-container .blackout.too-high div.too-high {
+    visibility: visible;
+    opacity: 1; }
+  .react-tutorial-container .blackout.too-low div.too-low {
+    visibility: visible;
+    opacity: 1; }
+
+.react-tutorial-container.active .blackout {
+  opacity: 0.85; }
+
+.react-tutorial-container div.complete {
+  color: #fff;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  max-width: 500px;
+  -ms-transform: translateY(-51%) translateX(-50%);
+  transform: translateY(-51%) translateX(-50%);
+  margin: 0 auto;
+  z-index: 1051; }
+  .react-tutorial-container div.complete h2 {
+    margin: 0;
+    margin-bottom: 2em; }
+  .react-tutorial-container div.complete p {
+    white-space: pre-wrap; }
+  .react-tutorial-container div.complete a {
+    margin-top: 2em; }

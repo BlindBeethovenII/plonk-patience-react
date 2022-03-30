@@ -8,7 +8,7 @@ import { PLAYAREA_X_OFFSET } from '../shared/constants';
 import GameStateContext from '../contexts/GameStateContext';
 
 const Container = styled.div`
-  height: 22px;
+  height: 24px;
   width: 100%;
   position: relative;
 `;
@@ -31,6 +31,7 @@ const Progress = styled(BaseBox)`
   background: #ffc069;
   width: ${({ percent }) => percent}%;
   text-align: center;
+  font-size: 0.7em;
 `;
 
 // const Label = styled.div`
