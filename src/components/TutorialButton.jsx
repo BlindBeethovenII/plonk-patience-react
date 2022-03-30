@@ -34,21 +34,21 @@ const Button = styled.button`
 `;
 
 const TUTORIALS = {
-  plonkTutorial: {
-    key: 'plonkTutorial',
+  plonk: {
+    key: 'plonk',
     title: 'Plonk Tutorial',
     steps: [
       {
-        key: 'anywhere',
+        key: 'intro',
         announce: paragraphs`
-          The tutorial will present itself as a series of modals with annotations and prompts on how
-          to progress. This, in fact, is an announcement-style tutorial step.
-
-          Feel free to hide / show this modal at any point to attempt to break the flow of the
-          tutorial. You should not be able to force the tutorial into any situtation it cannot
-          recover from.
+          Welcome to Plonk! 
+          
+          Plonk! is a two card patience for a single player. 
+          It is fairly balanced between skill and luck.
+          But it is a difficult patience to complete.
+          You will be doing well if you complete it 1 go in 10.
         `,
-        announceDismiss: "Okay, let's begin",
+        announceDismiss: 'Do tell me more',
         activeWhen: [],
       },
     ],
@@ -67,7 +67,7 @@ const TutorialButton = () => {
 
   return (
     <div style={divstyle}>
-      <Button onClick={() => startTutorial('plonkTutorial')}>Start Tutorial</Button>
+      <Button onClick={() => startTutorial('plonk')}>Start Tutorial</Button>
     </div>
   );
 };

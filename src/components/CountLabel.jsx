@@ -11,7 +11,7 @@ const Label = styled.h2`
   background: rgb(85,107,47);
   color: white;
   font-size: 0.6em;
-  margin: 0.6em;
+  margin: 0.4em;
   padding: 0.2em 1em 0.2em 0.2em;
   border: 1px solid #761d38;
   border-radius: 2px;
@@ -41,7 +41,7 @@ const CountLabel = (props) => {
     left: `${left}px`,
     top: `${top}px`,
     width: `${width}px`,
-    height: '20px',
+    height: '16px',
     textAlign: 'left',
     pointerEvents: 'none',
     zIndex: 5,
