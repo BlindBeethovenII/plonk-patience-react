@@ -45,13 +45,53 @@ const TUTORIALS = {
           
           Plonk! is a two card patience for a single player. 
           It is fairly balanced between skill and luck.
-          But it is a difficult patience to complete.
-          You will be doing well if you complete it 1 go in 10.
+
+          However it is a difficult patience to complete.
+          You will be doing well if you complete the game 1 go in every 10 goes.
         `,
-        announceDismiss: 'Do tell me more',
+        announceDismiss: 'Do Tell Me More',
         activeWhen: [],
       },
+      {
+        key: 'dealpile',
+        highlight: '#DEAL_PILE',
+        highlightBack: '#fff',
+        annotateAfter: '#DEAL_PILE',
+        announce: paragraphs`
+          This is the Deal Pile.
+          
+          At the start of each game, the 104 cards of two decks of cards are shuffled and placed face down on this Deal Pile.
+        `,
+        announceDismiss: 'Okay',
+        activeWhen: [
+          {
+            compare: 'checkpointComplete',
+            checkpoint: 'plonk_intro',
+          },
+        ],
+      },
+      {
+        key: 'laststep',
+        announce: paragraphs`
+          Tutorial Last Step.
+        `,
+        announceDismiss: 'Okay',
+        activeWhen: [
+          {
+            compare: 'checkpointComplete',
+            checkpoint: 'plonk_plonkpile',
+          },
+        ],
+      },
     ],
+    complete: {
+      on: 'checkpointReached',
+      checkpoint: 'laststep',
+      title: 'Plonk! Tutorial Complete',
+      message: paragraphs`
+        Good Luck
+      `,
+    },
   },
 };
 

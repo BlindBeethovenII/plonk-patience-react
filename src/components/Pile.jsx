@@ -121,7 +121,11 @@ const Pile = (props) => {
   }
 
   // and return them
-  return componentsToShow;
+  return (
+    <div id={pileId}>
+      {componentsToShow}
+    </div>
+  );
 };
 
 Pile.propTypes = {
