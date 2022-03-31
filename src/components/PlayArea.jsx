@@ -13,7 +13,6 @@ import BorderBottomRightImage from '../images/borders/bottomright.png';
 import BorderRightImage from '../images/borders/right.png';
 
 import {
-  COL_INDEXES,
   ROW_INDEXES,
   PLAYAREA_X_OFFSET,
   UP_DOWN_GAP,
@@ -150,13 +149,25 @@ const PlayArea = () => (
       <rect style={playbackgroundrect} />
     </svg>
     <img src={PlayAreaImage} alt="playarea" style={playarea} />
-    <img src={PlayAreaImage} alt="playareaup" style={playareaup} />
-    <div style={uplabelstyle}>
-      <UpDownLabel>Up</UpDownLabel>
+    <div id="play_area_up">
+      <img src={PlayAreaImage} alt="playareaup" style={playareaup} />
+      <BlankSpace key="blankspace_0_0" col={0} row={0} />
+      <BlankSpace key="blankspace_0_1" col={0} row={1} />
+      <BlankSpace key="blankspace_0_2" col={0} row={2} />
+      <BlankSpace key="blankspace_0_3" col={0} row={3} />
+      <div style={uplabelstyle}>
+        <UpDownLabel>Up</UpDownLabel>
+      </div>
     </div>
-    <img src={PlayAreaImage} alt="playareadown" style={playareadown} />
-    <div style={downlabelstyle}>
-      <UpDownLabel>Down</UpDownLabel>
+    <div id="play_area_down">
+      <img src={PlayAreaImage} alt="playareadown" style={playareadown} />
+      <BlankSpace key="blankspace_4_0" col={4} row={0} />
+      <BlankSpace key="blankspace_4_1" col={4} row={1} />
+      <BlankSpace key="blankspace_4_2" col={4} row={2} />
+      <BlankSpace key="blankspace_4_3" col={4} row={3} />
+      <div style={downlabelstyle}>
+        <UpDownLabel>Down</UpDownLabel>
+      </div>
     </div>
     <img src={BorderTopLeftImage} alt="bordertopleft" style={bordertopleft} />
     <img src={BorderTopImage} alt="bordertop" style={bordertop} />
@@ -166,7 +177,7 @@ const PlayArea = () => (
     <img src={BorderTopRightImage} alt="bordertopright" style={bordertopright} />
     <img src={BorderBottomRightImage} alt="borderbottomright" style={borderbottomright} />
     <img src={BorderRightImage} alt="borderright" style={borderright} />
-    {COL_INDEXES.map((col) =>
+    {[1, 2, 3].map((col) =>
       ROW_INDEXES.map((row) => <BlankSpace key={`blankspace_${col}_${row}`} col={col} row={row} />))}
     <BlankSpace key="blankspace_0_4" col={0} row={4} />
     <BlankSpace key="blankspace_4_4" col={4} row={4} />

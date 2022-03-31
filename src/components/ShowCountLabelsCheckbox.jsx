@@ -26,7 +26,7 @@ const ShowCountLabelsCheckbox = () => {
   };
 
   return (
-    <div style={divstyle}>
+    <div id="show_count_labels" style={divstyle}>
       <label>
         <Checkbox
           checked={showCountLabels}
