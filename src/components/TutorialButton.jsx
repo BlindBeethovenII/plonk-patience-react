@@ -44,9 +44,9 @@ const TUTORIALS = {
           Welcome to Plonk! 
           
           Plonk! is a two card patience for a single player. 
-          It is fairly balanced between skill and luck.
+          You will need both skill and luck to complete a game.
 
-          However it is a difficult patience to complete.
+          It is a difficult patience to complete.
           You will be doing well if you complete the game 1 go in every 10 goes.
         `,
         announceDismiss: 'Do Tell Me More',
@@ -94,10 +94,10 @@ const TUTORIALS = {
         announce: paragraphs`
           Here is the Show Count Labels configuration option.
 
-          The game is a little harder if the Count Labels are NOT shown.
+          The game is a little harder if the Count Labels are not shown.
 
-          Note: Configurations are stored in the browser local storage,
-          so these are remembered if you play the game again using the same browser.
+          Note: The configuration options that you set are stored in the browser local storage,
+          so, if you play the game again using the same browser, your previous configuration options are remembered.
         `,
         announceDismiss: 'Okay',
         activeWhen: [
@@ -132,6 +132,8 @@ const TUTORIALS = {
         annotateAfter: '#play_area_down',
         announce: paragraphs`
           And there are 4 build down piles.  These build down from Kings to Aces, pile one for each suit.
+
+          You have completed a game of Plonk! if all build up and build down piles contain 13 cards.
         `,
         announceDismiss: 'Okay',
         activeWhen: [
