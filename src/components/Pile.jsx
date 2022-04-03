@@ -7,27 +7,12 @@ import CountLabel from './CountLabel';
 import TickIcon from './TickIcon';
 import SortedIcon from './SortedIcon';
 
-import { colToLeft, rowToTop, cardSuitToImage } from '../shared/card-functions';
 import {
   pileIdToColRow,
   isSortPileId,
   isUpPileId,
   isDownPileId,
 } from '../shared/pile-functions';
-
-import {
-  PILE_ID_UP_PILE_H,
-  PILE_ID_UP_PILE_D,
-  PILE_ID_UP_PILE_C,
-  PILE_ID_DOWN_PILE_H,
-  PILE_ID_DOWN_PILE_D,
-  PILE_ID_DOWN_PILE_C,
-  SUIT_CLUBS,
-  SUIT_DIAMONDS,
-  SUIT_HEARTS,
-  SUIT_SPADES,
-  PLAYAREA_X_OFFSET,
-} from '../shared/constants';
 
 import GameStateContext from '../contexts/GameStateContext';
 
@@ -44,53 +29,7 @@ const Pile = (props) => {
   const { col, row } = pileIdToColRow(pileId);
 
   if (!cards?.length) {
-    // if there are no cards and if we are a up pile or a down pile, then show our suit
-    if (isUpPileId(pileId) || isDownPileId(pileId)) {
-      let suit = SUIT_SPADES;
-      if (pileId === PILE_ID_UP_PILE_H || pileId === PILE_ID_DOWN_PILE_H) {
-        suit = SUIT_HEARTS;
-      }
-      if (pileId === PILE_ID_UP_PILE_D || pileId === PILE_ID_DOWN_PILE_D) {
-        suit = SUIT_DIAMONDS;
-      }
-      if (pileId === PILE_ID_UP_PILE_C || pileId === PILE_ID_DOWN_PILE_C) {
-        suit = SUIT_CLUBS;
-      }
-
-      // this is the same code from Card.jsx - with minor adjustments
-      let height = '42px';
-      if (suit === SUIT_SPADES) {
-        height = '38px';
-      } else if (suit === SUIT_CLUBS) {
-        height = '40px';
-      }
-
-      const cardsuitstyle = {
-        position: 'absolute',
-        left: '12px',
-        top: suit === SUIT_SPADES ? '22px' : '20px',
-        width: '40px',
-        height,
-        opacity: 0.5,
-      };
-
-      const cardsuit = <img src={cardSuitToImage(suit)} alt="cardsuit" style={cardsuitstyle} />;
-
-      const shadowSuitDivStyle = {
-        position: 'absolute',
-        zIndex: 0,
-        left: colToLeft(col, row) + PLAYAREA_X_OFFSET,
-        top: rowToTop(row),
-      };
-
-      return (
-        <div style={shadowSuitDivStyle}>
-          {cardsuit}
-        </div>
-      );
-    }
-
-    // otherwise nothing to show
+    // if there are no cards then nothing to show
     return null;
   }
 

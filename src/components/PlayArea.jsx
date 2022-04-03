@@ -17,6 +17,10 @@ import {
   UP_DOWN_GAP,
   CARD_HEIGHT,
   CARD_WIDTH,
+  SUIT_SPADES,
+  SUIT_HEARTS,
+  SUIT_DIAMONDS,
+  SUIT_CLUBS,
 } from '../shared/constants';
 
 import BlankSpace from './BlankSpace';
@@ -150,20 +154,20 @@ const PlayArea = () => (
     <img src={PlayAreaImage} alt="playarea" style={playarea} />
     <div id="play_area_up">
       <img src={PlayAreaImage} alt="playareaup" style={playareaup} />
-      <BlankSpace key="blankspace_0_0" col={0} row={0} />
-      <BlankSpace key="blankspace_0_1" col={0} row={1} />
-      <BlankSpace key="blankspace_0_2" col={0} row={2} />
-      <BlankSpace key="blankspace_0_3" col={0} row={3} />
+      <BlankSpace key="blankspace_0_0" col={0} row={0} suit={SUIT_SPADES} />
+      <BlankSpace key="blankspace_0_1" col={0} row={1} suit={SUIT_HEARTS} />
+      <BlankSpace key="blankspace_0_2" col={0} row={2} suit={SUIT_DIAMONDS} />
+      <BlankSpace key="blankspace_0_3" col={0} row={3} suit={SUIT_CLUBS} />
       <div style={uplabelstyle}>
         <UpDownLabel>Up</UpDownLabel>
       </div>
     </div>
     <div id="play_area_down">
       <img src={PlayAreaImage} alt="playareadown" style={playareadown} />
-      <BlankSpace key="blankspace_4_0" col={4} row={0} />
-      <BlankSpace key="blankspace_4_1" col={4} row={1} />
-      <BlankSpace key="blankspace_4_2" col={4} row={2} />
-      <BlankSpace key="blankspace_4_3" col={4} row={3} />
+      <BlankSpace key="blankspace_4_0" col={4} row={0} suit={SUIT_SPADES} />
+      <BlankSpace key="blankspace_4_1" col={4} row={1} suit={SUIT_HEARTS} />
+      <BlankSpace key="blankspace_4_2" col={4} row={2} suit={SUIT_DIAMONDS} />
+      <BlankSpace key="blankspace_4_3" col={4} row={3} suit={SUIT_CLUBS} />
       <div style={downlabelstyle}>
         <UpDownLabel>Down</UpDownLabel>
       </div>
