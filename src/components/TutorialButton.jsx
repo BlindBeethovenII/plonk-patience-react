@@ -58,7 +58,7 @@ const TUTORIALS = {
         key: 'dealpile',
         highlight: '#DEAL_PILE',
         highlightBack: '#fff',
-        annotateAfter: '#DEAL_PILE',
+        annotateBottom: '#DEAL_PILE',
         announce: {
           p: paragraphs(`
             This is the Deal Pile.
@@ -78,7 +78,7 @@ const TUTORIALS = {
         key: 'dealpilelabel',
         highlight: '#DEAL_PILE',
         highlightBack: '#fff',
-        annotateAfter: '#DEAL_PILE',
+        annotateBottom: '#DEAL_PILE',
         announce: {
           p: paragraphs(`
             Each pile can optionally show a count label, to indicate how many cards are in that pile.
@@ -96,7 +96,7 @@ const TUTORIALS = {
         key: 'showcountlabelcheckbox',
         highlight: '#show_count_labels',
         highlightBack: '#fff',
-        annotateAfter: '#show_count_labels',
+        annotateBottom: '#show_count_labels',
         announce: {
           p: paragraphs(`
             Here is the Show Count Labels configuration option.
@@ -119,7 +119,7 @@ const TUTORIALS = {
         key: 'playareaup',
         highlight: '#play_area_up',
         highlightBack: '#fff',
-        annotateAfter: '#play_area_up',
+        annotateBottom: '#play_area_up',
         announce: {
           p: paragraphs(`
             Plonk! has two sets of build piles.
@@ -139,7 +139,7 @@ const TUTORIALS = {
         key: 'playareadown',
         highlight: '#play_area_down',
         highlightBack: '#fff',
-        annotateAfter: '#play_area_down',
+        annotateBottom: '#play_area_down',
         announce: {
           p: paragraphs(`
             And there are 4 build down piles.  These build down from Kings to Aces, pile one for each suit.
@@ -159,7 +159,7 @@ const TUTORIALS = {
         key: 'plonkpile',
         highlight: '#PLONK_PILE',
         highlightBack: '#fff',
-        annotateAfter: '#PLONK_PILE',
+        annotateBottom: '#PLONK_PILE',
         announce: {
           p: paragraphs(`
             This is the Plonk! pile.
@@ -177,7 +177,7 @@ const TUTORIALS = {
         key: 'playarea',
         highlight: '#play_area',
         highlightBack: '#fff',
-        annotateAfter: '#play_area',
+        annotateBottom: '#play_area',
         announce: {
           p: paragraphs(`
             There are 12 play piles in the central area.
@@ -203,6 +203,7 @@ const TUTORIALS = {
 
 // the tutorial options
 const tutorialOptions = {
+  centralizeAnnouncements: true,
   translations: {
     complete: 'End Tutorial',
     hideHelp: 'Hide Tutorial',
@@ -211,6 +212,11 @@ const tutorialOptions = {
 };
 
 registerTutorials(TUTORIALS, tutorialOptions);
+
+// // their default transFunc logs "why no override?" to the console, even though the extracted code doesn't??
+// // so setting my own
+// const myTransFunc = (s) => s;
+// setTransFunc(myTransFunc);
 
 const TutorialButton = () => {
   const { gameHasStarted } = useContext(GameStateContext);

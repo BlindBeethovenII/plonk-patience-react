@@ -88,8 +88,6 @@
     text-align: left;
     max-width: 600px;
     left: 50%;
-    background: rgba(0, 0, 0, 0.85);
-    opacity: 0.7;
     -ms-transform: translateY(-50%) translateX(-50%);
     transform: translateY(-50%) translateX(-50%); }
     .react-tutorial-container .announcements div.announcement div.dismiss {
@@ -114,7 +112,7 @@
     opacity: 1; }
 
 .react-tutorial-container.active .blackout {
-  opacity: 0.5; }
+  opacity: 0.65; }
 
 .react-tutorial-container div.complete {
   color: #fff;
