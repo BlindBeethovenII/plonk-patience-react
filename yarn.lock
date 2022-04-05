@@ -7336,10 +7336,10 @@ react-error-overlay@^6.0.10:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.10.tgz#0fe26db4fa85d9dbb8624729580e90e7159a59a6"
   integrity sha512-mKR90fX7Pm5seCOfz8q9F+66VCc1PGsWSBxKbITjfKVQHMNF2zudxHnMdJiB1fRCb+XsbQV9sO9DCkgsMQgBIA==
 
-react-interactive-tutorials@^0.1.11:
-  version "0.1.11"
-  resolved "https://registry.yarnpkg.com/react-interactive-tutorials/-/react-interactive-tutorials-0.1.11.tgz#d923357c5d491d74a2731a2fbe037d4f2d6ecf98"
-  integrity sha1-2SM1fF1JHXSicxovvgN9Ty1uz5g=
+react-interactive-tutorials-cont@^0.1.29:
+  version "0.1.29"
+  resolved "https://registry.yarnpkg.com/react-interactive-tutorials-cont/-/react-interactive-tutorials-cont-0.1.29.tgz#58978b9ba471a3282477ef98d2a6bc67712f4c17"
+  integrity sha512-HgniGN50EyB3mby5+vjfOLdqqdS8jtYe3johHWR6xMa7zQLT/YNUpZVvThGK9lcaKXkRdEM8WXSQjzb1GKGqeg==
   dependencies:
     classnames "^2.2.5"
     clone "^1.0.2"
@@ -7347,6 +7347,7 @@ react-interactive-tutorials@^0.1.11:
     js-cookie "^2.1.2"
     react "^15.1.0"
     react-dom "^15.1.0"
+    typescript "^4.3.2"
 
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
@@ -8473,6 +8474,11 @@ typedarray-to-buffer@^3.1.5:
   integrity sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==
   dependencies:
     is-typedarray "^1.0.0"
+
+typescript@^4.3.2:
+  version "4.6.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.3.tgz#eefeafa6afdd31d725584c67a0eaba80f6fc6c6c"
+  integrity sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==
 
 typescript@^4.5.5:
   version "4.5.5"

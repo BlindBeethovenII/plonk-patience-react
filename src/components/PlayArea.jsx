@@ -151,7 +151,21 @@ const PlayArea = () => (
     <svg style={playbackgroundsvg}>
       <rect style={playbackgroundrect} />
     </svg>
-    <img src={PlayAreaImage} alt="playarea" style={playarea} />
+    <div id="play_area">
+      <img src={PlayAreaImage} alt="playarea" style={playarea} />
+      <BlankSpace key="blankspace_1_0" col={1} row={0} />
+      <BlankSpace key="blankspace_1_1" col={1} row={1} />
+      <BlankSpace key="blankspace_1_2" col={1} row={2} />
+      <BlankSpace key="blankspace_1_3" col={1} row={3} />
+      <BlankSpace key="blankspace_2_0" col={2} row={0} />
+      <BlankSpace key="blankspace_2_1" col={2} row={1} />
+      <BlankSpace key="blankspace_2_2" col={2} row={2} />
+      <BlankSpace key="blankspace_2_3" col={2} row={3} />
+      <BlankSpace key="blankspace_3_0" col={3} row={0} />
+      <BlankSpace key="blankspace_3_1" col={3} row={1} />
+      <BlankSpace key="blankspace_3_2" col={3} row={2} />
+      <BlankSpace key="blankspace_3_3" col={3} row={3} />
+    </div>
     <div id="play_area_up">
       <img src={PlayAreaImage} alt="playareaup" style={playareaup} />
       <BlankSpace key="blankspace_0_0" col={0} row={0} suit={SUIT_SPADES} />
@@ -180,18 +194,6 @@ const PlayArea = () => (
     <img src={BorderTopRightImage} alt="bordertopright" style={bordertopright} />
     <img src={BorderBottomRightImage} alt="borderbottomright" style={borderbottomright} />
     <img src={BorderRightImage} alt="borderright" style={borderright} />
-    <BlankSpace key="blankspace_1_0" col={1} row={0} />
-    <BlankSpace key="blankspace_1_1" col={1} row={1} />
-    <BlankSpace key="blankspace_1_2" col={1} row={2} />
-    <BlankSpace key="blankspace_1_3" col={1} row={3} />
-    <BlankSpace key="blankspace_2_0" col={2} row={0} />
-    <BlankSpace key="blankspace_2_1" col={2} row={1} />
-    <BlankSpace key="blankspace_2_2" col={2} row={2} />
-    <BlankSpace key="blankspace_2_3" col={2} row={3} />
-    <BlankSpace key="blankspace_3_0" col={3} row={0} />
-    <BlankSpace key="blankspace_3_1" col={3} row={1} />
-    <BlankSpace key="blankspace_3_2" col={3} row={2} />
-    <BlankSpace key="blankspace_3_3" col={3} row={3} />
     <BlankSpace key="blankspace_0_4" col={0} row={4} />
     <BlankSpace key="blankspace_4_4" col={4} row={4} />
     <BlankSpace key="blankspace_-4_5" col={-4} row={5} />
