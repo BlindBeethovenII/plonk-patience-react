@@ -51,7 +51,7 @@ const TUTORIALS = {
             You will be doing well if you complete the game 1 go in every 10 goes.
           `),
         },
-        announceDismiss: 'Do Tell Me More',
+        announceDismiss: { trans: 'Do Tell Me More' },
         activeWhen: [],
       },
       {
@@ -66,7 +66,7 @@ const TUTORIALS = {
             At the start of each game, the 104 cards of two decks of cards are shuffled and placed face down on this Deal Pile.
           `),
         },
-        announceDismiss: 'Okay',
+        announceDismiss: { trans: 'Okay' },
         activeWhen: [
           {
             compare: 'checkpointComplete',
@@ -84,7 +84,7 @@ const TUTORIALS = {
             Each pile can optionally show a count label, to indicate how many cards are in that pile.
           `),
         },
-        announceDismiss: 'Okay',
+        announceDismiss: { trans: 'Okay' },
         activeWhen: [
           {
             compare: 'checkpointComplete',
@@ -107,7 +107,7 @@ const TUTORIALS = {
             so, if you play the game again using the same browser, your previous configuration options are remembered.
           `),
         },
-        announceDismiss: 'Okay',
+        announceDismiss: { trans: 'Okay' },
         activeWhen: [
           {
             compare: 'checkpointComplete',
@@ -127,7 +127,7 @@ const TUTORIALS = {
             There are 4 build up piles.  These build up from Aces to Kings, one pile for each suit.
           `),
         },
-        announceDismiss: 'Okay',
+        announceDismiss: { trans: 'Okay' },
         activeWhen: [
           {
             compare: 'checkpointComplete',
@@ -147,7 +147,7 @@ const TUTORIALS = {
             You have completed a game of Plonk! if all build up and build down piles contain 13 cards.
           `),
         },
-        announceDismiss: 'Okay',
+        announceDismiss: { trans: 'Okay' },
         activeWhen: [
           {
             compare: 'checkpointComplete',
@@ -165,7 +165,7 @@ const TUTORIALS = {
             This is the Plonk! pile.
           `),
         },
-        announceDismiss: 'Okay',
+        announceDismiss: { trans: 'Okay' },
         activeWhen: [
           {
             compare: 'checkpointComplete',
@@ -183,7 +183,7 @@ const TUTORIALS = {
             There are 12 play piles in the central area.
           `),
         },
-        announceDismiss: 'Okay',
+        announceDismiss: { trans: 'Okay' },
         activeWhen: [
           {
             compare: 'checkpointComplete',
