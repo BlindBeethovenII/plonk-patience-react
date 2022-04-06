@@ -36,7 +36,7 @@ const Button = styled.button`
 const TUTORIALS = {
   plonk: {
     key: 'plonk',
-    title: 'Plonk Tutorial',
+    title: { trans: 'Plonk! Tutorial' },
     steps: [
       {
         key: 'intro',
