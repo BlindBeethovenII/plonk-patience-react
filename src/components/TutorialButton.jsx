@@ -211,12 +211,8 @@ const tutorialOptions = {
   },
 };
 
-registerTutorials(TUTORIALS, tutorialOptions);
-
-// // their default transFunc logs "why no override?" to the console, even though the extracted code doesn't??
-// // so setting my own
-// const myTransFunc = (s) => s;
-// setTransFunc(myTransFunc);
+// register my tutorial, with my options, and translate function and language to use
+registerTutorials(TUTORIALS, tutorialOptions, (s) => s, 'en');
 
 const TutorialButton = () => {
   const { gameHasStarted } = useContext(GameStateContext);
