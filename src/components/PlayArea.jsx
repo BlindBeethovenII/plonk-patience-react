@@ -41,6 +41,19 @@ import {
   PILE_ID_DOWN_PILE_H,
   PILE_ID_DOWN_PILE_D,
   PILE_ID_DOWN_PILE_C,
+  PILE_ID_SORT_PILE_1,
+  PILE_ID_SORT_PILE_2,
+  PILE_ID_SORT_PILE_3,
+  PILE_ID_SORT_PILE_4,
+  PILE_ID_SORT_PILE_5,
+  PILE_ID_SORT_PILE_6,
+  PILE_ID_SORT_PILE_7,
+  PILE_ID_SORT_PILE_8,
+  PILE_ID_SORT_PILE_9,
+  PILE_ID_SORT_PILE_10,
+  PILE_ID_SORT_PILE_11,
+  PILE_ID_SORT_PILE_12,
+  PILE_ID_SORT_PILE_13,
 } from '../shared/constants';
 
 import BlankSpace from './BlankSpace';
@@ -191,6 +204,19 @@ const PlayArea = () => {
     downPileHearts,
     downPileDiamonds,
     downPileClubs,
+    sortPile1,
+    sortPile2,
+    sortPile3,
+    sortPile4,
+    sortPile5,
+    sortPile6,
+    sortPile7,
+    sortPile8,
+    sortPile9,
+    sortPile10,
+    sortPile11,
+    sortPile12,
+    sortPile13,
   } = useContext(GameStateContext);
 
   return (
@@ -263,19 +289,34 @@ const PlayArea = () => {
       <img src={BorderRightImage} alt="borderright" style={borderright} />
       <BlankSpace key="blankspace_0_4" col={0} row={4} />
       <BlankSpace key="blankspace_4_4" col={4} row={4} />
-      <BlankSpace key="blankspace_-4_5" col={-4} row={5} />
-      <BlankSpace key="blankspace_-3_5" col={-3} row={5} />
-      <BlankSpace key="blankspace_-2_5" col={-2} row={5} />
-      <BlankSpace key="blankspace_-1_5" col={-1} row={5} />
-      <BlankSpace key="blankspace_0_5" col={0} row={5} />
-      <BlankSpace key="blankspace_1_5" col={1} row={5} />
-      <BlankSpace key="blankspace_2_5" col={2} row={5} />
-      <BlankSpace key="blankspace_3_5" col={3} row={5} />
-      <BlankSpace key="blankspace_4_5" col={4} row={5} />
-      <BlankSpace key="blankspace_5_5" col={5} row={5} />
-      <BlankSpace key="blankspace_6_5" col={6} row={5} />
-      <BlankSpace key="blankspace_7_5" col={7} row={5} />
-      <BlankSpace key="blankspace_8_5" col={8} row={5} />
+      <div id="sort_area">
+        <BlankSpace key="blankspace_-4_5" col={-4} row={5} />
+        <BlankSpace key="blankspace_-3_5" col={-3} row={5} />
+        <BlankSpace key="blankspace_-2_5" col={-2} row={5} />
+        <BlankSpace key="blankspace_-1_5" col={-1} row={5} />
+        <BlankSpace key="blankspace_0_5" col={0} row={5} />
+        <BlankSpace key="blankspace_1_5" col={1} row={5} />
+        <BlankSpace key="blankspace_2_5" col={2} row={5} />
+        <BlankSpace key="blankspace_3_5" col={3} row={5} />
+        <BlankSpace key="blankspace_4_5" col={4} row={5} />
+        <BlankSpace key="blankspace_5_5" col={5} row={5} />
+        <BlankSpace key="blankspace_6_5" col={6} row={5} />
+        <BlankSpace key="blankspace_7_5" col={7} row={5} />
+        <BlankSpace key="blankspace_8_5" col={8} row={5} />
+        <Pile key="sort_pile_1" pileId={PILE_ID_SORT_PILE_1} cards={sortPile1} />
+        <Pile key="sort_pile_2" pileId={PILE_ID_SORT_PILE_2} cards={sortPile2} />
+        <Pile key="sort_pile_3" pileId={PILE_ID_SORT_PILE_3} cards={sortPile3} />
+        <Pile key="sort_pile_4" pileId={PILE_ID_SORT_PILE_4} cards={sortPile4} />
+        <Pile key="sort_pile_5" pileId={PILE_ID_SORT_PILE_5} cards={sortPile5} />
+        <Pile key="sort_pile_6" pileId={PILE_ID_SORT_PILE_6} cards={sortPile6} />
+        <Pile key="sort_pile_7" pileId={PILE_ID_SORT_PILE_7} cards={sortPile7} />
+        <Pile key="sort_pile_8" pileId={PILE_ID_SORT_PILE_8} cards={sortPile8} />
+        <Pile key="sort_pile_9" pileId={PILE_ID_SORT_PILE_9} cards={sortPile9} />
+        <Pile key="sort_pile_10" pileId={PILE_ID_SORT_PILE_10} cards={sortPile10} />
+        <Pile key="sort_pile_11" pileId={PILE_ID_SORT_PILE_11} cards={sortPile11} />
+        <Pile key="sort_pile_12" pileId={PILE_ID_SORT_PILE_12} cards={sortPile12} />
+        <Pile key="sort_pile_13" pileId={PILE_ID_SORT_PILE_13} cards={sortPile13} />
+      </div>
     </div>
   );
 };
