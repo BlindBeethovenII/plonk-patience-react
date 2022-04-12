@@ -44,7 +44,7 @@ const CountLabel = (props) => {
     height: '16px',
     textAlign: 'left',
     pointerEvents: 'none',
-    zIndex: 5,
+    zIndex: 0,
   };
 
   return (

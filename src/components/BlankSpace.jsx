@@ -24,6 +24,7 @@ const BlankSpace = (props) => {
     position: 'absolute',
     left: `${left}px`,
     top: `${top}px`,
+    pointerEvents: 'none',
   };
 
   const cardbasestyle = {
