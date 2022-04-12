@@ -4,7 +4,7 @@ import { ModalProvider } from 'styled-react-modal';
 
 import PlayArea from './components/PlayArea';
 import GitInfo from './components/GitInfo';
-import Piles from './components/Piles';
+import FlashingPiles from './components/FlashingPiles';
 import DebugButton from './components/DebugButton';
 import DealSpeedSlider from './components/DealSpeedSlider';
 import PlaySpeedSlider from './components/PlaySpeedSlider';
@@ -26,7 +26,7 @@ const App = () => (
     <GameStateContextProvider>
       <PlayArea />
       <GitInfo />
-      <Piles />
+      <FlashingPiles />
       <SelectedPileFlash />
       <DealSpeedSlider />
       <PlaySpeedSlider />
