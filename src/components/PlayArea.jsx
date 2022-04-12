@@ -200,18 +200,6 @@ const PlayArea = () => {
       </svg>
       <div id="play_area">
         <img src={PlayAreaImage} alt="playarea" style={playarea} />
-        <Pile key="play_pile_1" pileId={PILE_ID_PLAY_PILE_1} cards={playPile1} />
-        <Pile key="play_pile_2" pileId={PILE_ID_PLAY_PILE_2} cards={playPile2} />
-        <Pile key="play_pile_3" pileId={PILE_ID_PLAY_PILE_3} cards={playPile3} />
-        <Pile key="play_pile_4" pileId={PILE_ID_PLAY_PILE_4} cards={playPile4} />
-        <Pile key="play_pile_5" pileId={PILE_ID_PLAY_PILE_5} cards={playPile5} />
-        <Pile key="play_pile_6" pileId={PILE_ID_PLAY_PILE_6} cards={playPile6} />
-        <Pile key="play_pile_7" pileId={PILE_ID_PLAY_PILE_7} cards={playPile7} />
-        <Pile key="play_pile_8" pileId={PILE_ID_PLAY_PILE_8} cards={playPile8} />
-        <Pile key="play_pile_9" pileId={PILE_ID_PLAY_PILE_9} cards={playPile9} />
-        <Pile key="play_pile_10" pileId={PILE_ID_PLAY_PILE_10} cards={playPile10} />
-        <Pile key="play_pile_11" pileId={PILE_ID_PLAY_PILE_11} cards={playPile11} />
-        <Pile key="play_pile_12" pileId={PILE_ID_PLAY_PILE_12} cards={playPile12} />
         <BlankSpace key="blankspace_1_0" col={1} row={0} />
         <BlankSpace key="blankspace_1_1" col={1} row={1} />
         <BlankSpace key="blankspace_1_2" col={1} row={2} />
@@ -224,6 +212,18 @@ const PlayArea = () => {
         <BlankSpace key="blankspace_3_1" col={3} row={1} />
         <BlankSpace key="blankspace_3_2" col={3} row={2} />
         <BlankSpace key="blankspace_3_3" col={3} row={3} />
+        <Pile key="play_pile_1" pileId={PILE_ID_PLAY_PILE_1} cards={playPile1} />
+        <Pile key="play_pile_2" pileId={PILE_ID_PLAY_PILE_2} cards={playPile2} />
+        <Pile key="play_pile_3" pileId={PILE_ID_PLAY_PILE_3} cards={playPile3} />
+        <Pile key="play_pile_4" pileId={PILE_ID_PLAY_PILE_4} cards={playPile4} />
+        <Pile key="play_pile_5" pileId={PILE_ID_PLAY_PILE_5} cards={playPile5} />
+        <Pile key="play_pile_6" pileId={PILE_ID_PLAY_PILE_6} cards={playPile6} />
+        <Pile key="play_pile_7" pileId={PILE_ID_PLAY_PILE_7} cards={playPile7} />
+        <Pile key="play_pile_8" pileId={PILE_ID_PLAY_PILE_8} cards={playPile8} />
+        <Pile key="play_pile_9" pileId={PILE_ID_PLAY_PILE_9} cards={playPile9} />
+        <Pile key="play_pile_10" pileId={PILE_ID_PLAY_PILE_10} cards={playPile10} />
+        <Pile key="play_pile_11" pileId={PILE_ID_PLAY_PILE_11} cards={playPile11} />
+        <Pile key="play_pile_12" pileId={PILE_ID_PLAY_PILE_12} cards={playPile12} />
       </div>
       <div id="play_area_up">
         <img src={PlayAreaImage} alt="playareaup" style={playareaup} />

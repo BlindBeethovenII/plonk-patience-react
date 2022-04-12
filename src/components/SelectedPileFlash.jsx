@@ -52,7 +52,7 @@ const SelectedPileFlash = () => {
     position: 'absolute',
     left,
     top,
-    zIndex: 2,
+    zIndex: 0,
   };
 
   const sortdivstyle = {
