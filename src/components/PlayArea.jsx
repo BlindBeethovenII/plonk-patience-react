@@ -223,6 +223,14 @@ const PlayArea = () => {
     sortPile13,
   } = useContext(GameStateContext);
 
+  const forTutorialDivstyle = {
+    position: 'absolute',
+    left: '300px',
+    top: '40px',
+    width: '40px',
+    height: '300px',
+  };
+
   return (
     <div>
       <svg style={playbackgroundsvg}>
@@ -327,6 +335,7 @@ const PlayArea = () => {
         <Pile key="sort_pile_12" pileId={PILE_ID_SORT_PILE_12} cards={sortPile12} />
         <Pile key="sort_pile_13" pileId={PILE_ID_SORT_PILE_13} cards={sortPile13} />
       </div>
+      <div id="for_tutorial" style={forTutorialDivstyle} />
     </div>
   );
 };

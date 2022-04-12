@@ -57,7 +57,7 @@ const ScoreHistory = () => {
   };
 
   return (
-    <div style={divstyle}>
+    <div id="score_history" style={divstyle}>
       <Label>
         {average}
         <br />

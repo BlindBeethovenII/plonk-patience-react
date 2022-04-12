@@ -59,14 +59,14 @@ const TUTORIALS = {
         highlight: '#DEAL_PILE',
         highlightBack: '#fff',
         annotateBottom: '#DEAL_PILE',
-        announce: {
+        annotate: {
           p: paragraphs(`
             This is the Deal Pile.
 
             At the start of each game, the 104 cards of two decks of cards are shuffled and placed face down on this Deal Pile.
           `),
         },
-        announceDismiss: { trans: 'Okay' },
+        annotateSkip: { trans: 'Okay' },
         activeWhen: [
           {
             compare: 'checkpointComplete',
@@ -79,12 +79,12 @@ const TUTORIALS = {
         highlight: '#DEAL_PILE',
         highlightBack: '#fff',
         annotateBottom: '#DEAL_PILE',
-        announce: {
+        annotate: {
           p: paragraphs(`
             Each pile can optionally show a count label, to indicate how many cards are in that pile.
           `),
         },
-        announceDismiss: { trans: 'Okay' },
+        annotateSkip: { trans: 'Okay' },
         activeWhen: [
           {
             compare: 'checkpointComplete',
@@ -96,8 +96,8 @@ const TUTORIALS = {
         key: 'showcountlabelcheckbox',
         highlight: '#show_count_labels',
         highlightBack: '#fff',
-        annotateBottom: '#show_count_labels',
-        announce: {
+        annotateRight: '#for_tutorial',
+        annotate: {
           p: paragraphs(`
             Here is the Show Count Labels configuration option.
 
@@ -107,7 +107,7 @@ const TUTORIALS = {
             so, if you play the game again using the same browser, your previous configuration options are remembered.
           `),
         },
-        announceDismiss: { trans: 'Okay' },
+        annotateSkip: { trans: 'Okay' },
         activeWhen: [
           {
             compare: 'checkpointComplete',
@@ -120,14 +120,14 @@ const TUTORIALS = {
         highlight: '#play_area_up',
         highlightBack: '#fff',
         annotateBottom: '#play_area_up',
-        announce: {
+        annotate: {
           p: paragraphs(`
             Plonk! has two sets of build piles.
 
             There are 4 build up piles.  These build up from Aces to Kings, one pile for each suit.
           `),
         },
-        announceDismiss: { trans: 'Okay' },
+        annotateSkip: { trans: 'Okay' },
         activeWhen: [
           {
             compare: 'checkpointComplete',
@@ -140,14 +140,14 @@ const TUTORIALS = {
         highlight: '#play_area_down',
         highlightBack: '#fff',
         annotateBottom: '#play_area_down',
-        announce: {
+        annotate: {
           p: paragraphs(`
             And there are 4 build down piles.  These build down from Kings to Aces, pile one for each suit.
 
             You have completed a game of Plonk! if all build up and build down piles contain 13 cards.
           `),
         },
-        announceDismiss: { trans: 'Okay' },
+        annotateSkip: { trans: 'Okay' },
         activeWhen: [
           {
             compare: 'checkpointComplete',
@@ -160,12 +160,12 @@ const TUTORIALS = {
         highlight: '#PLONK_PILE',
         highlightBack: '#fff',
         annotateBottom: '#PLONK_PILE',
-        announce: {
+        annotate: {
           p: paragraphs(`
             This is the Plonk! pile.
           `),
         },
-        announceDismiss: { trans: 'Okay' },
+        annotateSkip: { trans: 'Okay' },
         activeWhen: [
           {
             compare: 'checkpointComplete',
@@ -177,8 +177,8 @@ const TUTORIALS = {
         key: 'playarea',
         highlight: '#play_area',
         highlightBack: '#fff',
-        annotateBottom: '#play_area',
-        announce: {
+        annotateSkip: '#play_area',
+        annotate: {
           p: paragraphs(`
             There are 12 play piles in the central area.
           `),
