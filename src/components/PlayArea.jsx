@@ -21,6 +21,8 @@ import {
   SUIT_HEARTS,
   SUIT_DIAMONDS,
   SUIT_CLUBS,
+  PILE_ID_DEAL_PILE,
+  PILE_ID_PLONK_PILE,
   PILE_ID_PLAY_PILE_1,
   PILE_ID_PLAY_PILE_2,
   PILE_ID_PLAY_PILE_3,
@@ -184,6 +186,8 @@ const downlabelstyle = {
 
 const PlayArea = () => {
   const {
+    dealPile,
+    plonkPile,
     playPile1,
     playPile2,
     playPile3,
@@ -287,8 +291,14 @@ const PlayArea = () => {
       <img src={BorderTopRightImage} alt="bordertopright" style={bordertopright} />
       <img src={BorderBottomRightImage} alt="borderbottomright" style={borderbottomright} />
       <img src={BorderRightImage} alt="borderright" style={borderright} />
-      <BlankSpace key="blankspace_0_4" col={0} row={4} />
-      <BlankSpace key="blankspace_4_4" col={4} row={4} />
+      <div id="deal_area">
+        <BlankSpace key="blankspace_0_4" col={0} row={4} />
+        <Pile key="deal_pile" pileId={PILE_ID_DEAL_PILE} cards={dealPile} />
+      </div>
+      <div id="plonk_area">
+        <BlankSpace key="blankspace_4_4" col={4} row={4} />
+        <Pile key="plonk_pile" pileId={PILE_ID_PLONK_PILE} cards={plonkPile} />
+      </div>
       <div id="sort_area">
         <BlankSpace key="blankspace_-4_5" col={-4} row={5} />
         <BlankSpace key="blankspace_-3_5" col={-3} row={5} />
