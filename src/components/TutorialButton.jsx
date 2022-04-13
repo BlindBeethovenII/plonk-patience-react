@@ -267,10 +267,14 @@ const TutorialButton = () => {
           key: 'playpile12',
           highlight: '#PLAY_PILE_12',
           highlightBack: '#fff',
-          annotateBottom: '#for_tutorial',
+          annotateRight: '#for_tutorial',
           annotate: {
             p: paragraphs(`
               And so on, up to the last play pile, which corresponds to a King.
+
+              During the deal, if a card is dealt onto a play pile which corresponds to that cards number, then the card is moved to the Plonk! Pile.  
+              
+              The more cards on the Plonk! Pile at the end of the deal, the more chance you have of completing the game.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -278,6 +282,49 @@ const TutorialButton = () => {
             {
               compare: 'checkpointComplete',
               checkpoint: 'plonk_playpile3',
+            },
+          ],
+        },
+        {
+          key: 'playspeed',
+          highlight: '#play_speed_slider',
+          highlightBack: '#fff',
+          annotateRight: '#for_tutorial',
+          annotate: {
+            p: paragraphs(`
+              Once the deal is complete, if a top card of a play pile can be used to build up or build down, then clicking on that card will build that card.
+
+              Note: The speed of animation is now set by this configuration slider.
+
+              If you can see a card that can build up or down, then you could Hide the tutorial and click on that card to see the build happen.
+            `),
+          },
+          annotateSkip: { trans: 'Okay' },
+          activeWhen: [
+            {
+              compare: 'checkpointComplete',
+              checkpoint: 'plonk_playpile12',
+            },
+          ],
+        },
+        {
+          key: 'buildupanddown',
+          highlight: '#PLONK_PILE',
+          highlightBack: '#fff',
+          annotateRight: '#for_tutorial',
+          annotate: {
+            p: paragraphs(`
+              Note that if the card could build on both an up pile and an down pile (which happens a lot in the game) then clicking on the card will build on the up pile.  
+              You can then click on the card on the up pile to move it to the down pile.
+
+              A key part to completing a game is deciding when to move cards between the up and down piles.
+            `),
+          },
+          annotateSkip: { trans: 'Okay' },
+          activeWhen: [
+            {
+              compare: 'checkpointComplete',
+              checkpoint: 'plonk_playspeed',
             },
           ],
         },

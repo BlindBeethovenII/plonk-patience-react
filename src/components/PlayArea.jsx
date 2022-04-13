@@ -225,7 +225,7 @@ const PlayArea = () => {
 
   const forTutorialDivstyle = {
     position: 'absolute',
-    left: '300px',
+    left: '200px',
     top: '40px',
     width: '40px',
     height: '300px',
