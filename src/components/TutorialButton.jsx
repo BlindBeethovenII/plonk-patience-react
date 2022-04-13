@@ -200,7 +200,6 @@ const TutorialButton = () => {
             `),
           },
           annotateSkip: { trans: 'Okay' },
-          additionalBeforeHandler: dealCards,
           activeWhen: [
             {
               compare: 'checkpointComplete',
@@ -209,13 +208,15 @@ const TutorialButton = () => {
           ],
         },
         {
-          key: 'playarea',
-          highlight: '#play_area',
+          key: 'playpile1',
+          highlight: '#PLAY_PILE_1',
           highlightBack: '#fff',
-          annotateBottom: '#play_area',
+          annotateBottom: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              There are 12 play piles in the central area.
+              There are 12 play piles, each corresponds to a card number, or in the case of the first play pile, two card numbers.
+
+              This is the first play pile, which corresponds to an Ace or a Two.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -226,10 +227,64 @@ const TutorialButton = () => {
             },
           ],
         },
+        {
+          key: 'playpile2',
+          highlight: '#PLAY_PILE_2',
+          highlightBack: '#fff',
+          annotateBottom: '#for_tutorial',
+          annotate: {
+            p: paragraphs(`
+              This play pile corresponds to a Three.
+            `),
+          },
+          annotateSkip: { trans: 'Okay' },
+          activeWhen: [
+            {
+              compare: 'checkpointComplete',
+              checkpoint: 'plonk_playpile1',
+            },
+          ],
+        },
+        {
+          key: 'playpile3',
+          highlight: '#PLAY_PILE_3',
+          highlightBack: '#fff',
+          annotateBottom: '#for_tutorial',
+          annotate: {
+            p: paragraphs(`
+              This play pile corresponds to a Four.
+            `),
+          },
+          annotateSkip: { trans: 'Okay' },
+          activeWhen: [
+            {
+              compare: 'checkpointComplete',
+              checkpoint: 'plonk_playpile2',
+            },
+          ],
+        },
+        {
+          key: 'playpile12',
+          highlight: '#PLAY_PILE_12',
+          highlightBack: '#fff',
+          annotateBottom: '#for_tutorial',
+          annotate: {
+            p: paragraphs(`
+              And so on, up to the last play pile, which corresponds to a King.
+            `),
+          },
+          annotateSkip: { trans: 'Okay' },
+          activeWhen: [
+            {
+              compare: 'checkpointComplete',
+              checkpoint: 'plonk_playpile3',
+            },
+          ],
+        },
       ],
       complete: {
         on: 'checkpointReached',
-        checkpoint: 'playarea',
+        checkpoint: 'playTODO',
         title: { trans: 'Plonk! Tutorial Complete' },
         message: { p: 'Actually - still working on the tutorial - so it is not complete!' },
       },
