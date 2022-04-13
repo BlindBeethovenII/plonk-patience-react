@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import {
   paragraphs,
   registerTutorials,
+  registerFinaliseCallback,
   startTutorial,
 } from 'react-interactive-tutorials-cont';
 
@@ -34,7 +35,7 @@ const Button = styled.button`
 `;
 
 const TutorialButton = () => {
-  const { gameHasStarted, dealCards } = useContext(GameStateContext);
+  const { gameHasStarted, dealCards, resetGameState } = useContext(GameStateContext);
 
   // don't show if the game has started
   if (gameHasStarted) {
@@ -247,6 +248,9 @@ const TutorialButton = () => {
 
   // register my tutorial, with my options, and translate function and language to use
   registerTutorials(TUTORIALS, tutorialOptions, (s) => s, 'en');
+
+  // and reset the deck once tutorial is complete (Note: wanted to do this on tutorial exit - but current module doesn't allow that - see my notes)
+  registerFinaliseCallback(() => resetGameState());
 
   return (
     <div style={divstyle}>

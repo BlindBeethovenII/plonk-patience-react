@@ -27,7 +27,7 @@ const Button = styled.button`
   border-radius: 3px;
 `;
 const RedealButton = () => {
-  const { redealCards, showRedealButton } = useContext(GameStateContext);
+  const { resetGameState, showRedealButton } = useContext(GameStateContext);
 
   // don't show the re-deal button until state says we should
   if (!showRedealButton) {
@@ -36,7 +36,7 @@ const RedealButton = () => {
 
   return (
     <div style={divstyle}>
-      <Button onClick={redealCards}>Redeal</Button>
+      <Button onClick={resetGameState}>Redeal</Button>
     </div>
   );
 };

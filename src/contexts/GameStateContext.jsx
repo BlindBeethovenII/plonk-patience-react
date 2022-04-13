@@ -493,8 +493,8 @@ export const GameStateContextProvider = ({ children }) => {
     }
   };
 
-  // redeal the cards - resetting all the game state to the beginning of a new game
-  const redealCards = () => {
+  // reset game state to the beginning of a new game
+  const resetGameState = () => {
     setDealPile(createShuffledDeck());
     setPlonkPile([]);
     setPlayPile1([]);
@@ -1827,7 +1827,7 @@ export const GameStateContextProvider = ({ children }) => {
     setShowRedealButton,
 
     // card functions
-    redealCards,
+    resetGameState,
     performNextAction,
     cardAnimationComplete,
     pileFlashAnimationComplete,
