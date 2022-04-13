@@ -121,6 +121,7 @@ const Input = styled.input`
 
 const Slider = (props) => {
   const {
+    id,
     value,
     setValue,
     left,
@@ -144,7 +145,7 @@ const Slider = (props) => {
   };
 
   return (
-    <div style={divstyle}>
+    <div id={id} style={divstyle}>
       <Input
         onInput={(e) => setValue(e.target.value)}
         type="range"
@@ -162,6 +163,7 @@ const Slider = (props) => {
 };
 
 Slider.propTypes = {
+  id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
   left: PropTypes.number.isRequired,

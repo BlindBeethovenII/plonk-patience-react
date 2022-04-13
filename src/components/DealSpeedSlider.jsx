@@ -14,6 +14,7 @@ const DealSpeedSlider = () => {
 
   return (
     <Slider
+      id="deal_speed_slider"
       value={dealSpeedPercentage}
       setValue={setDealSpeedPercentage}
       left={left}

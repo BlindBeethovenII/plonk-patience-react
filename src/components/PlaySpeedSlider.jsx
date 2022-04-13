@@ -14,6 +14,7 @@ const PlaySpeedSlider = () => {
 
   return (
     <Slider
+      id="play_speed_slider"
       value={playSpeedPercentage}
       setValue={setPlaySpeedPercentage}
       left={left}
