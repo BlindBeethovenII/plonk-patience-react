@@ -26,7 +26,7 @@ const ShowSortedIconsCheckbox = () => {
   };
 
   return (
-    <div style={divstyle}>
+    <div id="show_sorted_icons" style={divstyle}>
       <label>
         <Checkbox
           checked={showSortedIcons}

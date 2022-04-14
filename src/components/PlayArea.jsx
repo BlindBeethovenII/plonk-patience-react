@@ -225,10 +225,11 @@ const PlayArea = () => {
 
   const forTutorialDivstyle = {
     position: 'absolute',
-    left: '200px',
+    left: '290px',
     top: '40px',
-    width: '40px',
+    width: '380px',
     height: '300px',
+    pointerEvents: 'none',
   };
 
   return (

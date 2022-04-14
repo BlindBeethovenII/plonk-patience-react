@@ -13,8 +13,6 @@ import { colToLeft, rowToTop } from '../shared/card-functions';
 
 import logIfDevEnv from '../shared/logIfDevEnv';
 
-import { PILE_ID_PLONK_PILE } from '../shared/constants';
-
 import GameStateContext from '../contexts/GameStateContext';
 
 const left = colToLeft(11, 4);
@@ -43,7 +41,6 @@ const TutorialButton = () => {
     gameHasStarted,
     dealCards,
     resetGameState,
-    clickOnCard,
   } = useContext(GameStateContext);
 
   // we only want to register the tutorial once
@@ -75,7 +72,7 @@ const TutorialButton = () => {
           key: 'dealpile',
           highlight: '#DEAL_PILE',
           highlightBack: '#fff',
-          annotateBottom: '#DEAL_PILE',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
               This is the Deal Pile.
@@ -97,7 +94,7 @@ const TutorialButton = () => {
           key: 'dealpilelabel',
           highlight: '#DEAL_PILE',
           highlightBack: '#fff',
-          annotateBottom: '#DEAL_PILE',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
               Each pile can optionally show a count label, to indicate how many cards are in that pile.
@@ -115,7 +112,7 @@ const TutorialButton = () => {
           key: 'showcountlabelcheckbox',
           highlight: '#show_count_labels',
           highlightBack: '#fff',
-          annotateRight: '#for_tutorial',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
               Here is the Show Count Labels configuration option.
@@ -138,7 +135,7 @@ const TutorialButton = () => {
           key: 'playareaup',
           highlight: '#play_area_up',
           highlightBack: '#fff',
-          annotateBottom: '#play_area_up',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
               Plonk! has two sets of build piles.
@@ -158,7 +155,7 @@ const TutorialButton = () => {
           key: 'playareadown',
           highlight: '#play_area_down',
           highlightBack: '#fff',
-          annotateBottom: '#play_area_down',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
               And there are 4 build down piles.  These build down from Kings to Aces, pile one for each suit.
@@ -178,7 +175,7 @@ const TutorialButton = () => {
           key: 'plonkpile',
           highlight: '#PLONK_PILE',
           highlightBack: '#fff',
-          annotateBottom: '#PLONK_PILE',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
               The cards are now dealing.  The first card goes to the Plonk! pile.
@@ -197,7 +194,7 @@ const TutorialButton = () => {
           key: 'dealspeed',
           highlight: '#deal_speed_slider',
           highlightBack: '#fff',
-          annotateRight: '#for_tutorial',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
               The speed of the deal is set by this configuration slider.
@@ -219,9 +216,11 @@ const TutorialButton = () => {
           key: 'playpile1',
           highlight: '#PLAY_PILE_1',
           highlightBack: '#fff',
-          annotateBottom: '#for_tutorial',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
+              .
+
               There are 12 play piles, each corresponds to a card number, or in the case of the first play pile, two card numbers.
 
               This is the first play pile, which corresponds to an Ace or a Two.
@@ -239,10 +238,12 @@ const TutorialButton = () => {
           key: 'playpile2',
           highlight: '#PLAY_PILE_2',
           highlightBack: '#fff',
-          annotateBottom: '#for_tutorial',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              This play pile corresponds to a Three.
+            .
+
+            This play pile corresponds to a Three.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -257,10 +258,12 @@ const TutorialButton = () => {
           key: 'playpile3',
           highlight: '#PLAY_PILE_3',
           highlightBack: '#fff',
-          annotateBottom: '#for_tutorial',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              This play pile corresponds to a Four.
+            .
+
+            This play pile corresponds to a Four.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -275,7 +278,7 @@ const TutorialButton = () => {
           key: 'playpile12',
           highlight: '#PLAY_PILE_12',
           highlightBack: '#fff',
-          annotateRight: '#for_tutorial',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
               And so on, up to the last play pile, which corresponds to a King.
@@ -297,7 +300,7 @@ const TutorialButton = () => {
           key: 'playspeed',
           highlight: '#play_speed_slider',
           highlightBack: '#fff',
-          annotateRight: '#for_tutorial',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
               Once the deal is complete, if a top card of a play pile can be used to build up or build down, then clicking on that card will build that card.
@@ -319,7 +322,7 @@ const TutorialButton = () => {
           key: 'buildupanddown',
           highlight: '#PLONK_PILE',
           highlightBack: '#fff',
-          annotateRight: '#for_tutorial',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
               Note that if the card could build on both an up pile and an down pile (which happens a lot in the game) then clicking on the card will build on the up pile.  
@@ -340,14 +343,14 @@ const TutorialButton = () => {
           key: 'plonkclick',
           highlight: '#PLONK_PILE',
           highlightBack: '#fff',
-          annotateRight: '#for_tutorial',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
               Each card in the Plonk! Pile allows you to sort the play pile that corresponds to that card's number.
               
-              A click on the Plonk! Pile will move the corresponding play pile into the sort area.  
+              It is your turn now.  Once the deal has completed, please hide the tutorial and click on the Plonk! Pile.  This should move a play pile to the sort area.
 
-              When you click 'Okay' the tutorial will click on the Plonk! Pile for you.
+              When you've done that show the tutorial again, then click the Okay button.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -360,20 +363,65 @@ const TutorialButton = () => {
         },
         {
           key: 'sortpiles',
-          highlight: '#PLONK_PILE',
+          highlight: '#sort_area',
           highlightBack: '#fff',
-          annotateBottom: '#PLONK_PILE',
+          annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              TODO
+              This is the sort area.
+              
+              If a card can be built up or down then a click on that card will do the build.
+              
+              Otherwise the card will be moved to the left, if it is on the right, or moved to the right, if it is on the left.  
+
+              Another key part of the game is deciding the sort order of the cards that, you hope, will give you the best chance of completing the game.
             `),
           },
           annotateSkip: { trans: 'Okay' },
-          additionalBeforeHandler: () => clickOnCard(PILE_ID_PLONK_PILE),
           activeWhen: [
             {
               compare: 'checkpointComplete',
               checkpoint: 'plonk_plonkclick',
+            },
+          ],
+        },
+        {
+          key: 'sortpiles2',
+          highlight: '#sort_area',
+          highlightBack: '#fff',
+          annotateIn: '#for_tutorial',
+          annotate: {
+            p: paragraphs(`
+              Once you are happy with the sort order for the current pile then a click on the Plonk! Pile will put that pile back and open the next pile to sort.
+              
+              The pile you are currently sorting will be slowly flashing in the play area.
+            `),
+          },
+          annotateSkip: { trans: 'Okay' },
+          activeWhen: [
+            {
+              compare: 'checkpointComplete',
+              checkpoint: 'plonk_sortpiles',
+            },
+          ],
+        },
+        {
+          key: 'sortedicon',
+          highlight: '#show_sorted_icons',
+          highlightBack: '#fff',
+          annotateIn: '#for_tutorial',
+          annotate: {
+            p: paragraphs(`
+              There is an option to determine if a sorted pile has an icon to indicate that it is sorted.
+              
+              The game is slightly harder if the sorted icon is not shown on a sorted pile.
+            `),
+          },
+          annotateSkip: { trans: 'Okay' },
+          activeWhen: [
+            {
+              compare: 'checkpointComplete',
+              checkpoint: 'plonk_sortpiles2',
             },
           ],
         },
