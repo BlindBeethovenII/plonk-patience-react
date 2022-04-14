@@ -406,7 +406,7 @@ const TutorialButton = () => {
           ],
         },
         {
-          key: 'sortedicon',
+          key: 'sortedicons',
           highlight: '#show_sorted_icons',
           highlightBack: '#fff',
           annotateIn: '#for_tutorial',
@@ -425,12 +425,73 @@ const TutorialButton = () => {
             },
           ],
         },
+        {
+          key: 'fillemptypiles',
+          highlight: '#fill_empty_piles',
+          highlightBack: '#fff',
+          annotateIn: '#for_tutorial',
+          annotate: {
+            p: paragraphs(`
+              If a play pile becomes empty then clicking on another card in the play area will move that card onto that empty pile.
+              
+              This is the option to enable/disable this.  The game is harder if empty play piles cannot be filled.
+            `),
+          },
+          annotateSkip: { trans: 'Okay' },
+          activeWhen: [
+            {
+              compare: 'checkpointComplete',
+              checkpoint: 'plonk_sortedicons',
+            },
+          ],
+        },
+        {
+          key: 'percentagecomplete',
+          annotateIn: '#for_tutorial',
+          highlight: '#percentage_complete',
+          highlightBack: '#fff',
+          annotate: {
+            p: paragraphs(`
+              There is a percentage complete bar below the play area.
+
+              The game keeps track of how many times you complete the patience, along with your average percentage complete.
+              Note that this is stored in the browser local storage.
+            `),
+          },
+          annotateSkip: { trans: 'Okay' },
+          activeWhen: [
+            {
+              compare: 'checkpointComplete',
+              checkpoint: 'plonk_fillemptypiles',
+            },
+          ],
+        },
+        {
+          key: 'finally',
+          annotateIn: '#for_tutorial',
+          annotate: {
+            p: paragraphs(`
+              Two more things.
+
+              If you click on a card that cannot be play, a red cross will flash on that card.
+
+              If you click on a card while another card is animating into position, a red hand will flash on that card.  Try the click again after the animation has completed.
+            `),
+          },
+          annotateSkip: { trans: 'Okay' },
+          activeWhen: [
+            {
+              compare: 'checkpointComplete',
+              checkpoint: 'plonk_percentagecomplete',
+            },
+          ],
+        },
       ],
       complete: {
         on: 'checkpointReached',
-        checkpoint: 'playTODO',
+        checkpoint: 'finally',
         title: { trans: 'Plonk! Tutorial Complete' },
-        message: { p: 'Actually - still working on the tutorial - so it is not complete!' },
+        message: { p: 'Good Luck!' },
       },
     },
   };

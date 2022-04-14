@@ -54,11 +54,10 @@ const PercentageComplete = () => {
     width: '340px',
     height: '20px',
     textAlign: 'left',
-    zIndex: 5,
   };
 
   return (
-    <div style={divstyle}>
+    <div id="percentage_complete" style={divstyle}>
       <Container>
         <Background />
         <Progress percent={percentageComplete}>{`${percentageComplete}%`}</Progress>

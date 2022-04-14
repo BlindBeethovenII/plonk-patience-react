@@ -26,7 +26,7 @@ const FileEmptyPilesCheckbox = () => {
   };
 
   return (
-    <div style={divstyle}>
+    <div id="fill_empty_piles" style={divstyle}>
       <label>
         <Checkbox
           checked={fillEmptyPiles}
