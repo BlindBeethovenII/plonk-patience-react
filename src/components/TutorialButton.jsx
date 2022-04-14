@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -10,6 +10,10 @@ import {
 } from 'react-interactive-tutorials-cont';
 
 import { colToLeft, rowToTop } from '../shared/card-functions';
+
+import logIfDevEnv from '../shared/logIfDevEnv';
+
+import { PILE_ID_PLONK_PILE } from '../shared/constants';
 
 import GameStateContext from '../contexts/GameStateContext';
 
@@ -35,12 +39,16 @@ const Button = styled.button`
 `;
 
 const TutorialButton = () => {
-  const { gameHasStarted, dealCards, resetGameState } = useContext(GameStateContext);
+  const {
+    gameHasStarted,
+    dealCards,
+    resetGameState,
+    clickOnCard,
+  } = useContext(GameStateContext);
 
-  // don't show if the game has started
-  if (gameHasStarted) {
-    return null;
-  }
+  // we only want to register the tutorial once
+  // and we have to do it in here, so we can use GameStateContext functions in the tutorial steps
+  const [tutorialRegistered, setTutorialRegistered] = useState(false);
 
   const TUTORIALS = {
     plonk: {
@@ -328,6 +336,47 @@ const TutorialButton = () => {
             },
           ],
         },
+        {
+          key: 'plonkclick',
+          highlight: '#PLONK_PILE',
+          highlightBack: '#fff',
+          annotateRight: '#for_tutorial',
+          annotate: {
+            p: paragraphs(`
+              Each card in the Plonk! Pile allows you to sort the play pile that corresponds to that card's number.
+              
+              A click on the Plonk! Pile will move the corresponding play pile into the sort area.  
+
+              When you click 'Okay' the tutorial will click on the Plonk! Pile for you.
+            `),
+          },
+          annotateSkip: { trans: 'Okay' },
+          activeWhen: [
+            {
+              compare: 'checkpointComplete',
+              checkpoint: 'plonk_buildupanddown',
+            },
+          ],
+        },
+        {
+          key: 'sortpiles',
+          highlight: '#PLONK_PILE',
+          highlightBack: '#fff',
+          annotateBottom: '#PLONK_PILE',
+          annotate: {
+            p: paragraphs(`
+              TODO
+            `),
+          },
+          annotateSkip: { trans: 'Okay' },
+          additionalBeforeHandler: () => clickOnCard(PILE_ID_PLONK_PILE),
+          activeWhen: [
+            {
+              compare: 'checkpointComplete',
+              checkpoint: 'plonk_plonkclick',
+            },
+          ],
+        },
       ],
       complete: {
         on: 'checkpointReached',
@@ -349,10 +398,21 @@ const TutorialButton = () => {
   };
 
   // register my tutorial, with my options, and translate function and language to use
-  registerTutorials(TUTORIALS, tutorialOptions, (s) => s, 'en');
+  if (!tutorialRegistered) {
+    registerTutorials(TUTORIALS, tutorialOptions, (s) => s, 'en');
+    logIfDevEnv('registerTutorials called');
 
-  // and reset the deck once tutorial is complete (Note: wanted to do this on tutorial exit - but current module doesn't allow that - see my notes)
-  registerFinaliseCallback(() => resetGameState());
+    // and reset the deck once tutorial is complete (Note: wanted to do this on tutorial exit - but current module doesn't allow that - see my notes)
+    registerFinaliseCallback(() => resetGameState());
+
+    // remember we have registered the tutorial
+    setTutorialRegistered(true);
+  }
+
+  // don't show if the game has started
+  if (gameHasStarted) {
+    return null;
+  }
 
   return (
     <div style={divstyle}>
