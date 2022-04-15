@@ -54,7 +54,8 @@ const TutorialButton = () => {
       steps: [
         {
           key: 'intro',
-          announce: {
+          annotateIn: '#for_tutorial',
+          annotate: {
             p: paragraphs(`
               Welcome to Plonk!
   
@@ -62,10 +63,10 @@ const TutorialButton = () => {
               You will need both skill and luck to complete a game.
         
               It is a difficult patience to complete.
-              You will be doing well if you complete the game 1 go in every 10 goes.
+              You will be doing well if you complete 1 game in every 10 games.
             `),
           },
-          announceDismiss: { trans: 'Do Tell Me More' },
+          annotateSkip: { trans: 'Do Tell Me More' },
           activeWhen: [],
         },
         {
@@ -97,7 +98,7 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              Each pile can optionally show a count label, to indicate how many cards are in that pile.
+              Each pile has a number showing how many cards are in it.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -503,6 +504,7 @@ const TutorialButton = () => {
       complete: 'End Tutorial',
       hideHelp: 'Hide Tutorial',
       showHelp: 'Show Tutorial',
+      annotateSkip: ' ',
     },
   };
 
