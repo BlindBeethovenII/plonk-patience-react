@@ -116,12 +116,7 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              Here is the Show Count Labels configuration option.
-  
-              The game is a little harder if the Count Labels are not shown.
-  
-              Note: The configuration options that you set are stored in the browser local storage,
-              so, if you play the game again using the same browser, your previous configuration options are remembered.
+              You can turn off the Pile Count labels here, which makes the game a little harder.
             `),
           },
           annotateSkip: { trans: 'Okay' },
