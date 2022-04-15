@@ -287,12 +287,9 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              Once the deal is complete, if a top card of a play pile can be used to build up or build down, then clicking on that card will build that card.
-
               If the top card of a play pile can be built up or down, pressing it will move it to an up or down build pile.
-              You can also move cards between up and down build piles by pressing them
 
-              A key part to completing a game is deciding when to move cards between the up and down piles.
+              You can also move cards between up and down build piles by pressing them.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -330,13 +327,9 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              This is the sort area.
+              This is the sort area.  If a card can be built up or down, pressing it will move it to an up or down build pile.
               
-              If a card can be built up or down then a click on that card will do the build.
-              
-              Otherwise the card will be moved to the left, if it is on the right, or moved to the right, if it is on the left.  
-
-              Another key part of the game is deciding the sort order of the cards that, you hope, will give you the best chance of completing the game.
+              If a card can't be built, pressing it will move it to the far left of the Sort area. Cards on the left of the Sort area can be pressed to move them back to the right.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -355,8 +348,6 @@ const TutorialButton = () => {
           annotate: {
             p: paragraphs(`
               Once you are happy with the sort order for the current pile then a click on the Plonk! pile will put that pile back and open the next pile to sort.
-              
-              The pile you are currently sorting will be slowly flashing in the play area.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -374,9 +365,7 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              There is an option to determine if a sorted pile has an icon to indicate that it is sorted.
-              
-              The game is slightly harder if the sorted icon is not shown on a sorted pile.
+              You can turn off the indicators showing which piles you have already sorted here, which makes the game a little harder.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -414,10 +403,9 @@ const TutorialButton = () => {
           highlightBack: '#fff',
           annotate: {
             p: paragraphs(`
-              There is a percentage complete bar below the play area.
-
-              The game keeps track of how many times you complete the patience, along with your average percentage complete.
-              Note that this is stored in the browser local storage.
+              Below the play area, you can see how close you are to winning.
+              
+              Plonk! also keeps track of how many times you win, along with your average completion percentage.
             `),
           },
           annotateSkip: { trans: 'Okay' },
