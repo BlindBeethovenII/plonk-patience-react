@@ -4,10 +4,8 @@ import PropTypes from 'prop-types';
 
 import { motion } from 'framer-motion';
 
-import styled from 'styled-components';
-import { Bullseye } from '@styled-icons/boxicons-regular';
-
 import CardBlankImage from '../images/cards/cardblank.png';
+import CardBackImage from '../images/cards/cardback.png';
 
 import {
   colToLeft,
@@ -21,20 +19,11 @@ import { pileIdToColRow, isFaceDownPileId } from '../shared/pile-functions';
 
 import {
   SUIT_SPADES,
-  SUIT_HEARTS,
-  SUIT_DIAMONDS,
   SUIT_CLUBS,
   PLAYAREA_X_OFFSET,
-  PILE_ID_DEAL_PILE,
-  PILE_ID_PLONK_PILE,
 } from '../shared/constants';
 
 import GameStateContext from '../contexts/GameStateContext';
-
-const StyledBullseye = styled(Bullseye)`
-  color: rgb(85,107,47);
-  font-weight: bold;
-`;
 
 const Card = (props) => {
   // we are given the card and the col/row it is to be shown at
@@ -56,8 +45,6 @@ const Card = (props) => {
     animationSpeedPercentage,
     cardAnimationComplete,
     clickOnCard,
-    gameDealing,
-    gameHasStarted,
   } = useContext(GameStateContext);
 
   // we need to know if we are animating - both for the zIndex, and for card clicking
@@ -78,6 +65,12 @@ const Card = (props) => {
   const prevFaceDown = isFaceDownPileId(prevPileId);
 
   const cardbasestyle = {
+    position: 'relative',
+    left: '0px',
+    top: '0px',
+  };
+
+  const cardbackstyle = {
     position: 'relative',
     left: '0px',
     top: '0px',
@@ -111,47 +104,6 @@ const Card = (props) => {
     top: suit === SUIT_SPADES ? '2px' : '0px',
     width: '40px',
     height,
-  };
-
-  const smallcardsuitspadesstyle = {
-    position: 'absolute',
-    left: '2px',
-    top: '2px',
-    width: '20px',
-    height: '19px',
-  };
-
-  const smallcardsuitheartsstyle = {
-    position: 'absolute',
-    left: '40px',
-    top: '0px',
-    width: '22px',
-    height: '22px',
-  };
-
-  const smallcardsuitdiamondsstyle = {
-    position: 'absolute',
-    left: '2px',
-    top: '58px',
-    width: '22px',
-    height: '22px',
-  };
-
-  const smallcardsuitclubstyle = {
-    position: 'absolute',
-    left: '40px',
-    top: '58px',
-    width: '20px',
-    height: '20px',
-  };
-
-  const bullseyestyle = {
-    position: 'absolute',
-    left: '11px',
-    top: '20px',
-    width: '42px',
-    height: '30px',
-    pointerEvents: 'none',
   };
 
   const onAnimationStart = () => {
@@ -201,27 +153,8 @@ const Card = (props) => {
     </>
   );
 
-  // bullseye shows when to click on deal pile or plonk pile (remember if pile empty then no card showing - so this code won't be reached in that situation)
-  let bullseye = null;
-  if ((pileId === PILE_ID_DEAL_PILE && !gameDealing) || (pileId === PILE_ID_PLONK_PILE && gameHasStarted && !gameDealing)) {
-    bullseye = (
-      <div style={bullseyestyle}>
-        <StyledBullseye />
-      </div>
-    );
-  }
-
   // showCardBack
-  const cardBackShowing = (
-    <>
-      {cardblank}
-      <img src={cardSuitToImage(SUIT_SPADES)} alt="smallcardsuitspades" style={smallcardsuitspadesstyle} />
-      <img src={cardSuitToImage(SUIT_HEARTS)} alt="smallcardsuithearts" style={smallcardsuitheartsstyle} />
-      <img src={cardSuitToImage(SUIT_DIAMONDS)} alt="smallcardsuitdiamonds" style={smallcardsuitdiamondsstyle} />
-      <img src={cardSuitToImage(SUIT_CLUBS)} alt="smallcardsuitclubs" style={smallcardsuitclubstyle} />
-      {bullseye}
-    </>
-  );
+  const cardBackShowing = <img src={CardBackImage} alt="cardback" style={cardbackstyle} />;
 
   // we don't need to animate if we are already in place, or we are the undercard
   if ((prevCol === col && prevRow === row) || underCard) {
