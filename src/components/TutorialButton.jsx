@@ -359,6 +359,9 @@ const TutorialButton = () => {
           annotate: {
             p: paragraphs(`
               Once you are happy with the sort order for the current pile then a click on the Plonk! pile will put that pile back and open the next pile to sort.
+
+              The cards from the sort area are put back into the play pile left to right,
+              so the left-most card will be at the bottom of the play pile, and the right-most card at the top.
             `),
           },
           annotateSkip: { trans: 'Okay' },

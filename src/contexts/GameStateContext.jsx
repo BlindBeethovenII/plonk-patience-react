@@ -130,8 +130,8 @@ export const GameStateContextProvider = ({ children }) => {
   const [gameState, setGameState] = useState(GAME_STATE_START);
 
   // the animation speeds
-  const [dealSpeedPercentage, setDealSpeedPercentage] = useLocalStorage('dealSpeedPercentage', 50);
-  const [playSpeedPercentage, setPlaySpeedPercentage] = useLocalStorage('playSpeedPercentage', 50);
+  const [dealSpeedPercentage, setDealSpeedPercentage] = useLocalStorage('dealSpeedPercentage', 85);
+  const [playSpeedPercentage, setPlaySpeedPercentage] = useLocalStorage('playSpeedPercentage', 85);
 
   // the piles to flash, naming icon to flash
   const [pileFlashes, setPileFlashes] = useState([]);
