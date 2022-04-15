@@ -8,7 +8,7 @@ import GameStateContext from '../contexts/GameStateContext';
 
 const StyledModal = Modal.styled`
   width: 20rem;
-  height: 20rem;
+  height: 30rem;
   display: grid;
   align-items: center;
   justify-content: center;
