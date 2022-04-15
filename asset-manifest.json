@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/plonk-patience-react/static/css/main.098f0c05.css",
-    "main.js": "/plonk-patience-react/static/js/main.239e3938.js",
+    "main.css": "/plonk-patience-react/static/css/main.f11325a3.css",
+    "main.js": "/plonk-patience-react/static/js/main.ea9b18dc.js",
     "static/media/playarea.png": "/plonk-patience-react/static/media/playarea.b23162637225866bd41c.png",
     "index.html": "/plonk-patience-react/index.html",
-    "main.098f0c05.css.map": "/plonk-patience-react/static/css/main.098f0c05.css.map",
-    "main.239e3938.js.map": "/plonk-patience-react/static/js/main.239e3938.js.map"
+    "main.f11325a3.css.map": "/plonk-patience-react/static/css/main.f11325a3.css.map",
+    "main.ea9b18dc.js.map": "/plonk-patience-react/static/js/main.ea9b18dc.js.map"
   },
   "entrypoints": [
-    "static/css/main.098f0c05.css",
-    "static/js/main.239e3938.js"
+    "static/css/main.f11325a3.css",
+    "static/js/main.ea9b18dc.js"
   ]
 }
