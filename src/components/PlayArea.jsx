@@ -232,6 +232,15 @@ const PlayArea = () => {
     pointerEvents: 'none',
   };
 
+  const forTutorialLowerDivstyle = {
+    position: 'absolute',
+    left: '290px',
+    top: '140px',
+    width: '380px',
+    height: '300px',
+    pointerEvents: 'none',
+  };
+
   return (
     <div>
       <svg style={playbackgroundsvg}>
@@ -337,6 +346,7 @@ const PlayArea = () => {
         <Pile key="sort_pile_13" pileId={PILE_ID_SORT_PILE_13} cards={sortPile13} />
       </div>
       <div id="for_tutorial" style={forTutorialDivstyle} />
+      <div id="for_tutorial_lower" style={forTutorialLowerDivstyle} />
     </div>
   );
 };

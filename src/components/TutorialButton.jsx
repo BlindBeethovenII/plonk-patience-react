@@ -208,11 +208,9 @@ const TutorialButton = () => {
           key: 'playpile1',
           highlight: '#PLAY_PILE_1',
           highlightBack: '#fff',
-          annotateIn: '#for_tutorial',
+          annotateIn: '#for_tutorial_lower',
           annotate: {
             p: paragraphs(`
-              .
-
               There are 12 play piles, each corresponds to a card number, or in the case of the first play pile, two card numbers.
 
               This is the first play pile, which corresponds to an Ace or a Two.
@@ -230,11 +228,9 @@ const TutorialButton = () => {
           key: 'playpile2',
           highlight: '#PLAY_PILE_2',
           highlightBack: '#fff',
-          annotateIn: '#for_tutorial',
+          annotateIn: '#for_tutorial_lower',
           annotate: {
             p: paragraphs(`
-            .
-
             This play pile corresponds to a Three.
             `),
           },
@@ -250,11 +246,9 @@ const TutorialButton = () => {
           key: 'playpile3',
           highlight: '#PLAY_PILE_3',
           highlightBack: '#fff',
-          annotateIn: '#for_tutorial',
+          annotateIn: '#for_tutorial_lower',
           annotate: {
             p: paragraphs(`
-            .
-
             This play pile corresponds to a Four.
             `),
           },
