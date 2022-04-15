@@ -416,30 +416,10 @@ const TutorialButton = () => {
             },
           ],
         },
-        {
-          key: 'finally',
-          annotateIn: '#for_tutorial',
-          annotate: {
-            p: paragraphs(`
-              Two more things.
-
-              If you click on a card that cannot be play, a red cross will flash on that card.
-
-              If you click on a card while another card is animating into position, a red hand will flash on that card.  Try the click again after the animation has completed.
-            `),
-          },
-          annotateSkip: { trans: 'Okay' },
-          activeWhen: [
-            {
-              compare: 'checkpointComplete',
-              checkpoint: 'plonk_percentagecomplete',
-            },
-          ],
-        },
       ],
       complete: {
         on: 'checkpointReached',
-        checkpoint: 'finally',
+        checkpoint: 'percentagecomplete',
         title: { trans: 'Plonk! Tutorial Complete' },
         message: { p: 'Good Luck!' },
       },

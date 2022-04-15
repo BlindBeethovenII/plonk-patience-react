@@ -65,7 +65,7 @@ import {
   GAME_STATE_ANALYSING,
   GAME_STATE_ENDGAME,
   FLASH_ICON_CROSS,
-  FLASH_ICON_HAND,
+  // FLASH_ICON_HAND,
 } from '../shared/constants';
 
 const GameStateContext = React.createContext({});
@@ -1063,9 +1063,10 @@ export const GameStateContextProvider = ({ children }) => {
 
     // not allowed to click if we still have actions to process
     if (actions?.length) {
-      const newPileFlashes = [...pileFlashes];
-      newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_HAND });
-      setPileFlashes(newPileFlashes);
+      // Jonathan says that this red flashing hand is misleading, and prefers nothing to be done here - so commenting out
+      // const newPileFlashes = [...pileFlashes];
+      // newPileFlashes.push({ pileId: clickPileId, icon: FLASH_ICON_HAND });
+      // setPileFlashes(newPileFlashes);
       return;
     }
 
