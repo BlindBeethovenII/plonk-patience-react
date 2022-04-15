@@ -171,6 +171,10 @@ const uplabelstyle = {
   textAlign: 'left',
   zIndex: 5,
   fontSize: '0.9em',
+  userSelect: 'none',
+  MozUserSelect: 'none',
+  WebkitUserSelect: 'none',
+  msUserSelect: 'none',
 };
 
 const downlabelstyle = {
@@ -182,6 +186,10 @@ const downlabelstyle = {
   textAlign: 'left',
   zIndex: 5,
   fontSize: '0.9em',
+  userSelect: 'none',
+  MozUserSelect: 'none',
+  WebkitUserSelect: 'none',
+  msUserSelect: 'none',
 };
 
 const PlayArea = () => {
