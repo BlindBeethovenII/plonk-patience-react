@@ -76,11 +76,11 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              This is the Deal Pile.
+              This is the deal pile.
   
-              At the start of each game, the 104 cards of two decks of cards are shuffled and placed face down on this Deal Pile.
+              At the start of each game, the 104 cards of two decks of cards are shuffled and placed face down on this deal pile.
 
-              Clicking on the Deal Pile deals the cards (the tutorial will do this later).
+              Clicking on the deal pile deals the cards (the tutorial will do this later).
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -116,7 +116,7 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              You can turn off the Pile Count labels here, which makes the game a little harder.
+              You can turn off the pile count labels here, which makes the game a little harder.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -211,9 +211,7 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial_lower',
           annotate: {
             p: paragraphs(`
-              There are 12 play piles, each corresponds to a card number, or in the case of the first play pile, two card numbers.
-
-              This is the first play pile, which corresponds to an Ace or a Two.
+              There are 12 play piles.  The first represents Ace and Two.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -231,7 +229,7 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial_lower',
           annotate: {
             p: paragraphs(`
-            This play pile corresponds to a Three.
+            Then the next pile is for Three...
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -249,7 +247,7 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial_lower',
           annotate: {
             p: paragraphs(`
-            This play pile corresponds to a Four.
+            ... then Four...
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -267,11 +265,11 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              And so on, up to the last play pile, which corresponds to a King.
+              ...all the way up to King on the 12th pile.
 
-              During the deal, if a card is dealt onto a play pile which corresponds to that cards number, then the card is moved to the Plonk! Pile.  
+              During the deal, if a card gets dealt onto its matching play pile, it moves straight to the Plonk! pile.  
               
-              The more cards on the Plonk! Pile at the end of the deal, the more chance you have of completing the game.
+              The more cards on the Plonk! pile at the end of the deal, the more chance you have of completing the game.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -283,17 +281,18 @@ const TutorialButton = () => {
           ],
         },
         {
-          key: 'playspeed',
-          highlight: '#play_speed_slider',
+          key: 'buildupanddown',
+          highlight: '#PLONK_PILE',
           highlightBack: '#fff',
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
               Once the deal is complete, if a top card of a play pile can be used to build up or build down, then clicking on that card will build that card.
 
-              Note: The speed of animation is now set by this configuration slider.
+              If the top card of a play pile can be built up or down, pressing it will move it to an up or down build pile.
+              You can also move cards between up and down build piles by pressing them
 
-              If you can see a card that can build up or down, then you could Hide the tutorial and click on that card to see the build happen.
+              A key part to completing a game is deciding when to move cards between the up and down piles.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -305,38 +304,15 @@ const TutorialButton = () => {
           ],
         },
         {
-          key: 'buildupanddown',
-          highlight: '#PLONK_PILE',
-          highlightBack: '#fff',
-          annotateIn: '#for_tutorial',
-          annotate: {
-            p: paragraphs(`
-              Note that if the card could build on both an up pile and an down pile (which happens a lot in the game) then clicking on the card will build on the up pile.  
-              You can then click on the card on the up pile to move it to the down pile.
-
-              A key part to completing a game is deciding when to move cards between the up and down piles.
-            `),
-          },
-          annotateSkip: { trans: 'Okay' },
-          activeWhen: [
-            {
-              compare: 'checkpointComplete',
-              checkpoint: 'plonk_playspeed',
-            },
-          ],
-        },
-        {
           key: 'plonkclick',
           highlight: '#PLONK_PILE',
           highlightBack: '#fff',
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              Each card in the Plonk! Pile allows you to sort the play pile that corresponds to that card's number.
+              Each card in the Plonk! pile allows you to sort the play pile that corresponds to that card's number.
               
-              It is your turn now.  Once the deal has completed, please hide the tutorial and click on the Plonk! Pile.  This should move a play pile to the sort area.
-
-              When you've done that show the tutorial again, then click the Okay button.
+              Try it now by pressing the Plonk! pile.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -378,7 +354,7 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              Once you are happy with the sort order for the current pile then a click on the Plonk! Pile will put that pile back and open the next pile to sort.
+              Once you are happy with the sort order for the current pile then a click on the Plonk! pile will put that pile back and open the next pile to sort.
               
               The pile you are currently sorting will be slowly flashing in the play area.
             `),
