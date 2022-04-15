@@ -230,6 +230,7 @@ const Card = (props) => {
       zIndex: 0,
       left,
       top,
+      cursor: 'pointer',
     };
 
     return (
