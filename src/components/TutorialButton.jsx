@@ -193,11 +193,7 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              The speed of the deal is set by this configuration slider.
-              
-              A slow speed allows you to consider the cards dealt into each play pile.
-
-              You can hide the tutorial now, if you wish, and change the deal speed, then return to the tutorial.
+              You can set the deal speed with this slider.
             `),
           },
           annotateSkip: { trans: 'Okay' },
