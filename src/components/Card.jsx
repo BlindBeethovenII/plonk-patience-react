@@ -92,6 +92,10 @@ const Card = (props) => {
     fontWeight: 'bold',
     fontSize: '36px',
     letterSpacing: '-0.1em',
+    userSelect: 'none',
+    MozUserSelect: 'none',
+    WebkitUserSelect: 'none',
+    msUserSelect: 'none',
   };
 
   let height = '42px';
