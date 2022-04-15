@@ -26,8 +26,18 @@ const divstyle = {
   height: '40px',
 };
 
-const Button = styled.button`
-  background: #ff1d38; 
+const RedButton = styled.button`
+  background: #ff1d38;
+  color: white;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid #761d38;
+  border-radius: 3px;
+`;
+
+const GreyButton = styled.button`
+  background: grey;
   color: white;
   font-size: 1em;
   margin: 1em;
@@ -40,7 +50,8 @@ const TutorialButton = () => {
   const {
     gameHasStarted,
     dealCards,
-    resetGameState,
+    tutorialComplete,
+    tutorialNowComplete,
   } = useContext(GameStateContext);
 
   // we only want to register the tutorial once
@@ -443,7 +454,7 @@ const TutorialButton = () => {
     logIfDevEnv('registerTutorials called');
 
     // and reset the deck once tutorial is complete (Note: wanted to do this on tutorial exit - but current module doesn't allow that - see my notes)
-    registerFinaliseCallback(() => resetGameState());
+    registerFinaliseCallback(() => tutorialNowComplete());
 
     // remember we have registered the tutorial
     setTutorialRegistered(true);
@@ -454,9 +465,13 @@ const TutorialButton = () => {
     return null;
   }
 
+  // change the button based on if the tutorial is complete
+  const TheButton = tutorialComplete ? GreyButton : RedButton;
+  const buttonText = tutorialComplete ? 'Show Tutorial' : 'Start Tutorial';
+
   return (
     <div style={divstyle}>
-      <Button onClick={() => startTutorial('plonk')}>Start Tutorial</Button>
+      <TheButton tutorialComplete={tutorialComplete} onClick={() => startTutorial('plonk')}>{buttonText}</TheButton>
     </div>
   );
 };

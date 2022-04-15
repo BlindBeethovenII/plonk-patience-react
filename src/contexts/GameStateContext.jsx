@@ -156,6 +156,9 @@ export const GameStateContextProvider = ({ children }) => {
   // show the redeal button
   const [showRedealButton, setShowRedealButton] = useState(false);
 
+  // if tutorial has been completed
+  const [tutorialComplete, setTutorialComplete] = useLocalStorage('tutorialComplete', false);
+
   // add the current score to the score history
   const setScoreHistory = useCallback(() => {
     // calc the current score
@@ -1720,6 +1723,12 @@ export const GameStateContextProvider = ({ children }) => {
   // returns true if given pile id is a sorted play pile
   const isSortedPlayPile = useCallback((pileId) => sortedPlayPileIds.includes(pileId), [sortedPlayPileIds]);
 
+  // function to use when the tutorial is completed
+  const tutorialNowComplete = useCallback(() => {
+    setTutorialComplete(true);
+    resetGameState();
+  }, [setTutorialComplete]);
+
   // expose our state and state functions via the context
   // we are encouraged to do this via a useMemo now
   const context = useMemo(() => ({
@@ -1827,6 +1836,10 @@ export const GameStateContextProvider = ({ children }) => {
     showRedealButton,
     setShowRedealButton,
 
+    // tutorial
+    tutorialComplete,
+    tutorialNowComplete,
+
     // card functions
     resetGameState,
     performNextAction,
@@ -1890,6 +1903,8 @@ export const GameStateContextProvider = ({ children }) => {
     setFillEmptyPiles,
     showWin,
     showRedealButton,
+    tutorialComplete,
+    tutorialNowComplete,
     performNextAction,
     cardAnimationComplete,
     pileFlashAnimationComplete,
