@@ -137,11 +137,11 @@ const Card = (props) => {
   // convert animation speed int to a percentage
   let animationSpeedPercentage = 100;
   if (animationSpeed === ANIMATION_SPEED_FAST) {
-    animationSpeedPercentage = 90;
+    animationSpeedPercentage = 85;
   } else if (animationSpeed === ANIMATION_SPEED_REGULAR) {
-    animationSpeedPercentage = 70;
+    animationSpeedPercentage = 65;
   } else if (animationSpeed === ANIMATION_SPEED_SLOW) {
-    animationSpeedPercentage = 50;
+    animationSpeedPercentage = 40;
   }
   const duration = (2 * (100 - animationSpeedPercentage)) / 100;
 

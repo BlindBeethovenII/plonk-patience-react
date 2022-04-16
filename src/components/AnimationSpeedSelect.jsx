@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import styled from 'styled-components';
 
 import { colToLeft, rowToTop } from '../shared/card-functions';
 
-// import GameStateContext from '../contexts/GameStateContext';
+import {
+  ANIMATION_SPEED_SLOW,
+  ANIMATION_SPEED_REGULAR,
+  ANIMATION_SPEED_FAST,
+} from '../shared/constants';
+
+import GameStateContext from '../contexts/GameStateContext';
 
 const DropDownContainer = styled('div')`
   width: 5em;
@@ -63,20 +69,28 @@ const topDivStyle = {
 };
 
 const AnimationSpeedSelect = () => {
-  // const { animationSpeed, setAnimationSpeed } = useContext(GameStateContext);
+  const { animationSpeed, setAnimationSpeed } = useContext(GameStateContext);
 
-  // Slow(0)/Regular(1)/Fast(2)/Instant(3)
+  // animationSpeed is an int: 0 for Slow, 1 for Regular, 2 for Fast, 3 for Instant
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Slow');
 
   const toggling = () => setIsOpen(!isOpen);
 
   const onOptionClicked = (value) => () => {
-    setSelectedOption(value);
+    setAnimationSpeed(value);
     setIsOpen(false);
-    console.log(selectedOption);
   };
+
+  // convert animation speed to option string
+  let selectedOption = 'Instant';
+  if (animationSpeed === ANIMATION_SPEED_FAST) {
+    selectedOption = 'Fast';
+  } else if (animationSpeed === ANIMATION_SPEED_REGULAR) {
+    selectedOption = 'Regular';
+  } else if (animationSpeed === ANIMATION_SPEED_SLOW) {
+    selectedOption = 'Slow';
+  }
 
   return (
     <div id="animtation_speed_select" style={topDivStyle}>
@@ -88,10 +102,10 @@ const AnimationSpeedSelect = () => {
         {isOpen && (
           <DropDownListContainer>
             <DropDownList>
-              <ListItem onClick={onOptionClicked('Slow')} key="animation_speed_option_slow">Slow</ListItem>
-              <ListItem onClick={onOptionClicked('Regular')} key="animation_speed_option_regular">Regular</ListItem>
-              <ListItem onClick={onOptionClicked('Fast')} key="animation_speed_option_fast">Fast</ListItem>
-              <ListItem onClick={onOptionClicked('Instant')} key="animation_speed_option_instant">Instant</ListItem>
+              <ListItem onClick={onOptionClicked(0)} key="animation_speed_option_slow">Slow</ListItem>
+              <ListItem onClick={onOptionClicked(1)} key="animation_speed_option_regular">Regular</ListItem>
+              <ListItem onClick={onOptionClicked(2)} key="animation_speed_option_fast">Fast</ListItem>
+              <ListItem onClick={onOptionClicked(3)} key="animation_speed_option_instant">Instant</ListItem>
             </DropDownList>
           </DropDownListContainer>
         )}
