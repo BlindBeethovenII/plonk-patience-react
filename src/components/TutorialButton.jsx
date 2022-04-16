@@ -179,7 +179,7 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              And there are 4 build down piles.  These build down from Kings to Aces, pile one for each suit.
+              And there are 4 build down piles.  These build down from Kings to Aces, one pile for each suit.
   
               You have completed a game of Plonk! if all build up and build down piles contain 13 cards.
             `),
@@ -378,7 +378,7 @@ const TutorialButton = () => {
             p: paragraphs(`
               This is the sort area.  If a card can be built up or down, pressing it will move it to an up or down build pile.
               
-              If a card can't be built, pressing it will move it to the far left of the Sort area. Cards on the left of the Sort area can be pressed to move them back to the right.
+              If a card can't be built, pressing it will move it to the far left of the sort area. Cards on the left of the sort area can be pressed to move them back to the right.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -400,10 +400,10 @@ const TutorialButton = () => {
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              Once you are happy with the sort order for the current pile then a click on the Plonk! pile will put that pile back and open the next pile to sort.
+              Once you are happy with the sort order for the current pile then a click on the Plonk! pile will put the current pile back and open the next pile to sort.
 
-              The cards from the sort area are put back into the play pile left to right,
-              so the left-most card will be at the bottom of the play pile, and the right-most card at the top.
+              The cards from the sort area are put back into the play pile left to right.
+              So the left-most card will be at the bottom of the play pile, and the right-most card at the top.
             `),
           },
           annotateSkip: { trans: 'Okay' },
