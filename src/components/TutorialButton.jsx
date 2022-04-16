@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 
 import styled from 'styled-components';
 
+import $ from 'jquery';
+
 import {
   paragraphs,
   registerTutorials,
@@ -45,6 +47,18 @@ const GreyButton = styled.button`
   border: 2px solid #761d38;
   border-radius: 3px;
 `;
+
+// custom tutorial function to determine if 13th sort pile exists
+const sortPile13Exists = () => {
+  let result = false;
+  const sortPile13 = $('#SORT_PILE_13');
+  if (sortPile13.length) {
+    result = true;
+  }
+
+  // console.log(`sortPile13Exists returning ${result} `);
+  return result;
+};
 
 const TutorialButton = () => {
   const {
@@ -332,6 +346,28 @@ const TutorialButton = () => {
           ],
         },
         {
+          key: 'sortpileswait',
+          highlight: '#PLONK_PILE',
+          highlightBack: '#fff',
+          annotateIn: '#for_tutorial',
+          annotate: {
+            p: paragraphs(`
+              The tutorial is waiting for you to click on the Plonk! pile.
+            `),
+          },
+          annotateSkip: { trans: 'Okay' },
+          activeWhen: [
+            {
+              compare: 'checkpointComplete',
+              checkpoint: 'plonk_plonkclick',
+            },
+            {
+              compare: 'custom',
+              custom: () => !sortPile13Exists(),
+            },
+          ],
+        },
+        {
           key: 'sortpiles',
           highlight: '#sort_area',
           highlightBack: '#fff',
@@ -348,6 +384,10 @@ const TutorialButton = () => {
             {
               compare: 'checkpointComplete',
               checkpoint: 'plonk_plonkclick',
+            },
+            {
+              compare: 'custom',
+              custom: sortPile13Exists,
             },
           ],
         },
