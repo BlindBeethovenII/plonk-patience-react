@@ -9,7 +9,12 @@ import { PLAYAREA_X_OFFSET, SUIT_SPADES, SUIT_CLUBS } from '../shared/constants'
 
 const BlankSpace = (props) => {
   // compute the card blank space using absolute positioning based on grid (col, row) values
-  const { col, row, suit } = props;
+  const {
+    col,
+    row,
+    suit,
+    shadowText,
+  } = props;
 
   // we can show up to two things
   const divsToShow = [];
@@ -86,6 +91,60 @@ const BlankSpace = (props) => {
     divsToShow.push(shadowSuitDiv);
   }
 
+  // if shadow text defined, then we show a faded text in the middle of the blank space
+  if (shadowText) {
+    let leftAdjust = 12;
+    if (shadowText === 'A 2') {
+      leftAdjust = 0;
+    } else if (shadowText === '10') {
+      leftAdjust = 2;
+    } else if (shadowText === 'Q') {
+      leftAdjust = 6;
+    } else if (shadowText === 'K') {
+      leftAdjust = 8;
+    }
+
+    let letterSpacing = '0';
+    if (shadowText === 'A 2') {
+      letterSpacing = '-0.1em';
+    } else if (shadowText === '10') {
+      letterSpacing = '-0.1em';
+    }
+
+    const shadowTextDivStyle = {
+      position: 'absolute',
+      zIndex: 0,
+      left: colToLeft(col, row) + PLAYAREA_X_OFFSET + leftAdjust,
+      top: rowToTop(row) + 20,
+      width: '40px',
+      height: '40px',
+      fontWeight: 'bold',
+      fontSize: '36px',
+      letterSpacing,
+      opacity: 0.5,
+      userSelect: 'none',
+      MozUserSelect: 'none',
+      WebkitUserSelect: 'none',
+      msUserSelect: 'none',
+    };
+
+    const shadowTextDiv = (
+      <div
+        key={`blankspace_shadowtext_${col}_${row}`}
+        id={`blankspace_shadowtext_${col}_${row}`}
+        style={shadowTextDivStyle}
+      >
+        <svg width="66px" height="40px">
+          <text x="10" y="30">
+            {shadowText}
+          </text>
+        </svg>
+      </div>
+    );
+
+    divsToShow.push(shadowTextDiv);
+  }
+
   return divsToShow;
 };
 
@@ -93,10 +152,12 @@ BlankSpace.propTypes = {
   col: PropTypes.number.isRequired,
   row: PropTypes.number.isRequired,
   suit: PropTypes.string,
+  shadowText: PropTypes.string,
 };
 
 BlankSpace.defaultProps = {
   suit: null,
+  shadowText: null,
 };
 
 export default BlankSpace;

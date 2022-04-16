@@ -256,18 +256,18 @@ const PlayArea = () => {
       </svg>
       <div id="play_area">
         <img src={PlayAreaImage} alt="playarea" style={playarea} />
-        <BlankSpace key="blankspace_1_0" col={1} row={0} />
-        <BlankSpace key="blankspace_1_1" col={1} row={1} />
-        <BlankSpace key="blankspace_1_2" col={1} row={2} />
-        <BlankSpace key="blankspace_1_3" col={1} row={3} />
-        <BlankSpace key="blankspace_2_0" col={2} row={0} />
-        <BlankSpace key="blankspace_2_1" col={2} row={1} />
-        <BlankSpace key="blankspace_2_2" col={2} row={2} />
-        <BlankSpace key="blankspace_2_3" col={2} row={3} />
-        <BlankSpace key="blankspace_3_0" col={3} row={0} />
-        <BlankSpace key="blankspace_3_1" col={3} row={1} />
-        <BlankSpace key="blankspace_3_2" col={3} row={2} />
-        <BlankSpace key="blankspace_3_3" col={3} row={3} />
+        <BlankSpace key="blankspace_1_0" col={1} row={0} shadowText="A 2" />
+        <BlankSpace key="blankspace_1_1" col={1} row={1} shadowText="5" />
+        <BlankSpace key="blankspace_1_2" col={1} row={2} shadowText="8" />
+        <BlankSpace key="blankspace_1_3" col={1} row={3} shadowText="J" />
+        <BlankSpace key="blankspace_2_0" col={2} row={0} shadowText="3" />
+        <BlankSpace key="blankspace_2_1" col={2} row={1} shadowText="6" />
+        <BlankSpace key="blankspace_2_2" col={2} row={2} shadowText="9" />
+        <BlankSpace key="blankspace_2_3" col={2} row={3} shadowText="Q" />
+        <BlankSpace key="blankspace_3_0" col={3} row={0} shadowText="4" />
+        <BlankSpace key="blankspace_3_1" col={3} row={1} shadowText="7" />
+        <BlankSpace key="blankspace_3_2" col={3} row={2} shadowText="10" />
+        <BlankSpace key="blankspace_3_3" col={3} row={3} shadowText="K" />
         <Pile key="play_pile_1" pileId={PILE_ID_PLAY_PILE_1} cards={playPile1} />
         <Pile key="play_pile_2" pileId={PILE_ID_PLAY_PILE_2} cards={playPile2} />
         <Pile key="play_pile_3" pileId={PILE_ID_PLAY_PILE_3} cards={playPile3} />
