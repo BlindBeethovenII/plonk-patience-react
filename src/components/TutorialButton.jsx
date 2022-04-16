@@ -212,13 +212,13 @@ const TutorialButton = () => {
           ],
         },
         {
-          key: 'dealspeed',
-          highlight: '#deal_speed_slider',
+          key: 'animationspeed',
+          highlight: '#animtation_speed_select',
           highlightBack: '#fff',
           annotateIn: '#for_tutorial',
           annotate: {
             p: paragraphs(`
-              You can set the deal speed with this slider.
+              You can set the animation speed here.
             `),
           },
           annotateSkip: { trans: 'Okay' },
@@ -243,7 +243,7 @@ const TutorialButton = () => {
           activeWhen: [
             {
               compare: 'checkpointComplete',
-              checkpoint: 'plonk_dealspeed',
+              checkpoint: 'plonk_animationspeed',
             },
           ],
         },
@@ -353,6 +353,8 @@ const TutorialButton = () => {
           annotate: {
             p: paragraphs(`
               The tutorial is waiting for you to click on the Plonk! pile.
+
+              Note: The deal must be complete before your can use the Plonk! pile.
             `),
           },
           annotateSkip: { trans: 'Okay' },
