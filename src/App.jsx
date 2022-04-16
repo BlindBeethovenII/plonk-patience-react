@@ -6,8 +6,7 @@ import PlayArea from './components/PlayArea';
 import GitInfo from './components/GitInfo';
 import FlashingPiles from './components/FlashingPiles';
 import DebugButton from './components/DebugButton';
-import DealSpeedSlider from './components/DealSpeedSlider';
-import PlaySpeedSlider from './components/PlaySpeedSlider';
+import AnimationSpeedSelect from './components/AnimationSpeedSelect';
 import SelectedPileFlash from './components/SelectedPileFlash';
 import PercentageComplete from './components/PercentageComplete';
 import ShowCountLabelsCheckbox from './components/ShowCountLabelsCheckbox';
@@ -28,8 +27,7 @@ const App = () => (
       <GitInfo />
       <FlashingPiles />
       <SelectedPileFlash />
-      <DealSpeedSlider />
-      <PlaySpeedSlider />
+      <AnimationSpeedSelect />
       <PercentageComplete />
       <ShowCountLabelsCheckbox />
       <ShowSortedIconsCheckbox />

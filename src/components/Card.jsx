@@ -21,6 +21,9 @@ import {
   SUIT_SPADES,
   SUIT_CLUBS,
   PLAYAREA_X_OFFSET,
+  ANIMATION_SPEED_SLOW,
+  ANIMATION_SPEED_REGULAR,
+  ANIMATION_SPEED_FAST,
 } from '../shared/constants';
 
 import GameStateContext from '../contexts/GameStateContext';
@@ -42,7 +45,7 @@ const Card = (props) => {
   } = card;
 
   const {
-    animationSpeedPercentage,
+    animationSpeed,
     cardAnimationComplete,
     clickOnCard,
     canClickOnCard,
@@ -130,7 +133,16 @@ const Card = (props) => {
     }
   };
 
-  // duration of animation is based on the deal speed percentage - using reverse percentage - so slider to right is faster
+  // duration of animation is based on the animation speed
+  // convert animation speed int to a percentage
+  let animationSpeedPercentage = 100;
+  if (animationSpeed === ANIMATION_SPEED_FAST) {
+    animationSpeedPercentage = 90;
+  } else if (animationSpeed === ANIMATION_SPEED_REGULAR) {
+    animationSpeedPercentage = 70;
+  } else if (animationSpeed === ANIMATION_SPEED_SLOW) {
+    animationSpeedPercentage = 50;
+  }
   const duration = (2 * (100 - animationSpeedPercentage)) / 100;
 
   // the inside of the motion.div or div is the same regardless of if we animate the card into position

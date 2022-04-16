@@ -97,3 +97,8 @@ export const PILE_ID_SORT_PILE_10 = 'SORT_PILE_10';
 export const PILE_ID_SORT_PILE_11 = 'SORT_PILE_11';
 export const PILE_ID_SORT_PILE_12 = 'SORT_PILE_12';
 export const PILE_ID_SORT_PILE_13 = 'SORT_PILE_13';
+
+export const ANIMATION_SPEED_SLOW = 0;
+export const ANIMATION_SPEED_REGULAR = 1;
+export const ANIMATION_SPEED_FAST = 2;
+export const ANIMATION_SPEED_INSTANT = 3;

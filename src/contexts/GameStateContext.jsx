@@ -66,6 +66,7 @@ import {
   GAME_STATE_ENDGAME,
   FLASH_ICON_CROSS,
   // FLASH_ICON_HAND,
+  ANIMATION_SPEED_FAST,
 } from '../shared/constants';
 
 const GameStateContext = React.createContext({});
@@ -129,9 +130,8 @@ export const GameStateContextProvider = ({ children }) => {
   // the game state
   const [gameState, setGameState] = useState(GAME_STATE_START);
 
-  // the animation speeds
-  const [dealSpeedPercentage, setDealSpeedPercentage] = useLocalStorage('dealSpeedPercentage', 85);
-  const [playSpeedPercentage, setPlaySpeedPercentage] = useLocalStorage('playSpeedPercentage', 85);
+  // the animation speed
+  const [animationSpeed, setAnimationSpeed] = useLocalStorage('animationSpeed', ANIMATION_SPEED_FAST);
 
   // the piles to flash, naming icon to flash
   const [pileFlashes, setPileFlashes] = useState([]);
@@ -1997,12 +1997,9 @@ export const GameStateContextProvider = ({ children }) => {
     // debug mode
     isDebugMode: process.env.NODE_ENV === 'development',
 
-    // the animation speeds
-    dealSpeedPercentage,
-    setDealSpeedPercentage,
-    playSpeedPercentage,
-    setPlaySpeedPercentage,
-    animationSpeedPercentage: gameState === GAME_STATE_DEALING ? dealSpeedPercentage : playSpeedPercentage,
+    // the animation speed
+    animationSpeed,
+    setAnimationSpeed,
 
     // the flashing piles
     pileFlashes,
@@ -2104,10 +2101,8 @@ export const GameStateContextProvider = ({ children }) => {
     sortPile13,
     actions,
     gameState,
-    dealSpeedPercentage,
-    setDealSpeedPercentage,
-    playSpeedPercentage,
-    setPlaySpeedPercentage,
+    animationSpeed,
+    setAnimationSpeed,
     pileFlashes,
     selectedPileId,
     scoreHistory,
