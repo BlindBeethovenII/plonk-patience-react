@@ -45,6 +45,7 @@ const Card = (props) => {
     animationSpeedPercentage,
     cardAnimationComplete,
     clickOnCard,
+    gameDealing,
   } = useContext(GameStateContext);
 
   // we need to know if we are animating - both for the zIndex, and for card clicking
@@ -163,7 +164,7 @@ const Card = (props) => {
       zIndex: 0,
       left,
       top,
-      cursor: 'pointer',
+      cursor: gameDealing ? 'auto' : 'pointer',
     };
 
     return (
