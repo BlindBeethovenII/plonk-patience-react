@@ -45,6 +45,7 @@ const Card = (props) => {
     animationSpeedPercentage,
     cardAnimationComplete,
     clickOnCard,
+    canClickOnCard,
     gameDealing,
   } = useContext(GameStateContext);
 
@@ -164,7 +165,7 @@ const Card = (props) => {
       zIndex: 0,
       left,
       top,
-      cursor: gameDealing ? 'auto' : 'pointer',
+      cursor: gameDealing || !canClickOnCard(pileId) ? 'auto' : 'pointer',
     };
 
     return (
@@ -188,6 +189,7 @@ const Card = (props) => {
     zIndex: isAnimating ? 2 : 0, // if we are animating make sure they are on top of all other cards
     left,
     top,
+    cursor: gameDealing || !canClickOnCard(pileId) || isAnimating ? 'auto' : 'pointer',
   };
 
   const flipperDivStyle = {

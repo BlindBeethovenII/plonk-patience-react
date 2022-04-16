@@ -1720,6 +1720,223 @@ export const GameStateContextProvider = ({ children }) => {
     performNextAction,
   ]);
 
+  // return true if the card can be clicked on - used to determine which cursor to show over a card
+  const canClickOnCard = useCallback((clickPileId) => {
+    // not allowed to click if we still have actions to process
+    if (actions?.length) {
+      return false;
+    }
+
+    // process the pile clicked on
+
+    if (clickPileId === PILE_ID_DEAL_PILE) {
+      // click on the deal pile, deals
+      return true;
+    }
+
+    if (clickPileId === PILE_ID_PLONK_PILE || (gameState === GAME_STATE_ANALYSING && isPlayPileId(clickPileId))) {
+      // the click was on the plonk pile (which must be normal game play) or on a play pile while analysing
+      return true;
+    }
+
+    if (isUpPileId(clickPileId)) {
+      if (gameState === GAME_STATE_ANALYSING) {
+        return false;
+      }
+
+      // get that pile
+      const upPile = getPile(clickPileId);
+
+      // there should be at least one card in this pile by here - but checking anyway
+      if (!upPile?.length) {
+        return false;
+      }
+
+      // get the top card from the clicked up pile
+      const { suit: upPileSuit, number: upPileNumber } = upPile[0];
+
+      // get the corresponding down pile
+      const downPileId = suitToDownPileId(upPileSuit);
+
+      // get that down pile
+      const downPile = getPile(downPileId);
+
+      // remember our decision to move this card to the down pile
+      let cardIsForDownPile = false;
+
+      // the down pile might be empty, if so, we want to move the King
+      if (!downPile.length && upPileNumber === NUMBER_K) {
+        cardIsForDownPile = true;
+      }
+
+      // if the down pile is not empty, then we can move the next card down
+      if (downPile.length) {
+        // get the top card from the down pile
+        const { number: downPileNumber } = downPile[0];
+
+        if (upPileNumber === downPileNumber - 1) {
+          cardIsForDownPile = true;
+        }
+      }
+
+      if (cardIsForDownPile) {
+        // yes, move this card onto the up pile
+        return true;
+      }
+
+      return false;
+    }
+
+    if (isDownPileId(clickPileId)) {
+      if (gameState === GAME_STATE_ANALYSING) {
+        // nope - not allowed now
+        return false;
+      }
+
+      // get that pile
+      const downPile = getPile(clickPileId);
+
+      // there should be at least one card in this pile by here - but checking anyway
+      if (!downPile?.length) {
+        return false;
+      }
+
+      // get the top card from the clicked down pile
+      const { suit: downPileSuit, number: downPileNumber } = downPile[0];
+
+      // get the corresponding up pile
+      const upPileId = suitToUpPileId(downPileSuit);
+
+      // get that up pile
+      const upPile = getPile(upPileId);
+
+      // remember our decision to move this card to the updown pile
+      let cardIsForUpPile = false;
+
+      // the up pile might be empty, if so, we want to move the Ace
+      if (!upPile.length && downPileNumber === NUMBER_A) {
+        cardIsForUpPile = true;
+      }
+
+      // if the up pile is not empty, then we can move the next card up
+      if (upPile.length) {
+        // get the top card from the up pile
+        const { number: upPileNumber } = upPile[0];
+
+        if (downPileNumber === upPileNumber + 1) {
+          cardIsForUpPile = true;
+        }
+      }
+
+      if (cardIsForUpPile) {
+        // yes, move this card onto the up pile
+        return true;
+      }
+
+      return false;
+    }
+
+    if (gameState === GAME_STATE_ANALYSING) {
+      // in this if, the click was not the plonk pile, nor play pile, nor up or down pile, so it must be a sort pile now
+      return false;
+    }
+
+    // we must be on a play pile or a sort pile by this point
+    const clickPile = getPile(clickPileId);
+
+    // there should be at least one card in this pile by here - but checking anyway
+    if (!clickPile?.length) {
+      return false;
+    }
+
+    // get the top card from the click pile
+    const { suit: clickPileSuit, number: clickPileNumber } = clickPile[0];
+
+    // first check the build up pile for this suit
+    const upPileId = suitToUpPileId(clickPileSuit);
+
+    // get that up pile
+    const upPile = getPile(upPileId);
+
+    // remember our decision to move this card to the up pile
+    let cardIsForUpPile = false;
+
+    // the up pile might be empty, if so, we want to move the Ace
+    if (!upPile.length && clickPileNumber === NUMBER_A) {
+      cardIsForUpPile = true;
+    }
+
+    // if the up pile is not empty, then we can move the next card up
+    if (upPile.length) {
+      // get the top card from the up pile
+      const { number: upPileNumber } = upPile[0];
+
+      if (clickPileNumber === upPileNumber + 1) {
+        cardIsForUpPile = true;
+      }
+    }
+
+    if (cardIsForUpPile) {
+      // yes, move this card onto the up pile
+      return true;
+    }
+
+    // now do the same for the down pile for this suit
+    const downPileId = suitToDownPileId(clickPileSuit);
+
+    // get that down pile
+    const downPile = getPile(downPileId);
+
+    // remember our decision to move this card to the down pile
+    let cardIsForDownPile = false;
+
+    // the down pile might be empty, if so, we want to move the King
+    if (!downPile.length && clickPileNumber === NUMBER_K) {
+      cardIsForDownPile = true;
+    }
+
+    // if the down pile is not empty, then we can move the next card down
+    if (downPile.length) {
+      // get the top card from the down pile
+      const { number: downPileNumber } = downPile[0];
+
+      if (clickPileNumber === downPileNumber - 1) {
+        cardIsForDownPile = true;
+      }
+    }
+
+    if (cardIsForDownPile) {
+      // yes, move this card onto the up pile
+      return true;
+    }
+
+    // if click is for a sort pile, and it wasn't for a build up or a build down pile, then we are sorting
+    if (isSortPileId(clickPileId)) {
+      // can always re-arrange sort pile now
+      return true;
+    }
+
+    // here is must be a play pile, and the game state must be PLAYING
+    if (fillEmptyPiles) {
+      // see if we have an empty pile available
+      const emptyPileId = findEmptyPlayPile();
+
+      if (emptyPileId) {
+        // found an empty pile, so move this card to that pile
+        return true;
+      }
+    }
+
+    // cannot move the card clicked on - so flash it, for user feedback for the click
+    return false;
+  }, [
+    actions,
+    gameState,
+    fillEmptyPiles,
+    findEmptyPlayPile,
+    getPile,
+  ]);
+
   // returns true if given pile id is a sorted play pile
   const isSortedPlayPile = useCallback((pileId) => sortedPlayPileIds.includes(pileId), [sortedPlayPileIds]);
 
@@ -1847,6 +2064,7 @@ export const GameStateContextProvider = ({ children }) => {
     pileFlashAnimationComplete,
     dealCards,
     clickOnCard,
+    canClickOnCard,
     isSortedPlayPile,
   }), [
     dealPile,
@@ -1910,6 +2128,7 @@ export const GameStateContextProvider = ({ children }) => {
     pileFlashAnimationComplete,
     dealCards,
     clickOnCard,
+    canClickOnCard,
     isSortedPlayPile,
   ]);
 
