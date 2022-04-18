@@ -20,6 +20,7 @@ import { pileIdToColRow, isFaceDownPileId } from '../shared/pile-functions';
 import {
   SUIT_SPADES,
   SUIT_CLUBS,
+  NUMBER_10,
   PLAYAREA_X_OFFSET,
   ANIMATION_SPEED_SLOW,
   ANIMATION_SPEED_REGULAR,
@@ -150,7 +151,7 @@ const Card = (props) => {
   const cardnumber = (
     <div style={cardnumberstyle}>
       <svg width="60px" height="40px">
-        <text x="10" y="30" fill={cardSuitToFillColour(suit)}>
+        <text x={number === NUMBER_10 ? 4 : 10} y="30" fill={cardSuitToFillColour(suit)}>
           {cardNumberToString(number)}
         </text>
       </svg>
